@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://l-helianthus.github.io/"/>
-  <updated>2019-09-28T05:13:15.395Z</updated>
+  <updated>2019-09-28T15:47:18.214Z</updated>
   <id>http://l-helianthus.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>paramiko Python远程ssh库</title>
+    <link href="http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/"/>
+    <id>http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/</id>
+    <published>2019-09-28T22:38:02.000Z</published>
+    <updated>2019-09-28T15:47:18.214Z</updated>
+    
+    <content type="html"><![CDATA[<p>Paramiko是一个Python的远程操作库，可以进行<code>SSH</code>, <code>SFTP</code>等远程连接操作. 来学习学习怎么使用吧</p><a id="more"></a><h1 id="安装Paramiko"><a href="#安装Paramiko" class="headerlink" title="安装Paramiko"></a>安装Paramiko</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install paramiko</span><br></pre></td></tr></table></figure><h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h3 id="导入paramiko"><a href="#导入paramiko" class="headerlink" title="导入paramiko"></a>导入paramiko</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br></pre></td></tr></table></figure><h3 id="初始化SSHClient"><a href="#初始化SSHClient" class="headerlink" title="初始化SSHClient"></a>初始化SSHClient</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client = paramiko.SSHClient()</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure><h3 id="连接主机"><a href="#连接主机" class="headerlink" title="连接主机"></a>连接主机</h3><p>我的<code>Linux</code>主机是<code>192.168.1.40</code>，用户名为<code>root</code>, 密码为<code>admin123.</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.connect(hostname=<span class="string">"192.168.1.40"</span>, username=<span class="string">"root"</span>, password=<span class="string">"admin123."</span>)</span><br></pre></td></tr></table></figure><p><img src="/images/2/warning.jpg" alt="warning"><br>连接上会有几条警告，可以无视掉，或者直接<a href="https://github.com/paramiko/paramiko/issues/1386#issuecomment-470847772" target="_blank" rel="noopener">屏蔽警告信息</a></p><h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>执行一个<code>ifconfig</code>命令</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stdin, stdout, stderr = client.exec_command(<span class="string">"ifconfig"</span>)</span><br></pre></td></tr></table></figure><p>注意这里, <code>exec_command</code>的返回值为tuple类型<br>可以通过<code>python3 -m pydoc paramiko.SSHClient.exec_command</code>查看源码.<br><img src="/images/2/pydoc.jpg" alt="PyDoc"></p><h3 id="查看命令返回值"><a href="#查看命令返回值" class="headerlink" title="查看命令返回值"></a>查看命令返回值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stdout.readlines():</span><br><span class="line">print(i)</span><br></pre></td></tr></table></figure><p><img src="/images/2/ifconfig.jpg" alt="ifconfig"><br>这样就得到了返回值</p><h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>不要总是依赖上下文, 要学会手动释放资源关闭连接</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.close()</span><br></pre></td></tr></table></figure><p>到这里, <code>paramiko</code>的<code>SSHClient</code>用法就结束了，<code>paramiko</code>还支持<code>SFTPClient</code>等其他远程操作, 自己发掘吧~</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Paramiko是一个Python的远程操作库，可以进行&lt;code&gt;SSH&lt;/code&gt;, &lt;code&gt;SFTP&lt;/code&gt;等远程连接操作. 来学习学习怎么使用吧&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="http://l-helianthus.github.io/categories/Python/"/>
+    
+    
+      <category term="paramiko" scheme="http://l-helianthus.github.io/tags/paramiko/"/>
+    
+      <category term="python" scheme="http://l-helianthus.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Simple Reverse (简单的逆向)</title>
-    <link href="http://l-helianthus.github.io/2019/09/28/Simple-Reverse/"/>
-    <id>http://l-helianthus.github.io/2019/09/28/Simple-Reverse/</id>
+    <link href="http://l-helianthus.github.io/2019/09/28/1-Simple-Reverse/"/>
+    <id>http://l-helianthus.github.io/2019/09/28/1-Simple-Reverse/</id>
     <published>2019-09-28T12:51:00.000Z</published>
-    <updated>2019-09-28T05:13:15.395Z</updated>
+    <updated>2019-09-28T14:41:02.041Z</updated>
     
     <content type="html"><![CDATA[<p>学习使用IDA Pro 和 x64dbg反编译一个C语言程序.</p><a id="more"></a><h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol start="0"><li>DevC++</li><li>IDA Pro</li><li>x64dbg</li></ol><h2 id="开始动手！"><a href="#开始动手！" class="headerlink" title="开始动手！"></a>开始动手！</h2><p>我直接做成了视频. 直接来看吧.<br><a href="https://www.bilibili.com/video/av69174106" target="_blank" rel="noopener">【逆向工程】IDA Pro + x64dgb反编译一个应用程序</a></p>]]></content>
     
