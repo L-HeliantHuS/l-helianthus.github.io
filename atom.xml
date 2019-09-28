@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>HeliantHuS Blog</title>
+  
+  <subtitle>Python/Go Devloper</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://l-helianthus.github.io/"/>
+  <updated>2019-09-28T05:13:15.395Z</updated>
+  <id>http://l-helianthus.github.io/</id>
+  
+  <author>
+    <name>HeliantHuS</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Simple Reverse (简单的逆向)</title>
+    <link href="http://l-helianthus.github.io/2019/09/28/Simple-Reverse/"/>
+    <id>http://l-helianthus.github.io/2019/09/28/Simple-Reverse/</id>
+    <published>2019-09-28T12:51:00.000Z</published>
+    <updated>2019-09-28T05:13:15.395Z</updated>
+    
+    <content type="html"><![CDATA[<p>学习使用IDA Pro 和 x64dbg反编译一个C语言程序.</p><a id="more"></a><h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol start="0"><li>DevC++</li><li>IDA Pro</li><li>x64dbg</li></ol><h2 id="开始动手！"><a href="#开始动手！" class="headerlink" title="开始动手！"></a>开始动手！</h2><p>我直接做成了视频. 直接来看吧.<br><a href="https://www.bilibili.com/video/av69174106" target="_blank" rel="noopener">【逆向工程】IDA Pro + x64dgb反编译一个应用程序</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;学习使用IDA Pro 和 x64dbg反编译一个C语言程序.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://l-helianthus.github.io/categories/CTF/"/>
+    
+    
+      <category term="reverse" scheme="http://l-helianthus.github.io/tags/reverse/"/>
+    
+  </entry>
+  
+</feed>
