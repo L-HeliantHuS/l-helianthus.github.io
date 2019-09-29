@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://l-helianthus.github.io/"/>
-  <updated>2019-09-28T15:51:03.226Z</updated>
+  <updated>2019-09-29T14:20:42.342Z</updated>
   <id>http://l-helianthus.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nessus系统漏洞扫描平台(VMware傻瓜式安装)</title>
+    <link href="http://l-helianthus.github.io/2019/09/30/3-Nessus-Install-or-Use-and-License/"/>
+    <id>http://l-helianthus.github.io/2019/09/30/3-Nessus-Install-or-Use-and-License/</id>
+    <published>2019-09-29T21:44:44.000Z</published>
+    <updated>2019-09-29T14:20:42.342Z</updated>
+    
+    <content type="html"><![CDATA[<p>最懊恼的就是安装这种软件了，免费版本只能扫描16个IP，收费版本在天朝没人会去买，买完也没人去分享，而现在，我来安利一波可以无限IP，而且还傻瓜式的Nessus安装方式.</p><a id="more"></a><h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol><li>VMware Workstation (Version &gt;= 12)</li><li>科学上网工具</li><li>眼睛和脑子</li></ol><h2 id="下载Nessus-VMware版"><a href="#下载Nessus-VMware版" class="headerlink" title="下载Nessus(VMware版)"></a>下载Nessus(VMware版)</h2><p><a href="https://mega.nz/#!0YkSDYpY!JndpKpH5yB3hDNV-091jOwPhW9rLK9iNSzuF9nTz-i0" target="_blank" rel="noopener">https://mega.nz/#!0YkSDYpY!JndpKpH5yB3hDNV-091jOwPhW9rLK9iNSzuF9nTz-i0</a></p><h2 id="部署Nessus"><a href="#部署Nessus" class="headerlink" title="部署Nessus"></a>部署Nessus</h2><h4 id="导入至VMware"><a href="#导入至VMware" class="headerlink" title="导入至VMware"></a>导入至VMware</h4><p>首先解压下载的压缩文件，放到你能记得住的地方</p><p>然后打开<code>vmware</code>, <code>File -&gt; Open</code>, 选择<code>Nessus 8_VM12.ovf</code>文件.</p><p><img src="/images/3/vmware1.jpg" alt><br><img src="/images/3/vmware2.jpg" alt></p><h4 id="开机运行-配置网卡"><a href="#开机运行-配置网卡" class="headerlink" title="开机运行 配置网卡"></a>开机运行 配置网卡</h4><p>默认的用户名和密码都在描述中写了, 按照描述进行操作绝对没问题的.<br><img src="/images/3/description.jpg" alt></p><p>开机你肯定没问题了，按照他的要求访问<code>https://1.1.2.1:8834</code>你肯定访问不了，你需要修改网卡配置</p><p>这样，将网卡2改成NAT<br><img src="/images/3/setting.jpg" alt></p><p>就可以自动获取IP地址, 获取完毕直接输入<code>ifconfig</code>查看自动获取的IP地址, 访问自动获取的IP地址加端口号…哦对了, 一定要是<code>https</code>, 比如我自动获取的IP地址为<code>192.168.23.134</code>, 那么我在我物理机访问<code>https://192.168.23.134:8834</code>就可以了.<br><img src="/images/3/nessus.jpg" alt></p><p>到这里就完全可以正常运行以及进行扫描了, 怎么运行扫描就要看你了, 赶紧继续学习吧~</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最懊恼的就是安装这种软件了，免费版本只能扫描16个IP，收费版本在天朝没人会去买，买完也没人去分享，而现在，我来安利一波可以无限IP，而且还傻瓜式的Nessus安装方式.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="网络安全" scheme="http://l-helianthus.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="网络安全" scheme="http://l-helianthus.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="扫描" scheme="http://l-helianthus.github.io/tags/%E6%89%AB%E6%8F%8F/"/>
+    
+      <category term="漏洞" scheme="http://l-helianthus.github.io/tags/%E6%BC%8F%E6%B4%9E/"/>
+    
+  </entry>
   
   <entry>
     <title>Paramiko Python远程ssh库</title>
