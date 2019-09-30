@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://l-helianthus.github.io/"/>
-  <updated>2019-09-29T14:20:42.342Z</updated>
+  <updated>2019-09-30T10:58:14.320Z</updated>
   <id>http://l-helianthus.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Fabric Python远程部署利器</title>
+    <link href="http://l-helianthus.github.io/2019/10/01/4-Fabric-Python-Remote-deploy/"/>
+    <id>http://l-helianthus.github.io/2019/10/01/4-Fabric-Python-Remote-deploy/</id>
+    <published>2019-09-30T18:00:51.000Z</published>
+    <updated>2019-09-30T10:58:14.320Z</updated>
+    
+    <content type="html"><![CDATA[<p>Fabric是一个Python的第三方库，可以进行Linux的远程部署，批量执行各种命令，况且，机器出错的次数比你少多了呢。<br>(附详细的SSH免密登录过程)</p><a id="more"></a><h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><ul><li>Windows10的WSL IP: <code>192.168.1.66</code> 下面简称<code>物理机</code>.</li><li>VMware Centos服务器 IP: <code>192.168.1.40</code> 下面简称<code>服务器</code>.</li></ul><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul><li>Python3</li><li>类Linux操作系统 | 没有Linux用Windows的WSL也可以.</li></ul><h2 id="技术难点"><a href="#技术难点" class="headerlink" title="技术难点"></a>技术难点</h2><ul><li>SSH免密登录.</li></ul><h2 id="深入浅出"><a href="#深入浅出" class="headerlink" title="深入浅出"></a>深入浅出</h2><h4 id="SSH免密"><a href="#SSH免密" class="headerlink" title="SSH免密"></a>SSH免密</h4><p>使用<code>ssh-keygen</code>命令在物理机生成公钥和私钥, 生成完毕后在当前登录的用户目录下<code>.ssh</code>文件夹下.<br><img src="/images/4/ssh-keygen.jpg" alt></p><p>在服务器中的<code>.ssh</code>文件夹下创建一个名为<code>authorized_keys</code>文件并设置权限为<code>600</code>.</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">touch authorized_keys</span><br><span class="line">chmod 600 authorized_keys</span><br></pre></td></tr></table></figure><p>将物理机的<code>id_rsa.pub</code>里面的内容复制进服务器新建的<code>authorized_keys</code>中.<br>可以使用<code>scp</code>命令，将<code>id_rsa.pub</code>文件发送到服务器中，然后使用<code>cat</code>命令将<code>id_rsa.pub</code>的内容追加到<code>authorized_keys</code>文件中.<br>物理机:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.ssh/id_rsa.pub root@192.168.1.40:~/.ssh/</span><br></pre></td></tr></table></figure><p>服务器:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure><p><img src="/images/4/scp.jpg" alt><br><img src="/images/4/cat.jpg" alt></p><p>使用物理机远程SSH连接服务器验证是否免密成功<br><img src="/images/4/ssh.jpg" alt></p><h4 id="安装Fabric"><a href="#安装Fabric" class="headerlink" title="安装Fabric"></a>安装Fabric</h4><p>在物理机执行下面的安装命令即可安装完毕.</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install fabric</span><br></pre></td></tr></table></figure><p>找一个空的目录新建名为<code>fabfile.py</code>的文件.<br><img src="/images/4/touch.jpg" alt></p><h4 id="编写Fabric脚本"><a href="#编写Fabric脚本" class="headerlink" title="编写Fabric脚本"></a>编写Fabric脚本</h4><p>使用<code>vim</code>编辑刚刚新建的py文件.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fabric <span class="keyword">import</span> Connection, task</span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">devploy</span><span class="params">(c)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> Connection(<span class="string">"root@192.168.1.40"</span>) <span class="keyword">as</span> c:</span><br><span class="line">        c.run(<span class="string">"ifconfig"</span>)</span><br></pre></td></tr></table></figure><p>写入完毕后保存，运行<code>fab deploy</code>即可看到服务器的执行回显.<br><img src="/images/4/fab.jpg" alt></p><p>可以用来一键替换更新yum源, 代码如下:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fabric <span class="keyword">import</span> Connection, task</span><br><span class="line"></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deploy</span><span class="params">(c)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> Connection(<span class="string">"root@192.168.1.40"</span>) <span class="keyword">as</span> c:</span><br><span class="line">        c.run(<span class="string">'cd /etc/yum.repos.d/ &amp;&amp; \</span></span><br><span class="line"><span class="string">            mv CentOS-Media.repo CentOS-Media.repo.backup &amp;&amp; \</span></span><br><span class="line"><span class="string">            wget http://mirrors.163.com/.help/CentOS7-Base-163.repo &amp;&amp; \</span></span><br><span class="line"><span class="string">            yum clean all &amp;&amp; \</span></span><br><span class="line"><span class="string">            yum makecache &amp;&amp; \</span></span><br><span class="line"><span class="string">            yum update'</span>)</span><br></pre></td></tr></table></figure><p><img src="/images/4/yum.jpg" alt></p><p>不是不愿意学习新的东西, 而是想知道学习这个能做什么, 加油.</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Fabric是一个Python的第三方库，可以进行Linux的远程部署，批量执行各种命令，况且，机器出错的次数比你少多了呢。&lt;br&gt;(附详细的SSH免密登录过程)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="http://l-helianthus.github.io/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://l-helianthus.github.io/tags/Python/"/>
+    
+      <category term="fabric" scheme="http://l-helianthus.github.io/tags/fabric/"/>
+    
+      <category term="远程部署" scheme="http://l-helianthus.github.io/tags/%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
   
   <entry>
     <title>Nessus系统漏洞扫描平台(VMware傻瓜式安装)</title>
@@ -44,11 +71,11 @@
   </entry>
   
   <entry>
-    <title>Paramiko Python远程ssh库</title>
+    <title>Paramiko Python远程连接工具</title>
     <link href="http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/"/>
     <id>http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/</id>
     <published>2019-09-28T22:38:02.000Z</published>
-    <updated>2019-09-28T15:51:03.226Z</updated>
+    <updated>2019-09-30T10:53:44.936Z</updated>
     
     <content type="html"><![CDATA[<p>Paramiko是一个Python的远程操作库，可以进行<code>SSH</code>, <code>SFTP</code>等远程连接操作. 来学习学习怎么使用吧</p><a id="more"></a><h1 id="安装Paramiko"><a href="#安装Paramiko" class="headerlink" title="安装Paramiko"></a>安装Paramiko</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install paramiko</span><br></pre></td></tr></table></figure><h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h3 id="导入paramiko"><a href="#导入paramiko" class="headerlink" title="导入paramiko"></a>导入paramiko</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br></pre></td></tr></table></figure><h3 id="初始化SSHClient"><a href="#初始化SSHClient" class="headerlink" title="初始化SSHClient"></a>初始化SSHClient</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client = paramiko.SSHClient()</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure><h3 id="连接主机"><a href="#连接主机" class="headerlink" title="连接主机"></a>连接主机</h3><p>我的<code>Linux</code>主机是<code>192.168.1.40</code>，用户名为<code>root</code>, 密码为<code>admin123.</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.connect(hostname=<span class="string">"192.168.1.40"</span>, username=<span class="string">"root"</span>, password=<span class="string">"admin123."</span>)</span><br></pre></td></tr></table></figure><p><img src="/images/2/warning.jpg" alt="warning"><br>连接上会有几条警告，可以无视掉，或者直接<a href="https://github.com/paramiko/paramiko/issues/1386#issuecomment-470847772" target="_blank" rel="noopener">屏蔽警告信息</a></p><h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>执行一个<code>ifconfig</code>命令</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stdin, stdout, stderr = client.exec_command(<span class="string">"ifconfig"</span>)</span><br></pre></td></tr></table></figure><p>注意这里, <code>exec_command</code>的返回值为tuple类型<br>可以通过<code>python3 -m pydoc paramiko.SSHClient.exec_command</code>查看源码.<br><img src="/images/2/pydoc.jpg" alt="PyDoc"></p><h3 id="查看命令返回值"><a href="#查看命令返回值" class="headerlink" title="查看命令返回值"></a>查看命令返回值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stdout.readlines():</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure><p><img src="/images/2/ifconfig.jpg" alt="ifconfig"><br>这样就得到了返回值</p><h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>不要总是依赖上下文, 要学会手动释放资源关闭连接</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.close()</span><br></pre></td></tr></table></figure><p>到这里, <code>paramiko</code>的<code>SSHClient</code>用法就结束了，<code>paramiko</code>还支持<code>SFTPClient</code>等其他远程操作, 自己发掘吧~</p>]]></content>
     
