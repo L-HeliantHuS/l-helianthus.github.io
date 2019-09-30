@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Fabric Python远程部署利器]]></title>
+    <url>%2F2019%2F10%2F01%2F4-Fabric-Python-Remote-deploy%2F</url>
+    <content type="text"><![CDATA[Fabric是一个Python的第三方库，可以进行Linux的远程部署，批量执行各种命令，况且，机器出错的次数比你少多了呢。(附详细的SSH免密登录过程) 环境介绍 Windows10的WSL IP: 192.168.1.66 下面简称物理机. VMware Centos服务器 IP: 192.168.1.40 下面简称服务器. 准备工作 Python3 类Linux操作系统 | 没有Linux用Windows的WSL也可以. 技术难点 SSH免密登录. 深入浅出SSH免密使用ssh-keygen命令在物理机生成公钥和私钥, 生成完毕后在当前登录的用户目录下.ssh文件夹下. 在服务器中的.ssh文件夹下创建一个名为authorized_keys文件并设置权限为600. 123cd ~/.sshtouch authorized_keyschmod 600 authorized_keys 将物理机的id_rsa.pub里面的内容复制进服务器新建的authorized_keys中.可以使用scp命令，将id_rsa.pub文件发送到服务器中，然后使用cat命令将id_rsa.pub的内容追加到authorized_keys文件中.物理机: 1scp ~/.ssh/id_rsa.pub root@192.168.1.40:~/.ssh/ 服务器: 1cat id_rsa.pub &gt;&gt; authorized_keys 使用物理机远程SSH连接服务器验证是否免密成功 安装Fabric在物理机执行下面的安装命令即可安装完毕. 1python3 -m pip install fabric 找一个空的目录新建名为fabfile.py的文件. 编写Fabric脚本使用vim编辑刚刚新建的py文件. 12345from fabric import Connection, task@taskdef devploy(c): with Connection("root@192.168.1.40") as c: c.run("ifconfig") 写入完毕后保存，运行fab deploy即可看到服务器的执行回显. 可以用来一键替换更新yum源, 代码如下: 1234567891011from fabric import Connection, task@taskdef deploy(c): with Connection("root@192.168.1.40") as c: c.run('cd /etc/yum.repos.d/ &amp;&amp; \ mv CentOS-Media.repo CentOS-Media.repo.backup &amp;&amp; \ wget http://mirrors.163.com/.help/CentOS7-Base-163.repo &amp;&amp; \ yum clean all &amp;&amp; \ yum makecache &amp;&amp; \ yum update') 不是不愿意学习新的东西, 而是想知道学习这个能做什么, 加油.]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>fabric</tag>
+        <tag>远程部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nessus系统漏洞扫描平台(VMware傻瓜式安装)]]></title>
+    <url>%2F2019%2F09%2F30%2F3-Nessus-Install-or-Use-and-License%2F</url>
+    <content type="text"><![CDATA[最懊恼的就是安装这种软件了，免费版本只能扫描16个IP，收费版本在天朝没人会去买，买完也没人去分享，而现在，我来安利一波可以无限IP，而且还傻瓜式的Nessus安装方式. 准备工具 VMware Workstation (Version &gt;= 12) 科学上网工具 眼睛和脑子 下载Nessus(VMware版)https://mega.nz/#!0YkSDYpY!JndpKpH5yB3hDNV-091jOwPhW9rLK9iNSzuF9nTz-i0 部署Nessus导入至VMware首先解压下载的压缩文件，放到你能记得住的地方 然后打开vmware, File -&gt; Open, 选择Nessus 8_VM12.ovf文件. 开机运行 配置网卡默认的用户名和密码都在描述中写了, 按照描述进行操作绝对没问题的. 开机你肯定没问题了，按照他的要求访问https://1.1.2.1:8834你肯定访问不了，你需要修改网卡配置 这样，将网卡2改成NAT 就可以自动获取IP地址, 获取完毕直接输入ifconfig查看自动获取的IP地址, 访问自动获取的IP地址加端口号…哦对了, 一定要是https, 比如我自动获取的IP地址为192.168.23.134, 那么我在我物理机访问https://192.168.23.134:8834就可以了. 到这里就完全可以正常运行以及进行扫描了, 怎么运行扫描就要看你了, 赶紧继续学习吧~]]></content>
+      <categories>
+        <category>网络安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>扫描</tag>
+        <tag>漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Paramiko Python远程连接工具]]></title>
+    <url>%2F2019%2F09%2F29%2F2-paramiko-remote-exec%2F</url>
+    <content type="text"><![CDATA[Paramiko是一个Python的远程操作库，可以进行SSH, SFTP等远程连接操作. 来学习学习怎么使用吧 安装Paramiko1python3 -m pip install paramiko 开始使用导入paramiko1import paramiko 初始化SSHClient12client = paramiko.SSHClient()client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 连接主机我的Linux主机是192.168.1.40，用户名为root, 密码为admin123. 1client.connect(hostname="192.168.1.40", username="root", password="admin123.") 连接上会有几条警告，可以无视掉，或者直接屏蔽警告信息 发送命令执行一个ifconfig命令 1stdin, stdout, stderr = client.exec_command("ifconfig") 注意这里, exec_command的返回值为tuple类型可以通过python3 -m pydoc paramiko.SSHClient.exec_command查看源码. 查看命令返回值12for i in stdout.readlines(): print(i) 这样就得到了返回值 关闭连接不要总是依赖上下文, 要学会手动释放资源关闭连接 1client.close() 到这里, paramiko的SSHClient用法就结束了，paramiko还支持SFTPClient等其他远程操作, 自己发掘吧~]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>paramiko</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Simple Reverse (简单的逆向)]]></title>
+    <url>%2F2019%2F09%2F28%2F1-Simple-Reverse%2F</url>
+    <content type="text"><![CDATA[学习使用IDA Pro 和 x64dbg反编译一个C语言程序. 准备工具 DevC++ IDA Pro x64dbg 开始动手！我直接做成了视频. 直接来看吧.【逆向工程】IDA Pro + x64dgb反编译一个应用程序]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>reverse</tag>
+      </tags>
+  </entry>
+</search>
