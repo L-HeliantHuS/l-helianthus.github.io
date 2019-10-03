@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Nim编程语言快速入门 (附代码例子)]]></title>
+    <url>%2F2019%2F10%2F03%2F6-Nim-Programming-Language%2F</url>
+    <content type="text"><![CDATA[Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧. Nim官网: https://Nim-lang.org/Nim中文社区: https://Nim-lang-cn.org/ 前言花了半小时的时间去试了试这门语言, 可以通过Nim生成js或者c的代码以及可执行文件, 感觉蛮酷的, 做个分享. 基础Nim编译出一个exe文件是这么做的: 1Nim c main.Nim Nim 编译出一个js文件是这么做的: 1Nim js main.Nim 发没发现? 只需要更改Nim 中的内容就可以了. 不过, 你无法编译成”世界上最好的语言”, 比如Nim php main.Nim, 会报错的！！ 超级详细带代码体验定义变量基本变量类型12345# 指定类型var name: string = "HelloWorld"# 类型推断var i = 10 列表(数组)1var list = [1,2,3,4,5] Table(在Py叫Dict, Go叫Map)12345import tablesvar dict = &#123;"one": "HeliantHuS"&#125;.toTable# 取值echo dict["one"] # HeliantHuS 注释12# 打印HelloWorldecho "HelloWorld" Nim中的注释和Python一样. 判断case-of123456789101112var name: string = readLine(stdin)# case就等于其他语言的switch, of就相当于casecase nameof "": echo "你不可以输入空的哦."of "HeliantHuS": echo "HeliantHuS is Handsome"else: echo "我没看懂你输入的是什么" if-elif-else12345678import strformatvar name: string = readLine(stdin)if name == "HeliantHuS": echo fmt"Hello, &#123;name&#125;"elif name == "exit": echo "Exit!!!"else: echo "没有匹配~" 循环whilewhile 没什么好说的, Python有的它也有. 12while true: echo &quot;Hello&quot; for12345for i in countup(1, 10): echo ifor i in 1..10: echo i 上面两段代码效果一样, 可以看出来比Python还要简洁. 函数定义一个函数123import strformatproc hello(name: string): string = return fmt"Hello, &#123;name&#125;" 调用函数12var result = hello("HeliantHuS")echo result 舍弃函数返回值1discard hello("HeliantHuS") 在Nim中, 函数必须要有返回值, 你就必须要去用变量去接收或者直接echo, 不然会报错, 有时候函数的返回值也许不重要, 就需要去舍弃, 就要用关键字discard去舍弃. 作用域block12block hello: echo "HelloWorld" Nim中也是使用缩进进行作用域的区分. 先到这里, 日后继续学习, 持续更新…]]></content>
+      <categories>
+        <category>Nim</category>
+      </categories>
+      <tags>
+        <tag>Nim</tag>
+        <tag>元编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Nginx反向代理骚操作详解]]></title>
     <url>%2F2019%2F10%2F03%2F5-Nginx-Config-ServerName%2F</url>
     <content type="text"><![CDATA[Nginx是一个的静态文件和反向代理服务，轻量，方便部署，而且性能极高.看完这篇文章, 你将点亮NGINX配置虚拟主机, 反向代理等技能点. 深入浅出1234567891011121314151617181920212223worker_processes 1;events &#123; worker_connections 1024;&#125;http &#123; include mime.types; default_type application/octet-stream; sendfile on; keepalive_timeout 65; server &#123; listen 80; server_name localhost; location / &#123; root html; index index.html index.htm; &#125; &#125;&#125; 上面这是一个nginx最基本的配置, 分http代码块, server代码块, 其中今天要玩的就是server这个代码块. 开始操作首先在nginx的静态文件夹保证有两个html文件, 分别为index.html、page1.html, 里面的内容自己随便写, 只要能分清楚是哪个文件就好. 正常启动正常启动Nginx, 访问通过服务器地址访问, 会访问到index.html的内容. 虚拟主机第一个server代码块不需要更改, 下面紧接着添加: 12345678server &#123; listen 80; server_name page1.com; location / &#123; root html; index page1.html; &#125;&#125; 这样, 只要访问这个服务器的时候，请求头的Host键内容为page1.com, 可以通过抓包或者修改hosts文件的方式来达到目的. 反向代理第二个server代码块不需要更改, 修改第一个server代码块的内容为: 1234567server &#123; listen 80; server_name localhost; location / &#123; proxy_pass http://hls.easy.echosite.cn/; &#125;&#125; 重启服务器, 访问localhost或者服务器真实IP, 你会发现, 显示的结果是你输入的http://hls.easy.echosite.cn的内容, 但是浏览器的URL依旧是localhost或服务器IP. 最后的配置文件样子: 其实Nginx还有很多脚本类的东西, 太过深入就需要自己去研究了, NGINX一般还是作为接入层的反向代理去使用, 配置方便, 也轻量, 真的是做WEB必备的反向代理服务. 最后~ 文章中演示的hls.easy.echosite.cn是使用EchoSite2.0 内网穿透，就选他了！所内网穿透用来测试的, 如果有需要内网穿透的可以了解一下.]]></content>

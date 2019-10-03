@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Nim,元编程,">
 
 
 
@@ -96,17 +96,20 @@
 
 
 
-<meta name="description" content="每个人都有一片属于自己的森林，迷失的人迷失了，相逢的人会再相逢.">
-<meta name="keywords" content="HeliantHuS,Python,Golang,CTF,网络安全,AWD,服务器,运维">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HeliantHuS&#39;s Blog">
-<meta property="og:url" content="http://l-helianthus.github.io/tags/fabric/index.html">
+<meta name="description" content="Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧.">
+<meta name="keywords" content="Nim,元编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nim编程语言快速入门 (附代码例子)">
+<meta property="og:url" content="http://l-helianthus.github.io/2019/10/03/6-Nim-Programming-Language/index.html">
 <meta property="og:site_name" content="HeliantHuS&#39;s Blog">
-<meta property="og:description" content="每个人都有一片属于自己的森林，迷失的人迷失了，相逢的人会再相逢.">
+<meta property="og:description" content="Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://l-helianthus.github.io/images/6/strfmt.jpg">
+<meta property="og:updated_time" content="2019-10-03T06:05:20.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HeliantHuS&#39;s Blog">
-<meta name="twitter:description" content="每个人都有一片属于自己的森林，迷失的人迷失了，相逢的人会再相逢.">
+<meta name="twitter:title" content="Nim编程语言快速入门 (附代码例子)">
+<meta name="twitter:description" content="Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧.">
+<meta name="twitter:image" content="http://l-helianthus.github.io/images/6/strfmt.jpg">
 
 
 
@@ -136,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://l-helianthus.github.io/tags/fabric/">
+  <link rel="canonical" href="http://l-helianthus.github.io/2019/10/03/6-Nim-Programming-Language/">
 
 
 
 
 
-  <title>标签: fabric | HeliantHuS's Blog</title>
+  <title>Nim编程语言快速入门 (附代码例子) | HeliantHuS's Blog</title>
   
 
 
@@ -167,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -292,52 +295,234 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>fabric<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://l-helianthus.github.io/2019/10/03/6-Nim-Programming-Language/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HeliantHuS">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/myheadimg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HeliantHuS's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/10/01/4-Fabric-Python-Remote-deploy/" itemprop="url">
-              
-                <span itemprop="name">Fabric Python远程部署利器</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Nim编程语言快速入门 (附代码例子)</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-30T18:00:51Z" content="2019-09-30">
-          09-30
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-03T21:12:29+08:00">
+                2019-10-03
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nim/" itemprop="url" rel="index">
+                    <span itemprop="name">Nim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧.</p>
+<a id="more"></a>
+
+<p>Nim官网: <a href="https://Nim-lang.org/" target="_blank" rel="noopener">https://Nim-lang.org/</a><br>Nim中文社区: <a href="https://Nim-lang-cn.org/" target="_blank" rel="noopener">https://Nim-lang-cn.org/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>花了半小时的时间去试了试这门语言, 可以通过Nim生成js或者c的代码以及可执行文件, 感觉蛮酷的, 做个分享.</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Nim编译出一个exe文件是这么做的:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nim c main.Nim</span><br></pre></td></tr></table></figure>
+
+<p>Nim 编译出一个js文件是这么做的:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nim js main.Nim</span><br></pre></td></tr></table></figure>
+
+<p>发没发现? 只需要更改Nim <type> 中的内容就可以了.</type></p>
+<p>不过, 你无法编译成”世界上最好的语言”, 比如<code>Nim php main.Nim</code>, 会报错的！！</p>
+<h2 id="超级详细带代码体验"><a href="#超级详细带代码体验" class="headerlink" title="超级详细带代码体验"></a>超级详细带代码体验</h2><h4 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h4><h5 id="基本变量类型"><a href="#基本变量类型" class="headerlink" title="基本变量类型"></a>基本变量类型</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定类型</span></span><br><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = <span class="string">"HelloWorld"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类型推断</span></span><br><span class="line"><span class="keyword">var</span> i = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="列表-数组"><a href="#列表-数组" class="headerlink" title="列表(数组)"></a>列表(数组)</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<h5 id="Table-在Py叫Dict-Go叫Map"><a href="#Table-在Py叫Dict-Go叫Map" class="headerlink" title="Table(在Py叫Dict, Go叫Map)"></a>Table(在Py叫Dict, Go叫Map)</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tables</span><br><span class="line"><span class="keyword">var</span> dict = &#123;<span class="string">"one"</span>: <span class="string">"HeliantHuS"</span>&#125;.toTable</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取值</span></span><br><span class="line">echo dict[<span class="string">"one"</span>]  <span class="comment"># HeliantHuS</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印HelloWorld</span></span><br><span class="line">echo <span class="string">"HelloWorld"</span></span><br></pre></td></tr></table></figure>
+
+<p>Nim中的注释和Python一样.</p>
+<h4 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h4><h5 id="case-of"><a href="#case-of" class="headerlink" title="case-of"></a>case-of</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = readLine(<span class="literal">stdin</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># case就等于其他语言的switch, of就相当于case</span></span><br><span class="line"><span class="keyword">case</span> name</span><br><span class="line"><span class="keyword">of</span> <span class="string">""</span>:</span><br><span class="line">    echo <span class="string">"你不可以输入空的哦."</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">of</span> <span class="string">"HeliantHuS"</span>:</span><br><span class="line">    echo <span class="string">"HeliantHuS is Handsome"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    echo <span class="string">"我没看懂你输入的是什么"</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="if-elif-else"><a href="#if-elif-else" class="headerlink" title="if-elif-else"></a>if-elif-else</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> strformat</span><br><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = readLine(<span class="literal">stdin</span>)</span><br><span class="line"><span class="keyword">if</span> name == <span class="string">"HeliantHuS"</span>:</span><br><span class="line">    echo <span class="string">fmt"Hello, &#123;name&#125;"</span></span><br><span class="line"><span class="keyword">elif</span> name == <span class="string">"exit"</span>:</span><br><span class="line">    echo <span class="string">"Exit!!!"</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    echo <span class="string">"没有匹配~"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/6/strfmt.jpg" alt></p>
+<h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><h5 id="while"><a href="#while" class="headerlink" title="while"></a>while</h5><p>while 没什么好说的, Python有的它也有.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while true:</span><br><span class="line">    echo &quot;Hello&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> countup(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">    echo i</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span>..<span class="number">10</span>:</span><br><span class="line">    echo i</span><br></pre></td></tr></table></figure>
+
+<p>上面两段代码效果一样, 可以看出来比Python还要简洁.</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><h5 id="定义一个函数"><a href="#定义一个函数" class="headerlink" title="定义一个函数"></a>定义一个函数</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> strformat</span><br><span class="line"><span class="keyword">proc</span> hello(name: <span class="built_in">string</span>): <span class="built_in">string</span> =</span><br><span class="line">    <span class="keyword">return</span> <span class="string">fmt"Hello, &#123;name&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="literal">result</span> = hello(<span class="string">"HeliantHuS"</span>)</span><br><span class="line">echo <span class="literal">result</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="舍弃函数返回值"><a href="#舍弃函数返回值" class="headerlink" title="舍弃函数返回值"></a>舍弃函数返回值</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">discard</span> hello(<span class="string">"HeliantHuS"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在Nim中, 函数必须要有返回值, 你就必须要去用变量去接收或者直接echo, 不然会报错, 有时候函数的返回值也许不重要, 就需要去舍弃, 就要用关键字<code>discard</code>去舍弃.</p>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><h5 id="block"><a href="#block" class="headerlink" title="block"></a>block</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">block</span> hello:</span><br><span class="line">    echo <span class="string">"HelloWorld"</span></span><br></pre></td></tr></table></figure>
+
+<p>Nim中也是使用缩进进行作用域的区分.</p>
+<p>先到这里, 日后继续学习, 持续更新…</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nim/" rel="tag"># Nim</a>
+          
+            <a href="/tags/元编程/" rel="tag"># 元编程</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/03/5-Nginx-Config-ServerName/" rel="next" title="Nginx反向代理骚操作详解">
+                <i class="fa fa-chevron-left"></i> Nginx反向代理骚操作详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -345,6 +530,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -366,8 +555,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -486,6 +684,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">2.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超级详细带代码体验"><span class="nav-number">3.</span> <span class="nav-text">超级详细带代码体验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义变量"><span class="nav-number">3.0.1.</span> <span class="nav-text">定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本变量类型"><span class="nav-number">3.0.1.1.</span> <span class="nav-text">基本变量类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#列表-数组"><span class="nav-number">3.0.1.2.</span> <span class="nav-text">列表(数组)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Table-在Py叫Dict-Go叫Map"><span class="nav-number">3.0.1.3.</span> <span class="nav-text">Table(在Py叫Dict, Go叫Map)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注释"><span class="nav-number">3.0.2.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断"><span class="nav-number">3.0.3.</span> <span class="nav-text">判断</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#case-of"><span class="nav-number">3.0.3.1.</span> <span class="nav-text">case-of</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#if-elif-else"><span class="nav-number">3.0.3.2.</span> <span class="nav-text">if-elif-else</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">3.0.4.</span> <span class="nav-text">循环</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#while"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">while</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#for"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">for</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数"><span class="nav-number">3.0.5.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义一个函数"><span class="nav-number">3.0.5.1.</span> <span class="nav-text">定义一个函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调用函数"><span class="nav-number">3.0.5.2.</span> <span class="nav-text">调用函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#舍弃函数返回值"><span class="nav-number">3.0.5.3.</span> <span class="nav-text">舍弃函数返回值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域"><span class="nav-number">3.0.6.</span> <span class="nav-text">作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#block"><span class="nav-number">3.0.6.1.</span> <span class="nav-text">block</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -651,6 +865,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
