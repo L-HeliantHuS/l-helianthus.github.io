@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://l-helianthus.github.io/images/5/page1.jpg">
 <meta property="og:image" content="http://l-helianthus.github.io/images/5/proxy.jpg">
 <meta property="og:image" content="http://l-helianthus.github.io/images/5/conf.jpg">
-<meta property="og:updated_time" content="2019-10-02T15:43:57.175Z">
+<meta property="og:updated_time" content="2019-10-08T03:27:15.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx反向代理骚操作详解">
 <meta name="twitter:description" content="Nginx是一个的静态文件和反向代理服务，轻量，方便部署，而且性能极高.看完这篇文章, 你将点亮NGINX配置虚拟主机, 反向代理等技能点.">
@@ -422,7 +422,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name localhost;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://hls.easy.echosite.cn/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>重启服务器, 访问<code>localhost</code>或者服务器真实IP, 你会发现, 显示的结果是你输入的<code>http://hls.easy.echosite.cn</code>的内容, 但是浏览器的URL依旧是<code>localhost</code>或服务器IP.<br><img src="/images/5/proxy.jpg" alt></p>
-<p>最后的配置文件样子:<br><img src="/images/5/conf.jpg" alt></p>
+<h4 id="防盗链配置"><a href="#防盗链配置" class="headerlink" title="防盗链配置"></a>防盗链配置</h4><p>原理: 通过nginx的if判断, 只允许通过合法的域名访问本网站, 其余的域名访问本网站的时候直接返回403。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name youdoamin.com;</span><br><span class="line">    if ($host !~* ^youdomain.com$)</span><br><span class="line">    &#123;</span><br><span class="line">        return 403;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>临了, 最后的配置文件样子:<br><img src="/images/5/conf.jpg" alt></p>
 <p>其实Nginx还有很多脚本类的东西, 太过深入就需要自己去研究了, NGINX一般还是作为接入层的反向代理去使用, 配置方便, 也轻量, 真的是做WEB必备的反向代理服务.</p>
 <p>最后~ 文章中演示的<code>hls.easy.echosite.cn</code>是使用<a href="https://www.echosite.cn" target="_blank" rel="noopener">EchoSite2.0 内网穿透，就选他了！</a>所内网穿透用来测试的, 如果有需要内网穿透的可以了解一下.</p>
 
@@ -678,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深入浅出"><span class="nav-number">1.</span> <span class="nav-text">深入浅出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始操作"><span class="nav-number">2.</span> <span class="nav-text">开始操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正常启动"><span class="nav-number">2.0.1.</span> <span class="nav-text">正常启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟主机"><span class="nav-number">2.0.2.</span> <span class="nav-text">虚拟主机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理"><span class="nav-number">2.0.3.</span> <span class="nav-text">反向代理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深入浅出"><span class="nav-number">1.</span> <span class="nav-text">深入浅出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始操作"><span class="nav-number">2.</span> <span class="nav-text">开始操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正常启动"><span class="nav-number">2.0.1.</span> <span class="nav-text">正常启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟主机"><span class="nav-number">2.0.2.</span> <span class="nav-text">虚拟主机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理"><span class="nav-number">2.0.3.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防盗链配置"><span class="nav-number">2.0.4.</span> <span class="nav-text">防盗链配置</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -715,7 +718,7 @@
 
 
 
-  <div class="theme-info">博客全站共2.2k字`﹀`γ</div>
+  <div class="theme-info">博客全站共2.3k字`﹀`γ</div>
 
 
 
