@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="paramiko,python,">
+  <meta name="keywords" content="进制转换,二进制,">
 
 
 
@@ -96,22 +96,18 @@
 
 
 
-<meta name="description" content="Paramiko是一个Python的远程操作库，可以进行SSH, SFTP等远程连接操作. 来学习学习怎么使用吧">
-<meta name="keywords" content="paramiko,python">
+<meta name="description" content="学习一下手算十进制到二进制, 包括正数和负数转换二进制.">
+<meta name="keywords" content="进制转换,二进制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Paramiko Python远程连接工具">
-<meta property="og:url" content="http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/index.html">
+<meta property="og:title" content="手算正反十进制转换二进制过程">
+<meta property="og:url" content="http://l-helianthus.github.io/2019/10/28/7-Dec-to-Bin-Calc/index.html">
 <meta property="og:site_name" content="HeliantHuS&#39;s Blog">
-<meta property="og:description" content="Paramiko是一个Python的远程操作库，可以进行SSH, SFTP等远程连接操作. 来学习学习怎么使用吧">
+<meta property="og:description" content="学习一下手算十进制到二进制, 包括正数和负数转换二进制.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://l-helianthus.github.io/images/2/warning.jpg">
-<meta property="og:image" content="http://l-helianthus.github.io/images/2/pydoc.jpg">
-<meta property="og:image" content="http://l-helianthus.github.io/images/2/ifconfig.jpg">
-<meta property="og:updated_time" content="2019-09-30T10:53:44.936Z">
+<meta property="og:updated_time" content="2019-10-27T12:35:49.122Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Paramiko Python远程连接工具">
-<meta name="twitter:description" content="Paramiko是一个Python的远程操作库，可以进行SSH, SFTP等远程连接操作. 来学习学习怎么使用吧">
-<meta name="twitter:image" content="http://l-helianthus.github.io/images/2/warning.jpg">
+<meta name="twitter:title" content="手算正反十进制转换二进制过程">
+<meta name="twitter:description" content="学习一下手算十进制到二进制, 包括正数和负数转换二进制.">
 
 
 
@@ -141,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/">
+  <link rel="canonical" href="http://l-helianthus.github.io/2019/10/28/7-Dec-to-Bin-Calc/">
 
 
 
 
 
-  <title>Paramiko Python远程连接工具 | HeliantHuS's Blog</title>
+  <title>手算正反十进制转换二进制过程 | HeliantHuS's Blog</title>
   
 
 
@@ -311,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://l-helianthus.github.io/2019/09/29/2-paramiko-remote-exec/">
+    <link itemprop="mainEntityOfPage" href="http://l-helianthus.github.io/2019/10/28/7-Dec-to-Bin-Calc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HeliantHuS">
@@ -328,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Paramiko Python远程连接工具</h1>
+          <h1 class="post-title" itemprop="name headline">手算正反十进制转换二进制过程</h1>
         
 
         <div class="post-meta">
@@ -340,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-29T06:38:02+08:00">
-                2019-09-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-27T19:57:06Z">
+                2019-10-27
               </time>
             
 
@@ -363,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -405,31 +401,39 @@
       
 
       
-        <p>Paramiko是一个Python的远程操作库，可以进行<code>SSH</code>, <code>SFTP</code>等远程连接操作. 来学习学习怎么使用吧</p>
+        <p>学习一下手算十进制到二进制, 包括正数和负数转换二进制.</p>
 <a id="more"></a>
-<h1 id="安装Paramiko"><a href="#安装Paramiko" class="headerlink" title="安装Paramiko"></a>安装Paramiko</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install paramiko</span><br></pre></td></tr></table></figure>
 
-<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h3 id="导入paramiko"><a href="#导入paramiko" class="headerlink" title="导入paramiko"></a>导入paramiko</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br></pre></td></tr></table></figure>
+<h2 id="十进制正数-转换-二进制"><a href="#十进制正数-转换-二进制" class="headerlink" title="十进制正数 转换 二进制"></a>十进制正数 转换 二进制</h2><ol>
+<li>除以2的整数结果除以2到0为止.</li>
+<li>结果从下往上看.</li>
+</ol>
+<ul>
+<li><p>Example: 把9计算成2进制.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">9</span><br><span class="line">9/2  = 4 -&gt; 1  ; 9/2=4.5 把小数点忽略, 就是4, 因为有小数点, 所以这个位置就是1.</span><br><span class="line">4/2  = 2 -&gt; 0  ; 4/2=2 没有小数点, 这个位置就是0.</span><br><span class="line">2/2  = 1 -&gt; 0  ; 结果等于1的时候还要进行除.</span><br><span class="line">1/2  = 0 -&gt; 1  ; 结果为0的时候才能结束, 1/2=0.5, 有余数, 所以为1.</span><br><span class="line">从下向上看, 排序1001, 这个计算的结果从上到下和从下到上都一样...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Example: 把27计算2进制.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">27</span><br><span class="line">27/2 = 13 -&gt; 1</span><br><span class="line">13/2 = 6  -&gt; 1</span><br><span class="line">6/2  = 3  -&gt; 0</span><br><span class="line">3/2  = 1  -&gt; 1</span><br><span class="line">1/2  = 0  -&gt; 1</span><br><span class="line">结果是: 0001 1011</span><br></pre></td></tr></table></figure>
 
-<h3 id="初始化SSHClient"><a href="#初始化SSHClient" class="headerlink" title="初始化SSHClient"></a>初始化SSHClient</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client = paramiko.SSHClient()</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="十进制负数-转换-二进制"><a href="#十进制负数-转换-二进制" class="headerlink" title="十进制负数 转换 二进制"></a>十进制负数 转换 二进制</h2><ol>
+<li>计算负数<code>绝对值</code>的二进制结果.</li>
+<li>将第一步计算的结果进行取反.</li>
+<li>取反后+1, 就是最终结果</li>
+<li>64位的, 计算的内容前面填充1.</li>
+</ol>
+<ul>
+<li><p>Example: 把-9转换二进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">9</span><br><span class="line">9/2 4 1</span><br><span class="line">4/2 2 0</span><br><span class="line">2/2 1 0</span><br><span class="line">1/2 0 1</span><br><span class="line"></span><br><span class="line">源码: 1001</span><br><span class="line">反码: 0110</span><br><span class="line">补码: 反码 + 1 : 0111</span><br><span class="line"></span><br><span class="line">结果: 0111</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Example: 把-15转换二进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">15</span><br><span class="line">15/2 7 1</span><br><span class="line">7/2  3 1</span><br><span class="line">3/2  1 1</span><br><span class="line">1/2  0 1</span><br><span class="line"></span><br><span class="line">源码: 1111</span><br><span class="line">反码: 0000</span><br><span class="line">补码: 0001</span><br><span class="line"></span><br><span class="line">结果: 0001</span><br></pre></td></tr></table></figure>
 
-<h3 id="连接主机"><a href="#连接主机" class="headerlink" title="连接主机"></a>连接主机</h3><p>我的<code>Linux</code>主机是<code>192.168.1.40</code>，用户名为<code>root</code>, 密码为<code>admin123.</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.connect(hostname=<span class="string">"192.168.1.40"</span>, username=<span class="string">"root"</span>, password=<span class="string">"admin123."</span>)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2/warning.jpg" alt="warning"><br>连接上会有几条警告，可以无视掉，或者直接<a href="https://github.com/paramiko/paramiko/issues/1386#issuecomment-470847772" target="_blank" rel="noopener">屏蔽警告信息</a></p>
-<h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>执行一个<code>ifconfig</code>命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stdin, stdout, stderr = client.exec_command(<span class="string">"ifconfig"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>注意这里, <code>exec_command</code>的返回值为tuple类型<br>可以通过<code>python3 -m pydoc paramiko.SSHClient.exec_command</code>查看源码.<br><img src="/images/2/pydoc.jpg" alt="PyDoc"></p>
-
-
-<h3 id="查看命令返回值"><a href="#查看命令返回值" class="headerlink" title="查看命令返回值"></a>查看命令返回值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stdout.readlines():</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2/ifconfig.jpg" alt="ifconfig"><br>这样就得到了返回值</p>
-<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>不要总是依赖上下文, 要学会手动释放资源关闭连接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.close()</span><br></pre></td></tr></table></figure>
-
-<p>到这里, <code>paramiko</code>的<code>SSHClient</code>用法就结束了，<code>paramiko</code>还支持<code>SFTPClient</code>等其他远程操作, 自己发掘吧~</p>
+</li>
+</ul>
+<hr>
+<p>其他数计算都是这个步骤, 去尝试一下吧~</p>
 
       
     </div>
@@ -447,9 +451,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/paramiko/" rel="tag"># paramiko</a>
+            <a href="/tags/进制转换/" rel="tag"># 进制转换</a>
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/二进制/" rel="tag"># 二进制</a>
           
         </div>
       
@@ -477,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/28/1-Simple-Reverse/" rel="next" title="Simple Reverse (简单的逆向)">
-                <i class="fa fa-chevron-left"></i> Simple Reverse (简单的逆向)
+              <a href="/2019/10/03/6-Nim-Programming-Language/" rel="next" title="Nim编程语言快速入门 (附代码例子)">
+                <i class="fa fa-chevron-left"></i> Nim编程语言快速入门 (附代码例子)
               </a>
             
           </div>
@@ -486,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/30/3-Nessus-Install-or-Use-and-License/" rel="prev" title="Nessus系统漏洞扫描平台(VMware傻瓜式安装)">
-                Nessus系统漏洞扫描平台(VMware傻瓜式安装) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -681,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Paramiko"><span class="nav-number">1.</span> <span class="nav-text">安装Paramiko</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始使用"><span class="nav-number">2.</span> <span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导入paramiko"><span class="nav-number">2.0.1.</span> <span class="nav-text">导入paramiko</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化SSHClient"><span class="nav-number">2.0.2.</span> <span class="nav-text">初始化SSHClient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接主机"><span class="nav-number">2.0.3.</span> <span class="nav-text">连接主机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送命令"><span class="nav-number">2.0.4.</span> <span class="nav-text">发送命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看命令返回值"><span class="nav-number">2.0.5.</span> <span class="nav-text">查看命令返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭连接"><span class="nav-number">2.0.6.</span> <span class="nav-text">关闭连接</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#十进制正数-转换-二进制"><span class="nav-number">1.</span> <span class="nav-text">十进制正数 转换 二进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十进制负数-转换-二进制"><span class="nav-number">2.</span> <span class="nav-text">十进制负数 转换 二进制</span></a></li></ol></div>
             
 
           </div>

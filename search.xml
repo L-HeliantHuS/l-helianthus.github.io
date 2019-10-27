@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[手算正反十进制转换二进制过程]]></title>
+    <url>%2F2019%2F10%2F28%2F7-Dec-to-Bin-Calc%2F</url>
+    <content type="text"><![CDATA[学习一下手算十进制到二进制, 包括正数和负数转换二进制. 十进制正数 转换 二进制 除以2的整数结果除以2到0为止. 结果从下往上看. Example: 把9计算成2进制. 12345699/2 = 4 -&gt; 1 ; 9/2=4.5 把小数点忽略, 就是4, 因为有小数点, 所以这个位置就是1.4/2 = 2 -&gt; 0 ; 4/2=2 没有小数点, 这个位置就是0.2/2 = 1 -&gt; 0 ; 结果等于1的时候还要进行除.1/2 = 0 -&gt; 1 ; 结果为0的时候才能结束, 1/2=0.5, 有余数, 所以为1.从下向上看, 排序1001, 这个计算的结果从上到下和从下到上都一样... Example: 把27计算2进制. 12345672727/2 = 13 -&gt; 113/2 = 6 -&gt; 16/2 = 3 -&gt; 03/2 = 1 -&gt; 11/2 = 0 -&gt; 1结果是: 0001 1011 十进制负数 转换 二进制 计算负数绝对值的二进制结果. 将第一步计算的结果进行取反. 取反后+1, 就是最终结果 64位的, 计算的内容前面填充1. Example: 把-9转换二进制 123456789101199/2 4 14/2 2 02/2 1 01/2 0 1源码: 1001反码: 0110补码: 反码 + 1 : 0111结果: 0111 Example: 把-15转换二进制 12345678910111515/2 7 17/2 3 13/2 1 11/2 0 1源码: 1111反码: 0000补码: 0001结果: 0001 其他数计算都是这个步骤, 去尝试一下吧~]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>进制转换</tag>
+        <tag>二进制</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Nim编程语言快速入门 (附代码例子)]]></title>
     <url>%2F2019%2F10%2F03%2F6-Nim-Programming-Language%2F</url>
     <content type="text"><![CDATA[Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧. Nim官网: https://Nim-lang.org/Nim中文社区: https://Nim-lang-cn.org/ 前言花了半小时的时间去试了试这门语言, 可以通过Nim生成js或者c的代码以及可执行文件, 感觉蛮酷的, 做个分享. 基础Nim编译出一个exe文件是这么做的: 1Nim c main.Nim Nim 编译出一个js文件是这么做的: 1Nim js main.Nim 发没发现? 只需要更改Nim 中的内容就可以了. 不过, 你无法编译成”世界上最好的语言”, 比如Nim php main.Nim, 会报错的！！ 超级详细带代码体验定义变量基本变量类型12345# 指定类型var name: string = "HelloWorld"# 类型推断var i = 10 列表(数组)1var list = @[1,2,3,4,5] 加上@符号表明是动态数组, 可以进行Add和POP操作. Table(在Py叫Dict, Go叫Map)12345import tablesvar dict = &#123;"one": "HeliantHuS"&#125;.toTable# 取值echo dict["one"] # HeliantHuS 注释12# 打印HelloWorldecho "HelloWorld" Nim中的注释和Python一样. 判断case-of123456789101112var name: string = readLine(stdin)# case就等于其他语言的switch, of就相当于casecase nameof "": echo "你不可以输入空的哦."of "HeliantHuS": echo "HeliantHuS is Handsome"else: echo "我没看懂你输入的是什么" if-elif-else12345678import strformatvar name: string = readLine(stdin)if name == "HeliantHuS": echo fmt"Hello, &#123;name&#125;"elif name == "exit": echo "Exit!!!"else: echo "没有匹配~" 循环whilewhile 没什么好说的, Python有的它也有. 12while true: echo &quot;Hello&quot; for12345for i in countup(1, 10): echo ifor i in 1..10: echo i 上面两段代码效果一样, 可以看出来比Python还要简洁. 函数定义一个函数123import strformatproc hello(name: string): string = return fmt"Hello, &#123;name&#125;" 调用函数12var result = hello("HeliantHuS")echo result 舍弃函数返回值1discard hello("HeliantHuS") 在Nim中, 函数必须要有返回值, 你就必须要去用变量去接收或者直接echo, 不然会报错, 有时候函数的返回值也许不重要, 就需要去舍弃, 就要用关键字discard去舍弃. 作用域block12block hello: echo "HelloWorld" Nim中也是使用缩进进行作用域的区分. 道理我都懂, 可我好像真的对你着迷.]]></content>
