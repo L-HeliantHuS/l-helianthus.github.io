@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ElasticSearch Centos7安装教程]]></title>
+    <url>%2F2020%2F02%2F14%2F10-ElasticSearch-Quick-Start%2F</url>
+    <content type="text"><![CDATA[ElasticSearch是一个采用Java语言编写搜索服务器，提供了一个分布式多用户的全文搜索引擎，能够达到实时搜索，稳定，可靠，快速，安装使用方便。 环境说明Centos7必须能连接互联网 12[root@localhost ~]# cat /etc/redhat-releaseCentOS Linux release 7.7.1908 (Core) Xshell用来连接Centos主机. 没有的话直接用系统自带的SSH也可以。 安装ElasticSearch前置任务 (雾)由于es不支持以root用户运行，所以需要创建一个普通用户 1[root@localhost ~]# useradd elasticuser 在自己喜欢的目录创建一个es的下载文件夹. 我选择/usr/es 1[root@localhost ~]# mkdir -p /usr/es 因为是用root用户创建的文件夹, elasticuser用户没有权限，所以要更改文件夹的权限 1[root@localhost usr]# chown elasticuser:elasticuser es/ -R 切换成elasticuser用户进行下面的操作 123[root@localhost usr]# su elasticuser[elasticuser@localhost usr]$ whoamielasticuser 准备任务 (大雾)下载es 12[elasticuser@localhost usr]$ cd es[elasticuser@localhost es]$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-linux-x86_64.tar.gz 解压 123[elasticuser@localhost es]$ lselasticsearch-7.6.0-linux-x86_64.tar.gz[elasticuser@localhost es]$ tar zxvf elasticsearch-7.6.0-linux-x86_64.tar.gz 修改配置文件 config/jvm.options (非必须, 目的是调整内存占用少一些) 12-Xms512m-Xmx512m config/elasticsearch.yml (重要, 调整不好会导致ElasticSearch启动失败)不要直接复制粘贴, yml格式不允许写注释. 123456network.host: 0.0.0.0 // 修改完毕后可以外网访问cluster.name: "centos-cluster" // 不改就启动起来提示Warningnode.name: "node-1" // 不改就启动起来提示Warningdiscovery.seed_hosts: ["127.0.0.1", "[::1]"] // 不改就启动起来提示Warningcluster.initial_master_nodes: ["node-1"] // 不改就启动起来提示Warning 尝试启动ElasticSearch. 1[elasticuser@localhost elasticsearch-7.6.0]$ ./bin/elasticsearch 不失众望的报错了, 查看一下报错: 解决错误 ([1])遇到错误不慌， 一个个解决，首先是第一个 1[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535] 更改/etc/security/limits.conf, 这个时候要使用root用户更改, 写入以下内容 12* soft nofile 65535* hard nofile 65535 写完是这样的 接着重启一下服务器. 继续解决下一个bug. 解决错误 ([2])重启完， 先看看第一个错误解决了没有 1234[root@localhost ~]# ulimit -Hn65535[root@localhost ~]# ulimit -Sn65535 发现两个返回都是65535，就证明修改生效了。 然后看下一个报错 1[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144] 修改/etc/sysctl.conf， 添加 1vm.max_map_count=262144 保存退出 并 执行 12[root@localhost bin]# sysctl -pvm.max_map_count = 262144 再切换成elasticuser用户, 去运行es. 可以看到运行成功了, 使用浏览器去访问http://&lt;centos的IP地址&gt;:9200 emm 无法访问… 因为Centos默认开启了防火墙. 可以直接关闭防火墙 (启停服务需要root用户) 1[root@localhost bin]$ systemctl stop firewalld.service 再重新运行es. ok, 安装完毕, 接下来就可以正常学习和使用ElasticSearch了。 就这样！]]></content>
+      <categories>
+        <category>Linux</category>
+        <category>ElasticSearch</category>
+      </categories>
+      <tags>
+        <tag>ES</tag>
+        <tag>ElasticSearch</tag>
+        <tag>Centos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows下配置Flutter运行开发环境]]></title>
     <url>%2F2019%2F12%2F19%2F9-Windows-Set-FlutterDev%2F</url>
     <content type="text"><![CDATA[Windows下设置Flutter的运行开发环境. 说实话, 看到移动平台的开发就觉得很麻烦，还好这次Flutter没让我太过于失望。 下载必要的软件 GIt For Windows Git工具, 在windows下的客户端. Java Java JDK8 Android Studio 是为了安装SDK. Flutter 肯定是下载最新版本啦. VS Code 超级轻量的代码编辑器 设置环境变量Java设置环境变量将JDK的安装目录放入环境变量 key: JAVA_HOME value: D:\Software\Java\jdk1.8.0_231 看个人情况. Flutter设置环境变量将下载的Flutter SDK解压, 放入没有中文，没有空格的目录下, 设置环境变量将Flutter放入系统变量key: FLUTTER_HOME value: D:\LearningMaterials\flutter然后设置PATH: %FLUTTER_HOME%\bin 即可. VSCode安装插件 Dart Flutter 检查运行环境doctorcmd下运行flutter doctor会自动诊断当前的环境是否有异常 emulatorscmd下运行flutter emulators会列出当前可用的Android和IOS设备.通过运行flutter emulators --launch &lt;emulator id&gt;指定列出的设备名, 即可打开设备. runcmd在代码根目录运行flutter run即可在运行的设备中打开APP, 不过第一次可能会出现未license的错误, 可以运行flutter doctor --android-licenses, 根据提示全部按y, 结束后再次flutter run即可成功运行. 学习…学习…]]></content>
