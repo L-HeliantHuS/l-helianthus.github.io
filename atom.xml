@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://l-helianthus.github.io/"/>
-  <updated>2020-02-13T12:00:42.746Z</updated>
+  <updated>2020-03-09T14:07:17.220Z</updated>
   <id>http://l-helianthus.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang 垃圾回收剖析</title>
+    <link href="http://l-helianthus.github.io/2020/03/10/11-Golang-Gc/"/>
+    <id>http://l-helianthus.github.io/2020/03/10/11-Golang-Gc/</id>
+    <published>2020-03-09T22:05:37.000Z</published>
+    <updated>2020-03-09T14:07:17.220Z</updated>
+    
+    <content type="html"><![CDATA[<p>这一小节介绍三种经典的 GC 算法：引用计数（reference counting）、标记-清扫（mark &amp; sweep）、节点复制（Copying Garbage Collection），分代收集（Generational Garbage Collection）。</p><a id="more"></a><p>直接看大佬的文章, 讲的超级超级详细！！！<br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a><br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a><br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这一小节介绍三种经典的 GC 算法：引用计数（reference counting）、标记-清扫（mark &amp;amp; sweep）、节点复制（Copying Garbage Collection），分代收集（Generational Garbage Collection）。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Golang" scheme="http://l-helianthus.github.io/categories/Golang/"/>
+    
+    
+      <category term="Golang" scheme="http://l-helianthus.github.io/tags/Golang/"/>
+    
+      <category term="Gc" scheme="http://l-helianthus.github.io/tags/Gc/"/>
+    
+  </entry>
   
   <entry>
     <title>ElasticSearch Centos7安装教程</title>
