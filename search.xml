@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2020网鼎杯 安卓逆向 bang]]></title>
+    <url>%2F2020%2F05%2F11%2F12-wangdingCUP-bang-reverse%2F</url>
+    <content type="text"><![CDATA[参加了一下网鼎杯, 太难了…QAQ, 赛后根据大佬的思路重新做了一遍题目, 记录一下… Setup Python3 Jadx-GUI Frida (python -m pip install frida-tools) Frida-server Frida-DEXDump ADB 安卓模拟器(推荐夜神安卓模拟器) Go?0x01将题目先安装进模拟器, 然后运行起来. 0x02将adb连接到模拟器, adb connect 127.0.0.1:62001, 看到success就代表连接成功了. 0x03将适合自己模拟器系统的frida-server放入模拟器里.把下载的frida-server也就是frida-server-12.8.20-android-x86.xz,解压成为frida-server-12.8.20-android-x86(因为我的夜神模拟器里是x86架构的.) 可以如下命令查看手机版本 1adb shell getprop ro.product.cpu.abi 将解压后的文件push到手机里面、加执行权限、并运行。 12345adb push frida-server-12.8.20-android-x86 /data/local/tmp/frida-serveradb shellcd /data/local/tmpchmod 775 frida-server./frida-server 之后再开一个cmd窗口, 将端口转发到本机 12adb forward tcp:27042 tcp:27042adb forward tcp:27043 tcp:27043 0x04检查是否成功 1frida-ps -U 如果你和我一样, 那么恭喜. 0x05这时找到Frida-DEXDump, 运行python main.py就dump出了想要的内容. 再使用JADX-GUI, 打开得到的.dex文件, 就可以看到. 还是太菜了…]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>Reverse</tag>
+        <tag>CTF</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Golang 垃圾回收剖析]]></title>
     <url>%2F2020%2F03%2F10%2F11-Golang-Gc%2F</url>
     <content type="text"><![CDATA[这一小节介绍三种经典的 GC 算法：引用计数（reference counting）、标记-清扫（mark &amp; sweep）、节点复制（Copying Garbage Collection），分代收集（Generational Garbage Collection）。 直接看大佬的文章, 讲的超级超级详细！！！Golang 垃圾回收剖析Golang 垃圾回收剖析Golang 垃圾回收剖析]]></content>
