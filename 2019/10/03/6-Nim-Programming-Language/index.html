@@ -20,14 +20,14 @@
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -357,7 +357,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    577
+                    574
                 </div>
                 
 
@@ -385,43 +385,65 @@
 <p>Nim官网: <a href="https://Nim-lang.org/" target="_blank" rel="noopener">https://Nim-lang.org/</a><br>Nim中文社区: <a href="https://Nim-lang-cn.org/" target="_blank" rel="noopener">https://Nim-lang-cn.org/</a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>花了半小时的时间去试了试这门语言, 可以通过Nim生成js或者c的代码以及可执行文件, 感觉蛮酷的, 做个分享.</p>
 <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Nim编译出一个exe文件是这么做的:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nim c main.Nim</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">Nim c main.Nim</code></pre>
 <p>Nim 编译出一个js文件是这么做的:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nim js main.Nim</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">Nim js main.Nim</code></pre>
 <p>发没发现? 只需要更改Nim <type> 中的内容就可以了.</type></p>
 <p>不过, 你无法编译成”世界上最好的语言”, 比如<code>Nim php main.Nim</code>, 会报错的！！</p>
-<h2 id="超级详细带代码体验"><a href="#超级详细带代码体验" class="headerlink" title="超级详细带代码体验"></a>超级详细带代码体验</h2><h4 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h4><h5 id="基本变量类型"><a href="#基本变量类型" class="headerlink" title="基本变量类型"></a>基本变量类型</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定类型</span></span><br><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = <span class="string">"HelloWorld"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类型推断</span></span><br><span class="line"><span class="keyword">var</span> i = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2 id="超级详细带代码体验"><a href="#超级详细带代码体验" class="headerlink" title="超级详细带代码体验"></a>超级详细带代码体验</h2><h4 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h4><h5 id="基本变量类型"><a href="#基本变量类型" class="headerlink" title="基本变量类型"></a>基本变量类型</h5><pre class=" language-Nim"><code class="language-Nim"># 指定类型
+var name: string = "HelloWorld"
 
-<h5 id="列表-数组"><a href="#列表-数组" class="headerlink" title="列表(数组)"></a>列表(数组)</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = @[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
+# 类型推断
+var i = 10</code></pre>
+<h5 id="列表-数组"><a href="#列表-数组" class="headerlink" title="列表(数组)"></a>列表(数组)</h5><pre class=" language-Nim"><code class="language-Nim">var list = @[1,2,3,4,5]</code></pre>
 <p>加上<code>@</code>符号表明是动态数组, 可以进行<code>Add</code>和<code>POP</code>操作.</p>
-<h5 id="Table-在Py叫Dict-Go叫Map"><a href="#Table-在Py叫Dict-Go叫Map" class="headerlink" title="Table(在Py叫Dict, Go叫Map)"></a>Table(在Py叫Dict, Go叫Map)</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tables</span><br><span class="line"><span class="keyword">var</span> dict = &#123;<span class="string">"one"</span>: <span class="string">"HeliantHuS"</span>&#125;.toTable</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取值</span></span><br><span class="line">echo dict[<span class="string">"one"</span>]  <span class="comment"># HeliantHuS</span></span><br></pre></td></tr></table></figure>
+<h5 id="Table-在Py叫Dict-Go叫Map"><a href="#Table-在Py叫Dict-Go叫Map" class="headerlink" title="Table(在Py叫Dict, Go叫Map)"></a>Table(在Py叫Dict, Go叫Map)</h5><pre class=" language-Nim"><code class="language-Nim">import tables
+var dict = {"one": "HeliantHuS"}.toTable
 
-<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印HelloWorld</span></span><br><span class="line">echo <span class="string">"HelloWorld"</span></span><br></pre></td></tr></table></figure>
-
+# 取值
+echo dict["one"]  # HeliantHuS</code></pre>
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><pre class=" language-Nim"><code class="language-Nim"># 打印HelloWorld
+echo "HelloWorld"</code></pre>
 <p>Nim中的注释和Python一样.</p>
-<h4 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h4><h5 id="case-of"><a href="#case-of" class="headerlink" title="case-of"></a>case-of</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = readLine(<span class="literal">stdin</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># case就等于其他语言的switch, of就相当于case</span></span><br><span class="line"><span class="keyword">case</span> name</span><br><span class="line"><span class="keyword">of</span> <span class="string">""</span>:</span><br><span class="line">    echo <span class="string">"你不可以输入空的哦."</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">of</span> <span class="string">"HeliantHuS"</span>:</span><br><span class="line">    echo <span class="string">"HeliantHuS is Handsome"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    echo <span class="string">"我没看懂你输入的是什么"</span></span><br></pre></td></tr></table></figure>
+<h4 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h4><h5 id="case-of"><a href="#case-of" class="headerlink" title="case-of"></a>case-of</h5><pre class=" language-Nim"><code class="language-Nim">var name: string = readLine(stdin)
 
-<h5 id="if-elif-else"><a href="#if-elif-else" class="headerlink" title="if-elif-else"></a>if-elif-else</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> strformat</span><br><span class="line"><span class="keyword">var</span> name: <span class="built_in">string</span> = readLine(<span class="literal">stdin</span>)</span><br><span class="line"><span class="keyword">if</span> name == <span class="string">"HeliantHuS"</span>:</span><br><span class="line">    echo <span class="string">fmt"Hello, &#123;name&#125;"</span></span><br><span class="line"><span class="keyword">elif</span> name == <span class="string">"exit"</span>:</span><br><span class="line">    echo <span class="string">"Exit!!!"</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    echo <span class="string">"没有匹配~"</span></span><br></pre></td></tr></table></figure>
+# case就等于其他语言的switch, of就相当于case
+case name
+of "":
+    echo "你不可以输入空的哦."
 
+of "HeliantHuS":
+    echo "HeliantHuS is Handsome"
+
+else:
+    echo "我没看懂你输入的是什么"</code></pre>
+<h5 id="if-elif-else"><a href="#if-elif-else" class="headerlink" title="if-elif-else"></a>if-elif-else</h5><pre class=" language-Nim"><code class="language-Nim">import strformat
+var name: string = readLine(stdin)
+if name == "HeliantHuS":
+    echo fmt"Hello, {name}"
+elif name == "exit":
+    echo "Exit!!!"
+else:
+    echo "没有匹配~"</code></pre>
 <p><img src="/images/6/strfmt.jpg" alt></p>
 <h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><h5 id="while"><a href="#while" class="headerlink" title="while"></a>while</h5><p>while 没什么好说的, Python有的它也有.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while true:</span><br><span class="line">    echo &quot;Hello&quot;</span><br></pre></td></tr></table></figure>
+<pre class=" language-nil"><code class="language-nil">while true:
+    echo "Hello"</code></pre>
+<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><pre class=" language-Nim"><code class="language-Nim">for i in countup(1, 10):
+    echo i
 
-<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> countup(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">    echo i</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span>..<span class="number">10</span>:</span><br><span class="line">    echo i</span><br></pre></td></tr></table></figure>
-
+for i in 1..10:
+    echo i</code></pre>
 <p>上面两段代码效果一样, 可以看出来比Python还要简洁.</p>
-<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><h5 id="定义一个函数"><a href="#定义一个函数" class="headerlink" title="定义一个函数"></a>定义一个函数</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> strformat</span><br><span class="line"><span class="keyword">proc</span> hello(name: <span class="built_in">string</span>): <span class="built_in">string</span> =</span><br><span class="line">    <span class="keyword">return</span> <span class="string">fmt"Hello, &#123;name&#125;"</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="literal">result</span> = hello(<span class="string">"HeliantHuS"</span>)</span><br><span class="line">echo <span class="literal">result</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="舍弃函数返回值"><a href="#舍弃函数返回值" class="headerlink" title="舍弃函数返回值"></a>舍弃函数返回值</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">discard</span> hello(<span class="string">"HeliantHuS"</span>)</span><br></pre></td></tr></table></figure>
-
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><h5 id="定义一个函数"><a href="#定义一个函数" class="headerlink" title="定义一个函数"></a>定义一个函数</h5><pre class=" language-Nim"><code class="language-Nim">import strformat
+proc hello(name: string): string =
+    return fmt"Hello, {name}"</code></pre>
+<h5 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h5><pre class=" language-Nim"><code class="language-Nim">var result = hello("HeliantHuS")
+echo result</code></pre>
+<h5 id="舍弃函数返回值"><a href="#舍弃函数返回值" class="headerlink" title="舍弃函数返回值"></a>舍弃函数返回值</h5><pre class=" language-Nim"><code class="language-Nim">discard hello("HeliantHuS")</code></pre>
 <p>在Nim中, 函数必须要有返回值, 你就必须要去用变量去接收或者直接echo, 不然会报错, 有时候函数的返回值也许不重要, 就需要去舍弃, 就要用关键字<code>discard</code>去舍弃.</p>
-<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><h5 id="block"><a href="#block" class="headerlink" title="block"></a>block</h5><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">block</span> hello:</span><br><span class="line">    echo <span class="string">"HelloWorld"</span></span><br></pre></td></tr></table></figure>
-
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><h5 id="block"><a href="#block" class="headerlink" title="block"></a>block</h5><pre class=" language-Nim"><code class="language-Nim">block hello:
+    echo "HelloWorld"</code></pre>
 <p>Nim中也是使用缩进进行作用域的区分.</p>
 <blockquote>
 <p>道理我都懂, 可我好像真的对你着迷.</p>
@@ -687,7 +709,8 @@
 
 
 Example: 把9计算成2进制.
-12345699/2  = 4 -&gt; 1  ; 9/
+9
+9/2  = 4 -&gt; 1  ; 9/2=4.5
                         
                     </div>
                     <div class="publish-info">
@@ -743,7 +766,10 @@ Example: 把9计算成2进制.
                             Nginx是一个的静态文件和反向代理服务，轻量，方便部署，而且性能极高.看完这篇文章, 你将点亮NGINX配置虚拟主机, 反向代理等技能点.
 
 
-深入浅出1234567891011121314151617181920212223worker
+深入浅出worker_processes  1;
+
+events {
+    worker_c
                         
                     </div>
                     <div class="publish-info">
@@ -1004,7 +1030,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1150,11 +1176,11 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollprogress@3.0.2/dist/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery.min.js"></script>
     <script src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
@@ -1176,10 +1202,10 @@ $(function () {
 </script>
 
     
-    <script src="/libs/others/clicklove.js" async="async"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/clicklove.js" async="async"></script>
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script>
     
 
     

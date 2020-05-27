@@ -20,14 +20,14 @@
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -361,7 +361,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    590
+                    568
                 </div>
                 
 
@@ -386,22 +386,64 @@
                 <p>Nginx是一个的静态文件和反向代理服务，轻量，方便部署，而且性能极高.<br>看完这篇文章, 你将点亮NGINX配置<code>虚拟主机</code>, <code>反向代理</code>等技能点.</p>
 <a id="more"></a>
 
-<h2 id="深入浅出"><a href="#深入浅出" class="headerlink" title="深入浅出"></a>深入浅出</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       <span class="number">80</span>;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="深入浅出"><a href="#深入浅出" class="headerlink" title="深入浅出"></a>深入浅出</h2><pre class=" language-js"><code class="language-js">worker_processes  <span class="token number">1</span><span class="token punctuation">;</span>
 
+events <span class="token punctuation">{</span>
+    worker_connections  <span class="token number">1024</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+http <span class="token punctuation">{</span>
+    include       mime<span class="token punctuation">.</span>types<span class="token punctuation">;</span>
+    default_type  application<span class="token operator">/</span>octet<span class="token operator">-</span>stream<span class="token punctuation">;</span>
+
+    sendfile        on<span class="token punctuation">;</span>
+    keepalive_timeout  <span class="token number">65</span><span class="token punctuation">;</span>
+
+    server <span class="token punctuation">{</span>
+        listen       <span class="token number">80</span><span class="token punctuation">;</span>
+        server_name  localhost<span class="token punctuation">;</span>
+
+        location <span class="token operator">/</span> <span class="token punctuation">{</span>
+            root   html<span class="token punctuation">;</span>
+            index  index<span class="token punctuation">.</span>html index<span class="token punctuation">.</span>htm<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>上面这是一个<code>nginx</code>最基本的配置, 分<code>http</code>代码块, <code>server</code>代码块, 其中今天要玩的就是<code>server</code>这个代码块.</p>
 <h2 id="开始操作"><a href="#开始操作" class="headerlink" title="开始操作"></a>开始操作</h2><p>首先在<code>nginx</code>的静态文件夹保证有两个<code>html文件</code>, 分别为<code>index.html</code>、<code>page1.html</code>, 里面的内容自己随便写, 只要能分清楚是哪个文件就好.</p>
 <h4 id="正常启动"><a href="#正常启动" class="headerlink" title="正常启动"></a>正常启动</h4><p>正常启动Nginx, 访问通过服务器地址访问, 会访问到<code>index.html</code>的内容.<br><img src="/images/5/indexpage.jpg" alt></p>
 <h4 id="虚拟主机"><a href="#虚拟主机" class="headerlink" title="虚拟主机"></a>虚拟主机</h4><p>第一个server代码块不需要更改, 下面紧接着添加:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name page1.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root html;</span><br><span class="line">        index page1.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-conf"><code class="language-conf">    server {
+        listen 80;
+        server_name page1.com;
+        location / {
+            root html;
+            index page1.html;
+        }
+    }</code></pre>
 <p>这样, 只要访问这个服务器的时候，请求头的<code>Host</code>键内容为<code>page1.com</code>, 可以通过抓包或者修改<code>hosts</code>文件的方式来达到目的.<br><img src="/images/5/page1.jpg" alt></p>
 <h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>第二个server代码块不需要更改, 修改第一个server代码块的内容为:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name localhost;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://hls.easy.echosite.cn/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-conf"><code class="language-conf">    server {
+        listen 80;
+        server_name localhost;
+        location / {
+            proxy_pass http://hls.easy.echosite.cn/;
+        }
+    }</code></pre>
 <p>重启服务器, 访问<code>localhost</code>或者服务器真实IP, 你会发现, 显示的结果是你输入的<code>http://hls.easy.echosite.cn</code>的内容, 但是浏览器的URL依旧是<code>localhost</code>或服务器IP.<br><img src="/images/5/proxy.jpg" alt></p>
 <h4 id="防盗链配置"><a href="#防盗链配置" class="headerlink" title="防盗链配置"></a>防盗链配置</h4><p>原理: 通过nginx的if判断, 只允许通过合法的域名访问本网站, 其余的域名访问本网站的时候直接返回403。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name youdoamin.com;</span><br><span class="line">    if ($host !~* ^youdomain.com$)</span><br><span class="line">    &#123;</span><br><span class="line">        return 403;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-conf"><code class="language-conf">server {
+    listen 80;
+    server_name youdoamin.com;
+    if ($host !~* ^youdomain.com$)
+    {
+        return 403;
+    }
+    location / {
+        root html;
+        index index.html index.htm;
+    }
+}</code></pre>
 <p>临了, 最后的配置文件样子:<br><img src="/images/5/conf.jpg" alt></p>
 <p>其实Nginx还有很多脚本类的东西, 太过深入就需要自己去研究了, NGINX一般还是作为接入层的反向代理去使用, 配置方便, 也轻量, 真的是做WEB必备的反向代理服务.</p>
 <p>最后~ 文章中演示的<code>hls.easy.echosite.cn</code>是使用<a href="https://www.echosite.cn" target="_blank" rel="noopener">EchoSite2.0 内网穿透，就选他了！</a>所内网穿透用来测试的, 如果有需要内网穿透的可以了解一下.</p>
@@ -982,7 +1024,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1128,11 +1170,11 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollprogress@3.0.2/dist/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery.min.js"></script>
     <script src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
@@ -1154,10 +1196,10 @@ $(function () {
 </script>
 
     
-    <script src="/libs/others/clicklove.js" async="async"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/clicklove.js" async="async"></script>
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script>
     
 
     

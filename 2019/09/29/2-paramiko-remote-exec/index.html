@@ -20,14 +20,14 @@
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -357,7 +357,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    235
+                    236
                 </div>
                 
 
@@ -381,28 +381,23 @@
             <div id="articleContent">
                 <p>Paramiko是一个Python的远程操作库，可以进行<code>SSH</code>, <code>SFTP</code>等远程连接操作. 来学习学习怎么使用吧</p>
 <a id="more"></a>
-<h1 id="安装Paramiko"><a href="#安装Paramiko" class="headerlink" title="安装Paramiko"></a>安装Paramiko</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install paramiko</span><br></pre></td></tr></table></figure>
-
-<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h3 id="导入paramiko"><a href="#导入paramiko" class="headerlink" title="导入paramiko"></a>导入paramiko</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br></pre></td></tr></table></figure>
-
-<h3 id="初始化SSHClient"><a href="#初始化SSHClient" class="headerlink" title="初始化SSHClient"></a>初始化SSHClient</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client = paramiko.SSHClient()</span><br><span class="line">client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure>
-
+<h1 id="安装Paramiko"><a href="#安装Paramiko" class="headerlink" title="安装Paramiko"></a>安装Paramiko</h1><pre class=" language-shell"><code class="language-shell">    python3 -m pip install paramiko</code></pre>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h3 id="导入paramiko"><a href="#导入paramiko" class="headerlink" title="导入paramiko"></a>导入paramiko</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> paramiko</code></pre>
+<h3 id="初始化SSHClient"><a href="#初始化SSHClient" class="headerlink" title="初始化SSHClient"></a>初始化SSHClient</h3><pre class=" language-python"><code class="language-python">client <span class="token operator">=</span> paramiko<span class="token punctuation">.</span>SSHClient<span class="token punctuation">(</span><span class="token punctuation">)</span>
+client<span class="token punctuation">.</span>set_missing_host_key_policy<span class="token punctuation">(</span>paramiko<span class="token punctuation">.</span>AutoAddPolicy<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <h3 id="连接主机"><a href="#连接主机" class="headerlink" title="连接主机"></a>连接主机</h3><p>我的<code>Linux</code>主机是<code>192.168.1.40</code>，用户名为<code>root</code>, 密码为<code>admin123.</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.connect(hostname=<span class="string">"192.168.1.40"</span>, username=<span class="string">"root"</span>, password=<span class="string">"admin123."</span>)</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-python"><code class="language-python">client<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>hostname<span class="token operator">=</span><span class="token string">"192.168.1.40"</span><span class="token punctuation">,</span> username<span class="token operator">=</span><span class="token string">"root"</span><span class="token punctuation">,</span> password<span class="token operator">=</span><span class="token string">"admin123."</span><span class="token punctuation">)</span></code></pre>
 <p><img src="/images/2/warning.jpg" alt="warning"><br>连接上会有几条警告，可以无视掉，或者直接<a href="https://github.com/paramiko/paramiko/issues/1386#issuecomment-470847772" target="_blank" rel="noopener">屏蔽警告信息</a></p>
 <h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>执行一个<code>ifconfig</code>命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stdin, stdout, stderr = client.exec_command(<span class="string">"ifconfig"</span>)</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-python"><code class="language-python">stdin<span class="token punctuation">,</span> stdout<span class="token punctuation">,</span> stderr <span class="token operator">=</span> client<span class="token punctuation">.</span>exec_command<span class="token punctuation">(</span><span class="token string">"ifconfig"</span><span class="token punctuation">)</span></code></pre>
 <p>注意这里, <code>exec_command</code>的返回值为tuple类型<br>可以通过<code>python3 -m pydoc paramiko.SSHClient.exec_command</code>查看源码.<br><img src="/images/2/pydoc.jpg" alt="PyDoc"></p>
 
 
-<h3 id="查看命令返回值"><a href="#查看命令返回值" class="headerlink" title="查看命令返回值"></a>查看命令返回值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> stdout.readlines():</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
-
+<h3 id="查看命令返回值"><a href="#查看命令返回值" class="headerlink" title="查看命令返回值"></a>查看命令返回值</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> stdout<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span></code></pre>
 <p><img src="/images/2/ifconfig.jpg" alt="ifconfig"><br>这样就得到了返回值</p>
 <h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><p>不要总是依赖上下文, 要学会手动释放资源关闭连接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.close()</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-python"><code class="language-python">client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>到这里, <code>paramiko</code>的<code>SSHClient</code>用法就结束了，<code>paramiko</code>还支持<code>SFTPClient</code>等其他远程操作, 自己发掘吧~</p>
 
             </div>
@@ -979,7 +974,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1125,11 +1120,11 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollprogress@3.0.2/dist/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery.min.js"></script>
     <script src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
@@ -1151,10 +1146,10 @@ $(function () {
 </script>
 
     
-    <script src="/libs/others/clicklove.js" async="async"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/clicklove.js" async="async"></script>
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script>
     
 
     

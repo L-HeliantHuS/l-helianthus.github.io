@@ -20,14 +20,14 @@
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -365,7 +365,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    751
+                    746
                 </div>
                 
 
@@ -391,68 +391,71 @@
 <a id="more"></a>
 
 <h1 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h1><h4 id="Centos7"><a href="#Centos7" class="headerlink" title="Centos7"></a>Centos7</h4><p>必须能连接互联网</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /etc/redhat-release</span><br><span class="line">CentOS Linux release 7.7.1908 (Core)</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# cat /etc/redhat-release
+CentOS Linux release 7.7.1908 (Core)</code></pre>
 <h4 id="Xshell"><a href="#Xshell" class="headerlink" title="Xshell"></a>Xshell</h4><p>用来连接Centos主机. 没有的话直接用系统自带的SSH也可以。</p>
 <h1 id="安装ElasticSearch"><a href="#安装ElasticSearch" class="headerlink" title="安装ElasticSearch"></a>安装ElasticSearch</h1><h3 id="前置任务-雾"><a href="#前置任务-雾" class="headerlink" title="前置任务 (雾)"></a>前置任务 (雾)</h3><p>由于<code>es</code>不支持以<code>root</code>用户运行，所以需要创建一个普通用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd elasticuser</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# useradd elasticuser</code></pre>
 <p>在自己喜欢的目录创建一个<code>es</code>的下载文件夹. 我选择<code>/usr/es</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir -p /usr/es</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# mkdir -p /usr/es</code></pre>
 <p>因为是用<code>root</code>用户创建的文件夹, <code>elasticuser</code>用户没有权限，所以要更改文件夹的权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost usr]# chown elasticuser:elasticuser es/ -R</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost usr]# chown elasticuser:elasticuser es/ -R</code></pre>
 <p>切换成<code>elasticuser</code>用户进行下面的操作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost usr]# su elasticuser</span><br><span class="line">[elasticuser@localhost usr]$ whoami</span><br><span class="line">elasticuser</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost usr]# su elasticuser
+[elasticuser@localhost usr]$ whoami
+elasticuser</code></pre>
 <h3 id="准备任务-大雾"><a href="#准备任务-大雾" class="headerlink" title="准备任务 (大雾)"></a>准备任务 (大雾)</h3><p>下载<code>es</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[elasticuser@localhost usr]$ cd es</span><br><span class="line">[elasticuser@localhost es]$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-linux-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[elasticuser@localhost usr]$ cd es
+[elasticuser@localhost es]$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-linux-x86_64.tar.gz</code></pre>
 <p>解压</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[elasticuser@localhost es]$ ls</span><br><span class="line">elasticsearch-7.6.0-linux-x86_64.tar.gz</span><br><span class="line">[elasticuser@localhost es]$ tar zxvf elasticsearch-7.6.0-linux-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[elasticuser@localhost es]$ ls
+elasticsearch-7.6.0-linux-x86_64.tar.gz
+[elasticuser@localhost es]$ tar zxvf elasticsearch-7.6.0-linux-x86_64.tar.gz</code></pre>
 <p>修改配置文件</p>
 <ul>
-<li><p><code>config/jvm.options</code>  (非必须, 目的是调整内存占用少一些)</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="string">Xms512m</span></span><br><span class="line"><span class="bullet">-</span><span class="string">Xmx512m</span></span><br></pre></td></tr></table></figure>
+<li><p><code>config/jvm.options</code>  (非必须, 目的是调整内存占用少一些)<br>```yml</p>
 </li>
+<li><p>Xms512m</p>
+</li>
+<li><p>Xmx512m</p>
+<pre><code></code></pre></li>
 <li><p><code>config/elasticsearch.yml</code> (重要, 调整不好会导致ElasticSearch启动失败)<br>不要直接复制粘贴, yml格式不允许写注释.</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">network.host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>                        <span class="string">//</span> <span class="string">修改完毕后可以外网访问</span></span><br><span class="line"><span class="string">cluster.name:</span> <span class="string">"centos-cluster"</span>               <span class="string">//</span> <span class="string">不改就启动起来提示Warning</span></span><br><span class="line"><span class="string">node.name:</span> <span class="string">"node-1"</span>                          <span class="string">//</span> <span class="string">不改就启动起来提示Warning</span></span><br><span class="line"></span><br><span class="line"><span class="string">discovery.seed_hosts:</span> <span class="string">["127.0.0.1",</span> <span class="string">"[::1]"</span><span class="string">]</span> <span class="string">//</span> <span class="string">不改就启动起来提示Warning</span></span><br><span class="line"><span class="string">cluster.initial_master_nodes:</span> <span class="string">["node-1"]</span>     <span class="string">//</span> <span class="string">不改就启动起来提示Warning</span></span><br></pre></td></tr></table></figure>
-
+<pre class=" language-yml"><code class="language-yml">network.host: 0.0.0.0                        // 修改完毕后可以外网访问
+cluster.name: "centos-cluster"               // 不改就启动起来提示Warning
+node.name: "node-1"                          // 不改就启动起来提示Warning
+</code></pre>
 </li>
 </ul>
-<p>尝试启动<code>ElasticSearch</code>.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[elasticuser@localhost elasticsearch-7.6.0]$  ./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+<p>discovery.seed_hosts: [“127.0.0.1”, “[::1]”] // 不改就启动起来提示Warning<br>cluster.initial_master_nodes: [“node-1”]     // 不改就启动起来提示Warning</p>
+<pre><code>
 
-<p>不失众望的报错了, 查看一下报错:<br><img src="/images/10/errors.png" alt></p>
+尝试启动`ElasticSearch`.
+```shell
+[elasticuser@localhost elasticsearch-7.6.0]$  ./bin/elasticsearch</code></pre><p>不失众望的报错了, 查看一下报错:<br><img src="/images/10/errors.png" alt></p>
 <h3 id="解决错误-1"><a href="#解决错误-1" class="headerlink" title="解决错误 ([1])"></a>解决错误 ([1])</h3><p>遇到错误不慌， 一个个解决，首先是第一个</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]</code></pre>
 <p>更改<code>/etc/security/limits.conf</code>, 这个时候要使用<code>root</code>用户更改, 写入以下内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65535</span><br><span class="line">* hard nofile 65535</span><br></pre></td></tr></table></figure>
-
-<p>写完是这样的<br><img src="/images/10/limit_conf.png" alt></p>
+<pre><code>* soft nofile 65535
+* hard nofile 65535</code></pre><p>写完是这样的<br><img src="/images/10/limit_conf.png" alt></p>
 <p>接着重启一下服务器. 继续解决下一个bug.</p>
 <h3 id="解决错误-2"><a href="#解决错误-2" class="headerlink" title="解决错误 ([2])"></a>解决错误 ([2])</h3><p>重启完， 先看看第一个错误解决了没有</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ulimit -Hn</span><br><span class="line">65535</span><br><span class="line">[root@localhost ~]# ulimit -Sn</span><br><span class="line">65535</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# ulimit -Hn
+65535
+[root@localhost ~]# ulimit -Sn
+65535</code></pre>
 <p>发现两个返回都是<code>65535</code>，就证明修改生效了。</p>
 <p>然后看下一个报错</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</code></pre>
 <p>修改<code>/etc/sysctl.conf</code>， 添加</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">vm.max_map_count=262144</span></span><br></pre></td></tr></table></figure>
-
+<pre class=" language-yml"><code class="language-yml">vm.max_map_count=262144</code></pre>
 <p>保存退出 并 执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# sysctl -p</span><br><span class="line">vm.max_map_count = 262144</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost bin]# sysctl -p
+vm.max_map_count = 262144</code></pre>
 <p>再切换成<code>elasticuser</code>用户, 去运行<code>es</code>.<br><img src="/images/10/result.png" alt></p>
 <p>可以看到运行成功了, 使用浏览器去访问<code>http://&lt;centos的IP地址&gt;:9200</code></p>
 <p>emm 无法访问… </p>
 <p>因为Centos默认开启了防火墙. 可以直接关闭防火墙 (启停服务需要root用户)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]$ systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[root@localhost bin]$ systemctl stop firewalld.service</code></pre>
 <p>再重新运行<code>es</code>.</p>
 <p><img src="/images/10/bowser.png" alt></p>
 <p>ok, 安装完毕, 接下来就可以正常学习和使用<code>ElasticSearch</code>了。</p>
@@ -1038,7 +1041,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1184,11 +1187,11 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollprogress@3.0.2/dist/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery.min.js"></script>
     <script src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
@@ -1210,10 +1213,10 @@ $(function () {
 </script>
 
     
-    <script src="/libs/others/clicklove.js" async="async"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/clicklove.js" async="async"></script>
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script>
     
 
     

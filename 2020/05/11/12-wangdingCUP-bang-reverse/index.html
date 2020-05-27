@@ -20,14 +20,14 @@
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -361,7 +361,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    322
+                    324
                 </div>
                 
 
@@ -398,18 +398,16 @@
 <h2 id="Go"><a href="#Go" class="headerlink" title="Go?"></a>Go?</h2><h4 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h4><p>将题目先安装进模拟器, 然后运行起来.</p>
 <h4 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h4><p>将<code>adb</code>连接到模拟器, <code>adb connect 127.0.0.1:62001</code>, 看到success就代表连接成功了.</p>
 <h4 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h4><p>将适合自己模拟器系统的<code>frida-server</code>放入模拟器里.<br>把下载的<code>frida-server</code>也就是<code>frida-server-12.8.20-android-x86.xz</code>,<br>解压成为<code>frida-server-12.8.20-android-x86</code><br>(因为我的夜神模拟器里是x86架构的.) 可以如下命令查看手机版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell getprop ro.product.cpu.abi</span><br></pre></td></tr></table></figure>
-
-<p>将解压后的文件push到手机里面、加执行权限、并运行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">adb push frida-server-12.8.20-android-x86 /data/local/tmp/frida-server</span><br><span class="line">adb shell</span><br><span class="line">cd /data/local/tmp</span><br><span class="line">chmod 775 frida-server</span><br><span class="line">./frida-server</span><br></pre></td></tr></table></figure>
-
+<pre><code>adb shell getprop ro.product.cpu.abi</code></pre><p>将解压后的文件push到手机里面、加执行权限、并运行。</p>
+<pre class=" language-shell"><code class="language-shell">adb push frida-server-12.8.20-android-x86 /data/local/tmp/frida-server
+adb shell
+cd /data/local/tmp
+chmod 775 frida-server
+./frida-server</code></pre>
 <p>之后再开一个cmd窗口, 将端口转发到本机</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb forward tcp:27042 tcp:27042</span><br><span class="line">adb forward tcp:27043 tcp:27043</span><br></pre></td></tr></table></figure>
-
-<h4 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h4><p>检查是否成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida-ps -U</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/12/frida-ps.jpg" alt></p>
+<pre><code>adb forward tcp:27042 tcp:27042
+adb forward tcp:27043 tcp:27043</code></pre><h4 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h4><p>检查是否成功</p>
+<pre><code>frida-ps -U</code></pre><p><img src="/images/12/frida-ps.jpg" alt></p>
 <p>如果你和我一样, 那么恭喜.</p>
 <h4 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h4><p>这时找到<code>Frida-DEXDump</code>, 运行<code>python main.py</code><br><img src="/images/12/dumped-dex.jpg" alt><br>就dump出了想要的内容. </p>
 <p>再使用<code>JADX-GUI</code>, 打开得到的.dex文件, 就可以看到.<br><img src="/images/12/jadx.jpg" alt></p>
@@ -996,7 +994,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1142,11 +1140,11 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.js"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollprogress@3.0.2/dist/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery.min.js"></script>
     <script src="/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
@@ -1168,10 +1166,10 @@ $(function () {
 </script>
 
     
-    <script src="/libs/others/clicklove.js" async="async"></script>
+    <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/clicklove.js" async="async"></script>
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script>
     
 
     
