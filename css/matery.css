@@ -34,7 +34,8 @@
 }
 
 body {
-    background-color: #eaeaea;
+    background: linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)) 0% 0% / cover, url("https://ae01.alicdn.com/kf/H18a4b998752a4ae68b8e85d432a5aef0l.png"), url("https://ae01.alicdn.com/kf/H21b5f6b8496141a1979a33666e1074d9x.jpg") 0px 0px;
+    background-attachment: fixed;
     margin: 0;
     color: #34495e;
 }
@@ -266,11 +267,11 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #FF69B4 0%, #FFB6C1 100%);
+    background-image: linear-gradient(to right, #FF69B4 0%, #ffcacaff 100%);
 }
 
 .text-color {
-    color: #0f9d58 !important;
+    color: rgba(31, 19, 157, 0.85) !important;
 }
 
 .white-color {
@@ -282,7 +283,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background: linear-gradient(to right, #bf1e61 0%, #9d309b 100%);
     opacity: 0.8;
 }
 
@@ -2152,4 +2153,19 @@ footer .copy-right {
     height: 50px;
     padding: 0px;
     margin: 0px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: #ff467d;
+    background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.4) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.4) 50%,rgba(255,255,255,.4) 75%,transparent 75%,transparent);
+    border-radius: 3em;
+}
+::-webkit-scrollbar-track {
+    background-color: #ffcacaff;
+    border-radius: 3em;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    height: 15px;
 }
