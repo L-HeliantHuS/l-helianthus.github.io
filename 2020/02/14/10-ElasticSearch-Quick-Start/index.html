@@ -358,14 +358,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-13
+                    2020-05-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    746
+                    745
                 </div>
                 
 
@@ -413,25 +413,22 @@ elasticsearch-7.6.0-linux-x86_64.tar.gz
 [elasticuser@localhost es]$ tar zxvf elasticsearch-7.6.0-linux-x86_64.tar.gz</code></pre>
 <p>修改配置文件</p>
 <ul>
-<li><p><code>config/jvm.options</code>  (非必须, 目的是调整内存占用少一些)<br>```yml</p>
-</li>
-<li><p>Xms512m</p>
-</li>
-<li><p>Xmx512m</p>
-<pre><code></code></pre></li>
-<li><p><code>config/elasticsearch.yml</code> (重要, 调整不好会导致ElasticSearch启动失败)<br>不要直接复制粘贴, yml格式不允许写注释.</p>
+<li><code>config/jvm.options</code>  (非必须, 目的是调整内存占用少一些)</li>
+</ul>
+<pre class=" language-yml"><code class="language-yml">-Xms512m
+-Xmx512m</code></pre>
+<ul>
+<li><code>config/elasticsearch.yml</code> (重要, 调整不好会导致ElasticSearch启动失败)</li>
+</ul>
+<p>不要直接复制粘贴, yml格式不允许写注释.</p>
 <pre class=" language-yml"><code class="language-yml">network.host: 0.0.0.0                        // 修改完毕后可以外网访问
 cluster.name: "centos-cluster"               // 不改就启动起来提示Warning
 node.name: "node-1"                          // 不改就启动起来提示Warning
-</code></pre>
-</li>
-</ul>
-<p>discovery.seed_hosts: [“127.0.0.1”, “[::1]”] // 不改就启动起来提示Warning<br>cluster.initial_master_nodes: [“node-1”]     // 不改就启动起来提示Warning</p>
-<pre><code>
-
-尝试启动`ElasticSearch`.
-```shell
-[elasticuser@localhost elasticsearch-7.6.0]$  ./bin/elasticsearch</code></pre><p>不失众望的报错了, 查看一下报错:<br><img src="/images/10/errors.png" alt></p>
+discovery.seed_hosts: ["127.0.0.1", "[::1]"] // 不改就启动起来提示Warning
+cluster.initial_master_nodes: ["node-1"]     // 不改就启动起来提示Warning</code></pre>
+<p>尝试启动<code>ElasticSearch</code>.</p>
+<pre class=" language-shell"><code class="language-shell">[elasticuser@localhost elasticsearch-7.6.0]$  ./bin/elasticsearch</code></pre>
+<p>不失众望的报错了, 查看一下报错:<br><img src="/images/10/errors.png" alt></p>
 <h3 id="解决错误-1"><a href="#解决错误-1" class="headerlink" title="解决错误 ([1])"></a>解决错误 ([1])</h3><p>遇到错误不慌， 一个个解决，首先是第一个</p>
 <pre class=" language-shell"><code class="language-shell">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]</code></pre>
 <p>更改<code>/etc/security/limits.conf</code>, 这个时候要使用<code>root</code>用户更改, 写入以下内容</p>
