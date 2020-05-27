@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Python 3.7.2 urllib.parse.urlsplit 漏洞分析]]></title>
+    <url>%2F2020%2F05%2F27%2F13-Python-3-7-2-urlsplit-cve%2F</url>
+    <content type="text"><![CDATA[Python 3.7.2的urllib.parse模块下urlsplit错误的处理字符导致漏洞。 漏洞原理用 Punycode/IDNA 编码的 URL 使用 NFKC 规范化来分解字符。可能导致某些字符将新的段引入 URL。 例如，在直接比较中, \uFF03不等于＃，而是统一化为＃，这会更改 URL 的片段部分。 类似地，\u2100 统一化为a/c，它引入了路径段。 ℅解析为c/o℆解析为c/u CTF例子[SUCTF 2019]Pythonginx题目链接: Pythonginx这个题目通过构造℆ 使其构造为?url=file://suctf.c℅pt/../etc/passwd, 以此解析成suctf.cc/opt/../etc/passwd, 就可以看到/etc/passwd的内容. [SharkyCTF]Aqua World题目链接: Aqua World这个题目需要以本地的地址访问到这个网站, 题目也提示了要使urlsplit后的netloc为本地地址, 然后通过F12查看服务器的Python版本是3.7.2 这个网站存在一个anonymous的登录, 尝试分割这个url, 参考CVE-2019-9636, 可以得到 继续参考, 可以看到一个例子: >>> u = "https://example.com\uFF03@bing.com" >>> urlsplit(u).netloc.rpartition("@")[2] bing.com 于是我们尝试http://anonymous:anonymous@aquaworld.sharkyctf.xyz/admin-query?flag=flag根据上面的例子进行更改, 为 http://anonymous:anonymous@aquaworld.sharkyctf.xyz/admin-query\uFF03@localhost?flag=flag 发送payload! 可以看到netloc已经被更改了, 但是没有得到flag, 于是更改payload的localhost为127.0.0.1, 再次进行尝试. 修复官方解决办法是, 遇到这几个特殊字符直接抛出Value Error 参考资料CVE-2019-9636：urlsplit 不处理 NFKC 标准化 CVE-2019-10160：urlsplit NFKD 标准化漏洞]]></content>
+      <categories>
+        <category>网络安全</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>CVE</tag>
+        <tag>URLSPLIT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2020网鼎杯 安卓逆向 bang]]></title>
     <url>%2F2020%2F05%2F11%2F12-wangdingCUP-bang-reverse%2F</url>
     <content type="text"><![CDATA[参加了一下网鼎杯, 太难了…QAQ, 赛后根据大佬的思路重新做了一遍题目, 记录一下… Setup Python3 Jadx-GUI Frida (python -m pip install frida-tools) Frida-server Frida-DEXDump ADB 安卓模拟器(推荐夜神安卓模拟器) Go?0x01将题目先安装进模拟器, 然后运行起来. 0x02将adb连接到模拟器, adb connect 127.0.0.1:62001, 看到success就代表连接成功了. 0x03将适合自己模拟器系统的frida-server放入模拟器里.把下载的frida-server也就是frida-server-12.8.20-android-x86.xz,解压成为frida-server-12.8.20-android-x86(因为我的夜神模拟器里是x86架构的.) 可以如下命令查看手机版本 adb shell getprop ro.product.cpu.abi将解压后的文件push到手机里面、加执行权限、并运行。 adb push frida-server-12.8.20-android-x86 /data/local/tmp/frida-server adb shell cd /data/local/tmp chmod 775 frida-server ./frida-server 之后再开一个cmd窗口, 将端口转发到本机 adb forward tcp:27042 tcp:27042 adb forward tcp:27043 tcp:270430x04检查是否成功 frida-ps -U 如果你和我一样, 那么恭喜. 0x05这时找到Frida-DEXDump, 运行python main.py就dump出了想要的内容. 再使用JADX-GUI, 打开得到的.dex文件, 就可以看到. 还是太菜了…]]></content>

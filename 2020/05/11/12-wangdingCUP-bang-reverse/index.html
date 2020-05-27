@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
@@ -176,7 +176,7 @@
 </header>
 
     
-<script src="https://cdn.jsdelivr.net/npm/crypto@1.0.1/index.min.js"></script>
+<script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/crypto-js.min.js"></script>
 <script>
     (function() {
         let pwd = '';
@@ -192,7 +192,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/12/jadx.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -354,7 +354,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-11
+                    2020-05-27
                 </div>
                 
 
@@ -655,63 +655,57 @@ adb forward tcp:27043 tcp:27043</code></pre><h4 id="0x04"><a href="#0x04" class=
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/05/11/12-wangdingCUP-bang-reverse/">
+                <a href="/2020/05/27/13-Python-3-7-2-urlsplit-cve/">
                     <div class="card-image">
                         
+                        <img src="/images/13/1.png" class="responsive-img" alt="Python 3.7.2 urllib.parse.urlsplit 漏洞分析">
                         
-                        <img src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/featureimages/23.jpg" class="responsive-img" alt="2020网鼎杯 安卓逆向 bang">
-                        
-                        <span class="card-title">2020网鼎杯 安卓逆向 bang</span>
+                        <span class="card-title">Python 3.7.2 urllib.parse.urlsplit 漏洞分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            参加了一下网鼎杯, 太难了…QAQ, 赛后根据大佬的思路重新做了一遍题目, 记录一下…
+                            Python 3.7.2的urllib.parse模块下urlsplit错误的处理字符导致漏洞。
 
 
-Setup
-Python3
-Jadx-GUI
-Frida  (python -m pip install frida-tools)
-Frida-se
+漏洞原理用 Punycode/IDNA 编码的 URL 使用 NFKC 规范化来分解字符。可能导致某些字符将新的段引入 URL。
+例如，在
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-11
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-27
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
+                            <a href="/categories/网络安全/" class="post-category">
+                                    网络安全
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android/">
-                        <span class="chip bg-color">Android</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
-                    <a href="/tags/Reverse/">
-                        <span class="chip bg-color">Reverse</span>
+                    <a href="/tags/CVE/">
+                        <span class="chip bg-color">CVE</span>
                     </a>
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/URLSPLIT/">
+                        <span class="chip bg-color">URLSPLIT</span>
                     </a>
                     
                 </div>
@@ -1008,7 +1002,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">5.4k</span>&nbsp;字
+                class="white-color">5.8k</span>&nbsp;字
             
             
             
