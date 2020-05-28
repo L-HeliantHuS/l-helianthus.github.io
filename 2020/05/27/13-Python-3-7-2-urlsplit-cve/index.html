@@ -672,59 +672,56 @@ bing<span class="token punctuation">.</span>com</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/05/27/13-Python-3-7-2-urlsplit-cve/">
+                <a href="/2020/05/28/14-CTF-PWN-ROPEmporiumWriteUP/">
                     <div class="card-image">
                         
-                        <img src="/images/13/1.png" class="responsive-img" alt="Python 3.7.2 urllib.parse.urlsplit 漏洞分析">
+                        <img src="/images/14/banner.jpg" class="responsive-img" alt="【CTF-PWN】ROPEmporium">
                         
-                        <span class="card-title">Python 3.7.2 urllib.parse.urlsplit 漏洞分析</span>
+                        <span class="card-title">【CTF-PWN】ROPEmporium</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Python 3.7.2的urllib.parse模块下urlsplit错误的处理字符导致漏洞。
+                            记录一下学习ROP的基础题目.
 
 
-漏洞原理用 Punycode/IDNA 编码的 URL 使用 NFKC 规范化来分解字符。可能导致某些字符将新的段引入 URL。
-例如，在
+ret2win 32位:先分析一下程序, 可以看到main、pwnme、ret2win函数.main函数调用了pwnme函数, pwnme函数里面存在一个gets读取0x32个字节到s变量里面, 但是这个
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/网络安全/" class="post-category">
-                                    网络安全
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
                     </a>
                     
-                    <a href="/tags/CVE/">
-                        <span class="chip bg-color">CVE</span>
+                    <a href="/tags/PWN/">
+                        <span class="chip bg-color">PWN</span>
                     </a>
                     
-                    <a href="/tags/URLSPLIT/">
-                        <span class="chip bg-color">URLSPLIT</span>
+                    <a href="/tags/ROP/">
+                        <span class="chip bg-color">ROP</span>
                     </a>
                     
                 </div>
@@ -800,43 +797,6 @@ Frida-se
 
 </div>
 
-
-<script>
-    $('#articleContent').on('copy', function (e) {
-        // IE8 or earlier browser is 'undefined'
-        if (typeof window.getSelection === 'undefined') return;
-
-        var selection = window.getSelection();
-        // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('80')) {
-            return;
-        }
-
-        // create a div outside of the visible area and fill it with the selected text.
-        var bodyElement = document.getElementsByTagName('body')[0];
-        var newdiv = document.createElement('div');
-        newdiv.style.position = 'absolute';
-        newdiv.style.left = '-99999px';
-        bodyElement.appendChild(newdiv);
-        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
-
-        // we need a <pre> tag workaround.
-        // otherwise the text inside "pre" loses all the line breaks!
-        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
-            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
-        }
-
-        var url = document.location.href;
-        newdiv.innerHTML += '<br />'
-            + '来源: HeliantHuS&#39;s Blog<br />'
-            + '文章作者: HeliantHuS<br />'
-            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
-            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
-
-        selection.selectAllChildren(newdiv);
-        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
-    });
-</script>
 
 
 <!-- 代码块功能依赖 -->
@@ -977,7 +937,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">5.8k</span>&nbsp;字
+                class="white-color">6.7k</span>&nbsp;字
             
             
 
