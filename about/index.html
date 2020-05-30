@@ -62,22 +62,54 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/archives" class="waves-effect waves-light">
+    <a href="" class="waves-effect waves-light">
+
       
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
       
-      <span>归档</span>
+      <span>标签以及分类等</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章标签</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章分类</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章归档</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/about" class="waves-effect waves-light">
+    <a href="/contact" class="waves-effect waves-light">
       
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
-      <span>关于</span>
+      <span>留言板</span>
     </a>
     
   </li>
@@ -89,6 +121,17 @@
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
       
       <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
     </a>
     
   </li>
@@ -132,22 +175,56 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/archives" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-archive"></i>
+				<i class="fa-fw fas fa-list"></i>
 			
-			归档
+			标签以及分类等
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章标签</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章分类</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章归档</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
         <li class="m-nav-item">
 	  
-		<a href="/about" class="waves-effect waves-light">
+		<a href="/contact" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+			    <i class="fa-fw fas fa-comments"></i>
 			
-			关于
+			留言板
 		</a>
           
         </li>
@@ -159,6 +236,17 @@
 			    <i class="fa-fw fas fa-address-book"></i>
 			
 			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
 		</a>
           
         </li>
@@ -462,7 +550,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"CTF","value":4},{"name":"Linux","value":1},{"name":"Golang","value":1},{"name":"网络安全","value":2},{"name":"ElasticSearch","value":1},{"name":"Python","value":2},{"name":"运维","value":1},{"name":"Nim","value":1},{"name":"算法","value":1},{"name":"Flutter","value":1},{"name":"Tools","value":1}],
+                data: [{"name":"CTF","value":4},{"name":"Linux","value":1},{"name":"Golang","value":1},{"name":"网络安全","value":2},{"name":"ElasticSearch","value":1},{"name":"Tools","value":1},{"name":"Python","value":2},{"name":"运维","value":1},{"name":"Nim","value":1},{"name":"算法","value":1},{"name":"Flutter","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -745,6 +833,24 @@
             
             
             
+            <a href="/tags/golang/">
+                <span class="chip center-align waves-effect waves-light chip-default">golang</span>
+            </a>
+            
+            
+            
+            <a href="/tags/watch/">
+                <span class="chip center-align waves-effect waves-light chip-default">watch</span>
+            </a>
+            
+            
+            
+            <a href="/tags/dogo/">
+                <span class="chip center-align waves-effect waves-light chip-default">dogo</span>
+            </a>
+            
+            
+            
             <a href="/tags/paramiko/">
                 <span class="chip center-align waves-effect waves-light chip-default">paramiko</span>
             </a>
@@ -775,18 +881,6 @@
             
             
             
-            <a href="/tags/fabric/">
-                <span class="chip center-align waves-effect waves-light chip-default">fabric</span>
-            </a>
-            
-            
-            
-            <a href="/tags/远程部署/">
-                <span class="chip center-align waves-effect waves-light chip-default">远程部署</span>
-            </a>
-            
-            
-            
             <a href="/tags/Nginx/">
                 <span class="chip center-align waves-effect waves-light chip-default">Nginx</span>
             </a>
@@ -801,6 +895,18 @@
             
             <a href="/tags/Proxy/">
                 <span class="chip center-align waves-effect waves-light chip-default">Proxy</span>
+            </a>
+            
+            
+            
+            <a href="/tags/fabric/">
+                <span class="chip center-align waves-effect waves-light chip-default">fabric</span>
+            </a>
+            
+            
+            
+            <a href="/tags/远程部署/">
+                <span class="chip center-align waves-effect waves-light chip-default">远程部署</span>
             </a>
             
             
@@ -855,24 +961,6 @@
             
             <a href="/tags/IOS/">
                 <span class="chip center-align waves-effect waves-light chip-default">IOS</span>
-            </a>
-            
-            
-            
-            <a href="/tags/golang/">
-                <span class="chip center-align waves-effect waves-light chip-default">golang</span>
-            </a>
-            
-            
-            
-            <a href="/tags/watch/">
-                <span class="chip center-align waves-effect waves-light chip-default">watch</span>
-            </a>
-            
-            
-            
-            <a href="/tags/dogo/">
-                <span class="chip center-align waves-effect waves-light chip-default">dogo</span>
             </a>
             
             
