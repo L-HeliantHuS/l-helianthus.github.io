@@ -230,34 +230,36 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2019/09/29/2-paramiko-remote-exec/">
+                    <a href="/2019/12/19/9-Windows-Set-FlutterDev/">
                         <div class="card-image">
                             
-                            <img src="/images/2/banner.png" class="responsive-img" alt="Paramiko Python远程连接工具">
+                            <img src="/images/9/1.png" class="responsive-img" alt="Windows下配置Flutter运行开发环境">
                             
-                            <span class="card-title">Paramiko Python远程连接工具</span>
+                            <span class="card-title">Windows下配置Flutter运行开发环境</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Paramiko是一个Python的远程操作库，可以进行SSH, SFTP等远程连接操作. 来学习学习怎么使用吧
+                                Windows下设置Flutter的运行开发环境. 说实话, 看到移动平台的开发就觉得很麻烦，还好这次Flutter没让我太过于失望。
 
-安装Paramiko    python3 -m pip install paramiko
-开始使用导入paramikoim
+
+下载必要的软件
+GIt For Windows Git工具, 在windows下的客户端.
+Java
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-19
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Python/" class="post-category">
-                                    Python
+                                <a href="/categories/Flutter/" class="post-category">
+                                    Flutter
                                 </a>
                                 
                                 
@@ -268,12 +270,20 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/paramiko/">
-                            <span class="chip bg-color">paramiko</span>
+                        <a href="/tags/Android/">
+                            <span class="chip bg-color">Android</span>
                         </a>
                         
-                        <a href="/tags/python/">
-                            <span class="chip bg-color">python</span>
+                        <a href="/tags/Flutter/">
+                            <span class="chip bg-color">Flutter</span>
+                        </a>
+                        
+                        <a href="/tags/Windows/">
+                            <span class="chip bg-color">Windows</span>
+                        </a>
+                        
+                        <a href="/tags/IOS/">
+                            <span class="chip bg-color">IOS</span>
                         </a>
                         
                     </div>
@@ -283,33 +293,29 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2019/09/28/1-Simple-Reverse/">
+                    <a href="/2019/12/03/8-BUUCTF-Crypto-WriteUP/">
                         <div class="card-image">
                             
-                            <img src="/images/1/banner.jpg" class="responsive-img" alt="Simple Reverse (简单的逆向)">
+                            <img src="/images/8/1.jpg" class="responsive-img" alt="BUUCTF 密码学思路WriteUP">
                             
-                            <span class="card-title">Simple Reverse (简单的逆向)</span>
+                            <span class="card-title">BUUCTF 密码学思路WriteUP</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                学习使用IDA Pro 和 x64dbg反编译一个C语言程序.
+                                BUUCTF, 自己学习的过程中思路记录, 以及flag…  (目的是记录自己的思路和想法！！！)
+题目地址: BUUCTF
 
 
-准备工具
-DevC++
-IDA Pro
-x64dbg
-
-开始动手！我直接做成了视频. 直接来看吧.【逆向工程】IDA Pro + x64dgb反编译一个应用程序
-
+MD5直接拿去SOMD5解密flag{admin1}
+看我回旋踢ROT13解密, 直接在线工具.flag{5c
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
                             </span>
                             <span class="publish-author">
                                 
@@ -327,8 +333,247 @@ x64dbg
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/reverse/">
-                            <span class="chip bg-color">reverse</span>
+                        <a href="/tags/CTF/">
+                            <span class="chip bg-color">CTF</span>
+                        </a>
+                        
+                        <a href="/tags/BUUCTF/">
+                            <span class="chip bg-color">BUUCTF</span>
+                        </a>
+                        
+                        <a href="/tags/Crypto/">
+                            <span class="chip bg-color">Crypto</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/10/28/7-Dec-to-Bin-Calc/">
+                        <div class="card-image">
+                            
+                            <img src="/images/7/banner.jpg" class="responsive-img" alt="手算正反十进制转换二进制过程">
+                            
+                            <span class="card-title">手算正反十进制转换二进制过程</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                学习一下手算十进制到二进制, 包括正数和负数转换二进制.
+
+
+十进制正数 转换 二进制
+除以2的整数结果除以2到0为止.
+结果从下往上看.
+
+
+Example: 把9计算成2进制.
+9
+9/2  = 4 -&gt; 1  ; 9/2=4.5
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/算法/" class="post-category">
+                                    算法
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/进制转换/">
+                            <span class="chip bg-color">进制转换</span>
+                        </a>
+                        
+                        <a href="/tags/二进制/">
+                            <span class="chip bg-color">二进制</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/10/03/6-Nim-Programming-Language/">
+                        <div class="card-image">
+                            
+                            <img src="/images/6/banner.png" class="responsive-img" alt="Nim编程语言快速入门 (附代码例子)">
+                            
+                            <span class="card-title">Nim编程语言快速入门 (附代码例子)</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Nim是一种静态类型编译的系统编程语言, 它结合了其他成熟语言的成功概念, 这次就带你5分钟学会Nim的编写, 来跟我一起尝试一下吧.
+
+
+Nim官网: https://Nim-lang.org/Nim中文社区: https://Nim-l
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Nim/" class="post-category">
+                                    Nim
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Nim/">
+                            <span class="chip bg-color">Nim</span>
+                        </a>
+                        
+                        <a href="/tags/元编程/">
+                            <span class="chip bg-color">元编程</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/10/03/5-Nginx-Config-ServerName/">
+                        <div class="card-image">
+                            
+                            <img src="/images/5/images.jpg" class="responsive-img" alt="Nginx反向代理骚操作详解">
+                            
+                            <span class="card-title">Nginx反向代理骚操作详解</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Nginx是一个的静态文件和反向代理服务，轻量，方便部署，而且性能极高.看完这篇文章, 你将点亮NGINX配置虚拟主机, 反向代理等技能点.
+
+
+深入浅出worker_processes  1;
+
+events {
+    worker_c
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/运维/" class="post-category">
+                                    运维
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Nginx/">
+                            <span class="chip bg-color">Nginx</span>
+                        </a>
+                        
+                        <a href="/tags/HTTP/">
+                            <span class="chip bg-color">HTTP</span>
+                        </a>
+                        
+                        <a href="/tags/Proxy/">
+                            <span class="chip bg-color">Proxy</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/10/01/4-Fabric-Python-Remote-deploy/">
+                        <div class="card-image">
+                            
+                            <img src="/images/4/banner.jpg" class="responsive-img" alt="Fabric Python远程部署利器">
+                            
+                            <span class="card-title">Fabric Python远程部署利器</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Fabric是一个Python的第三方库，可以进行Linux的远程部署，批量执行各种命令，况且，机器出错的次数比你少多了呢。(附详细的SSH免密登录过程)
+
+
+环境介绍
+Windows10的WSL IP: 192.168.1.66 下面简称
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Python/" class="post-category">
+                                    Python
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Python/">
+                            <span class="chip bg-color">Python</span>
+                        </a>
+                        
+                        <a href="/tags/fabric/">
+                            <span class="chip bg-color">fabric</span>
+                        </a>
+                        
+                        <a href="/tags/远程部署/">
+                            <span class="chip bg-color">远程部署</span>
                         </a>
                         
                     </div>
@@ -353,11 +598,12 @@ x64dbg
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 2</div>
+            <div class="center-align b-text-gray">2 / 3</div>
         </div>
         <div class="col s6 m4 l4">
             
-            <a class="right btn-floating btn-large disabled">
+            <a href="/page/3/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
                 <i class="fas fa-angle-right"></i>
             </a>
             
@@ -380,7 +626,7 @@ x64dbg
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8k</span>&nbsp;字
+                class="white-color">8.2k</span>&nbsp;字
             
             
 

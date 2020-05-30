@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://helianthus.top/"/>
-  <updated>2020-05-29T01:33:32.204Z</updated>
+  <updated>2020-05-30T09:25:01.929Z</updated>
   <id>https://helianthus.top/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Dogo目录监听自动构建工具</title>
+    <link href="https://helianthus.top/2020/05/31/15-golang-dogo-filelisten/"/>
+    <id>https://helianthus.top/2020/05/31/15-golang-dogo-filelisten/</id>
+    <published>2020-05-30T17:00:50.000Z</published>
+    <updated>2020-05-30T09:25:01.929Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>dogo</code>是一个使用<code>Go</code>语言编写的自动化构建工具, 可以实时监听目录, 发生更改时就自动执行特定命令。</p><p>Github: <a href="https://github.com/liudng/dogo" target="_blank" rel="noopener">https://github.com/liudng/dogo</a></p><a id="more"></a><h2 id="下载并编译"><a href="#下载并编译" class="headerlink" title="下载并编译"></a>下载并编译</h2><pre class=" language-shell"><code class="language-shell">git clone https://github.com/liudng/dogo.gitcd dogogo mod init dogogo build</code></pre><p>我使用的是<code>windows</code>系统, 执行完上面的命令之后会生成一个<code>dogo.exe</code>.</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>目前有个需求<br>我的工作(源码)目录: <code>C:\\Users\\Administrator\\Desktop\\testSource</code><br>需要监听的文件类型: <code>.go</code><br>监听到更改需要执行的命令: <code>go build -o main.exe</code><br>并且<code>build</code>出来之后还要执行这个<code>main.exe</code>  </p><p>配置文件就可以这样写:</p><pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>  <span class="token property">"WorkingDir"</span><span class="token operator">:</span> <span class="token string">"C:\\Users\\Administrator\\Desktop\\testSource"</span><span class="token punctuation">,</span>  <span class="token property">"SourceDir"</span><span class="token operator">:</span> <span class="token punctuation">[</span>    <span class="token string">"C:\\Users\\Administrator\\Desktop\\testSource"</span>  <span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token property">"SourceExt"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">".go"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token property">"BuildCmd"</span><span class="token operator">:</span> <span class="token string">"go build -o main.exe"</span><span class="token punctuation">,</span>  <span class="token property">"RunCmd"</span><span class="token operator">:</span> <span class="token string">"main.exe"</span><span class="token punctuation">,</span>  <span class="token property">"Decreasing"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">}</span></code></pre><h2 id="看看效果"><a href="#看看效果" class="headerlink" title="看看效果?"></a>看看效果?</h2><p><img src="/images/15/1.gif" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;dogo&lt;/code&gt;是一个使用&lt;code&gt;Go&lt;/code&gt;语言编写的自动化构建工具, 可以实时监听目录, 发生更改时就自动执行特定命令。&lt;/p&gt;
+&lt;p&gt;Github: &lt;a href=&quot;https://github.com/liudng/dogo&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/liudng/dogo&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Tools" scheme="https://helianthus.top/categories/Tools/"/>
+    
+    
+      <category term="golang" scheme="https://helianthus.top/tags/golang/"/>
+    
+      <category term="watch" scheme="https://helianthus.top/tags/watch/"/>
+    
+      <category term="dogo" scheme="https://helianthus.top/tags/dogo/"/>
+    
+  </entry>
   
   <entry>
     <title>【CTF-PWN】ROPEmporium</title>
@@ -89,11 +117,11 @@
       <category term="CTF" scheme="https://helianthus.top/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="https://helianthus.top/tags/CTF/"/>
-    
       <category term="Android" scheme="https://helianthus.top/tags/Android/"/>
     
       <category term="Reverse" scheme="https://helianthus.top/tags/Reverse/"/>
+    
+      <category term="CTF" scheme="https://helianthus.top/tags/CTF/"/>
     
   </entry>
   
