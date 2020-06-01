@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[文件监听(FileWatch)实现原理]]></title>
+    <url>%2F2020%2F06%2F01%2F16-Filewatch-base%2F</url>
+    <content type="text"><![CDATA[拿上一篇文章中提到的dogo为例, 它是怎么进行文件监听的呢, 如何实现一个简单的文件监听 这篇文章就带你从底层看最简单的实现原理. 代码文件结构├─fileWatch │ ├─.idea │ └─folder │ main.go 原理把要监听的文件目录取 最后一次的更改时间 和 当前大小, 这两个值的类型都是int64, 然后进行异或, 这样无论是哪个值发生了更改, 最后的异或结果都会进行变化, 就可以看出这个目录是否被操作了. 代码实现main.go package main import ( "fmt" "os" "time" ) var ( FolderName = "C:\\Users\\Administrator\\Desktop\\fileWatch\\folder" LastValue int64 ) func main() { for { info, err := os.Stat(FolderName) if err != nil { panic("文件夹可能不存在.") } nowValue := info.ModTime().Unix() ^ info.Size() if nowValue != LastValue { fmt.Println("文件夹发生更改") LastValue = nowValue } time.Sleep(1 * time.Second) // 如果不Sleep, 会特别占用CPU } } 效果]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>FileWatch</tag>
+        <tag>Base</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Dogo目录监听自动构建工具]]></title>
     <url>%2F2020%2F05%2F31%2F15-golang-dogo-filelisten%2F</url>
     <content type="text"><![CDATA[dogo是一个使用Go语言编写的自动化构建工具, 可以实时监听目录, 发生更改时就自动执行特定命令。 Github: https://github.com/liudng/dogo 下载并编译git clone https://github.com/liudng/dogo.git cd dogo go mod init dogo go build 我使用的是windows系统, 执行完上面的命令之后会生成一个dogo.exe. 配置目前有个需求我的工作(源码)目录: C:\\Users\\Administrator\\Desktop\\testSource需要监听的文件类型: .go监听到更改需要执行的命令: go build -o main.exe并且build出来之后还要执行这个main.exe 配置文件就可以这样写: { "WorkingDir": "C:\\Users\\Administrator\\Desktop\\testSource", "SourceDir": [ "C:\\Users\\Administrator\\Desktop\\testSource" ], "SourceExt": [".go"], "BuildCmd": "go build -o main.exe", "RunCmd": "main.exe", "Decreasing": 1 } 看看效果?]]></content>
