@@ -304,7 +304,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(https://miscpic.oss-cn-qingdao.aliyuncs.com/banner/1.jpg)');
+    $('.bg-cover').css('background-image', 'url(https://miscpic.oss-cn-qingdao.aliyuncs.com/banner/2.jpg)');
 </script>
 
 
@@ -320,7 +320,7 @@
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
 <div class="statis">
-    <span class="count"><a href="/">16</a></span>
+    <span class="count"><a href="/">17</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -334,7 +334,7 @@
 
 
 <div class="statis">
-    <span class="count"><a href="/tags">38</a></span>
+    <span class="count"><a href="/tags">41</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -350,7 +350,7 @@
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
 <div class="statis">
-    <span class="count"><a href="/">16</a></span>
+    <span class="count"><a href="/">17</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -364,7 +364,7 @@
 
 
 <div class="statis">
-    <span class="count"><a href="/tags">38</a></span>
+    <span class="count"><a href="/tags">41</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -508,7 +508,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,3,4,0,2,0,1,1,0,4,1],
+                data: [0,0,0,3,4,0,2,0,1,1,0,4,2],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -550,7 +550,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"CTF","value":4},{"name":"Golang","value":2},{"name":"Linux","value":1},{"name":"网络安全","value":2},{"name":"Tools","value":1},{"name":"ElasticSearch","value":1},{"name":"Python","value":2},{"name":"运维","value":1},{"name":"算法","value":1},{"name":"Nim","value":1},{"name":"Flutter","value":1}],
+                data: [{"name":"CTF","value":5},{"name":"Golang","value":2},{"name":"Linux","value":1},{"name":"网络安全","value":2},{"name":"Tools","value":1},{"name":"ElasticSearch","value":1},{"name":"运维","value":1},{"name":"Python","value":2},{"name":"算法","value":1},{"name":"Nim","value":1},{"name":"Flutter","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -574,7 +574,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["CTF","Golang","Android","Python","reverse","Gc","ES","ElasticSearch","Centos","Reverse"]
+                data: ["CTF","Golang","BUUCTF","Python","Android","reverse","Gc","ES","ElasticSearch","Centos"]
             }
         ],
         yAxis: [
@@ -587,7 +587,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth : 18,
-                data: [3,2,2,2,1,1,1,1,1,1],
+                data: [4,2,2,2,2,1,1,1,1,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -789,20 +789,44 @@
             
             
             
-            <a href="/tags/Android/">
-                <span class="chip center-align waves-effect waves-light chip-default">Android</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Reverse/">
-                <span class="chip center-align waves-effect waves-light chip-default">Reverse</span>
-            </a>
-            
-            
-            
             <a href="/tags/CTF/">
                 <span class="chip center-align waves-effect waves-light chip-default">CTF</span>
+            </a>
+            
+            
+            
+            <a href="/tags/BUUCTF/">
+                <span class="chip center-align waves-effect waves-light chip-default">BUUCTF</span>
+            </a>
+            
+            
+            
+            <a href="/tags/BUUOJ/">
+                <span class="chip center-align waves-effect waves-light chip-default">BUUOJ</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Misc/">
+                <span class="chip center-align waves-effect waves-light chip-default">Misc</span>
+            </a>
+            
+            
+            
+            <a href="/tags/WriteUP/">
+                <span class="chip center-align waves-effect waves-light chip-default">WriteUP</span>
+            </a>
+            
+            
+            
+            <a href="/tags/PWN/">
+                <span class="chip center-align waves-effect waves-light chip-default">PWN</span>
+            </a>
+            
+            
+            
+            <a href="/tags/ROP/">
+                <span class="chip center-align waves-effect waves-light chip-default">ROP</span>
             </a>
             
             
@@ -821,14 +845,14 @@
             
             
             
-            <a href="/tags/FileWatch/">
-                <span class="chip center-align waves-effect waves-light chip-default">FileWatch</span>
+            <a href="/tags/Android/">
+                <span class="chip center-align waves-effect waves-light chip-default">Android</span>
             </a>
             
             
             
-            <a href="/tags/Base/">
-                <span class="chip center-align waves-effect waves-light chip-default">Base</span>
+            <a href="/tags/Reverse/">
+                <span class="chip center-align waves-effect waves-light chip-default">Reverse</span>
             </a>
             
             
@@ -851,14 +875,50 @@
             
             
             
-            <a href="/tags/PWN/">
-                <span class="chip center-align waves-effect waves-light chip-default">PWN</span>
+            <a href="/tags/FileWatch/">
+                <span class="chip center-align waves-effect waves-light chip-default">FileWatch</span>
             </a>
             
             
             
-            <a href="/tags/ROP/">
-                <span class="chip center-align waves-effect waves-light chip-default">ROP</span>
+            <a href="/tags/Base/">
+                <span class="chip center-align waves-effect waves-light chip-default">Base</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Nginx/">
+                <span class="chip center-align waves-effect waves-light chip-default">Nginx</span>
+            </a>
+            
+            
+            
+            <a href="/tags/HTTP/">
+                <span class="chip center-align waves-effect waves-light chip-default">HTTP</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Proxy/">
+                <span class="chip center-align waves-effect waves-light chip-default">Proxy</span>
+            </a>
+            
+            
+            
+            <a href="/tags/fabric/">
+                <span class="chip center-align waves-effect waves-light chip-default">fabric</span>
+            </a>
+            
+            
+            
+            <a href="/tags/远程部署/">
+                <span class="chip center-align waves-effect waves-light chip-default">远程部署</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Crypto/">
+                <span class="chip center-align waves-effect waves-light chip-default">Crypto</span>
             </a>
             
             
@@ -893,24 +953,6 @@
             
             
             
-            <a href="/tags/Nginx/">
-                <span class="chip center-align waves-effect waves-light chip-default">Nginx</span>
-            </a>
-            
-            
-            
-            <a href="/tags/HTTP/">
-                <span class="chip center-align waves-effect waves-light chip-default">HTTP</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Proxy/">
-                <span class="chip center-align waves-effect waves-light chip-default">Proxy</span>
-            </a>
-            
-            
-            
             <a href="/tags/进制转换/">
                 <span class="chip center-align waves-effect waves-light chip-default">进制转换</span>
             </a>
@@ -919,18 +961,6 @@
             
             <a href="/tags/二进制/">
                 <span class="chip center-align waves-effect waves-light chip-default">二进制</span>
-            </a>
-            
-            
-            
-            <a href="/tags/fabric/">
-                <span class="chip center-align waves-effect waves-light chip-default">fabric</span>
-            </a>
-            
-            
-            
-            <a href="/tags/远程部署/">
-                <span class="chip center-align waves-effect waves-light chip-default">远程部署</span>
             </a>
             
             
@@ -964,18 +994,6 @@
             </a>
             
             
-            
-            <a href="/tags/BUUCTF/">
-                <span class="chip center-align waves-effect waves-light chip-default">BUUCTF</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Crypto/">
-                <span class="chip center-align waves-effect waves-light chip-default">Crypto</span>
-            </a>
-            
-            
         </div>
     </div>
     
@@ -1004,7 +1022,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">9.1k</span>&nbsp;字
+                class="white-color">10.7k</span>&nbsp;字
             
             
 
