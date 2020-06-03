@@ -461,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
 
@@ -479,6 +479,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>BUUOJ CTF, 日常刷题记录, 包含题目flag, 以及使用的脚本. </p>
+<p>这是关于<code>杂项题目</code>的WP, 之前写过<code>密码学</code>的WP, 如果有需要可以转到<a href="/2019/12/03/8-BUUCTF-Crypto-WriteUP/">BUUCTF 密码学思路</a></p>
 <a id="more"></a>
 
 <h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p>emm, 直接给flag了。<br><code>flag{buu_ctf}</code></p>
@@ -572,6 +573,25 @@ img <span class="token operator">=</span> Image<span class="token punctuation">.
 <p>执行完毕后生成了一个二维码</p>
 <p><img src="/images/17/15.jpg" alt></p>
 <p>得到flag<br><code>flag{40fc0a979f759c8892f4dc045e28b820}</code></p>
+<h2 id="数据包中的线索"><a href="#数据包中的线索" class="headerlink" title="数据包中的线索"></a>数据包中的线索</h2><p>wireshark打开看到了一个<code>fenxi.php</code>的包,  很多base64, 直接<a href="https://codebeautify.org/base64-to-image-converter" target="_blank" rel="noopener">Base64 To Image</a><br>即可看到flag<br><code>flag{209acebf6324a09671abc31c869de72c}</code></p>
+<h2 id="刷新过的图片"><a href="#刷新过的图片" class="headerlink" title="刷新过的图片"></a>刷新过的图片</h2><p>根据题目, <code>刷新</code>  <code>F5</code>, 一定是F5隐写, 直接使用工具(F5-steganography-james)就可以解出一个<code>zip</code>文件, 然后直接解压得到flag<br><code>flag{96efd0a2037d06f34199e921079778ee}</code></p>
+<h2 id="被劫持的神秘礼物"><a href="#被劫持的神秘礼物" class="headerlink" title="被劫持的神秘礼物"></a>被劫持的神秘礼物</h2><p>直接<code>FOLLOW TCP STREAM</code><br><img src="/images/17/16.jpg" alt><br>flag就是<code>adminaadminb</code>的小写md5</p>
+<p><code>flag{1d240aafe21a86afc11f38a45b541a49}</code></p>
+<h2 id="BJDCTF-2nd-EasyBaBa"><a href="#BJDCTF-2nd-EasyBaBa" class="headerlink" title="[BJDCTF 2nd]EasyBaBa"></a>[BJDCTF 2nd]EasyBaBa</h2><p>文件很大, 绝对不一般, 扔进<code>binwalk</code>, 看到一个<code>zip</code>, 使用<code>dd</code>命令手动分割出来</p>
+<pre class=" language-shell"><code class="language-shell">dd if=ezbb.jpg of=2.zip bs=1 skip=28227</code></pre>
+<p>解压出来发现是一个<code>.jpg</code>, 但是大小很可以, 使用file命令查看是<code>.avi</code>的视频文件, 于是改后缀 就可以播放了.<br><img src="/images/17/17.jpg" alt></p>
+<p>视频看着看会闪过几张图片, 图片上有二维码, 用PR一帧一帧分析 + 扫描就可以了.<br><code>flag{imagin_love_Y1ng}</code></p>
+<h2 id="菜刀666"><a href="#菜刀666" class="headerlink" title="菜刀666"></a>菜刀666</h2><p>wireshark分析可以找到菜刀连接的痕迹, 我这里是使用的<code>foremost</code>工具提取出来的压缩包.<br>拿到压缩包之后发现有密码, 于是又返回<code>wireshark</code>, 从<code>wireshark</code>找到了一堆16进制<br><img src="/images/17/18.jpg" alt></p>
+<p>可以看到是<code>z2</code>参数的, 开头是<code>FFD8FF</code>, 有经验的就可以看出是<code>.jpg</code>文件的头, 于是拿出来, 保存到文件, 使用<code>xxd</code>命令将其保存成图片. 这里保存成<code>1</code></p>
+<pre class=" language-shell"><code class="language-shell">xxd -r -p 1 > 1.jpg</code></pre>
+<p><img src="/images/17/19.jpg" alt></p>
+<p>图片上就是压缩包的密码, 然后解压压缩包, 得到flag<br><code>flag{3OpWdJ-JP6FzK-koCMAK-VkfWBq-75Un2z}</code></p>
+<h2 id="BJDCTF-2nd-Real-EasyBaBa"><a href="#BJDCTF-2nd-Real-EasyBaBa" class="headerlink" title="[BJDCTF 2nd]Real_EasyBaBa"></a>[BJDCTF 2nd]Real_EasyBaBa</h2><p>使用winhex打开, 发现有一个地方不太对劲…<br><img src="/images/17/20.jpg" alt><br>这里我的屏幕是60Hz的, 上下滚动会有一点点拖影, 如果你也是, 不妨也跟我一样上下滚动鼠标, 就可以隐隐约约看清楚…<code>BJD{</code>…  好, flag出来了.<br>其实也可以根据这个画一下。<br><img src="/images/17/21.jpg" alt></p>
+<p><code>flag{572154976}</code></p>
+<h2 id="BJDCTF-2nd-圣火昭昭-y1ng"><a href="#BJDCTF-2nd-圣火昭昭-y1ng" class="headerlink" title="[BJDCTF 2nd]圣火昭昭-y1ng"></a>[BJDCTF 2nd]圣火昭昭-y1ng</h2><p>图片右键属性查看到了信息<code>新佛曰：諸壽隸僧壽降吽壽諸壽陀壽摩隸僧缽薩願心壽咤壽囉寂壽闍諸壽哆壽慧壽聞壽色吽愍壽所壽蜜如</code>.</p>
+<p>之前见过类似的, 但是这个是<code>新佛曰</code>, 没错, 更新换代了.</p>
+<p><a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">在线工具</a>解出了<code>gemlovecom</code>, 根据题目说明, 去掉<code>com</code>, 得到flag…..? flag不对? 继续分析.</p>
+<p>这里要用到<code>outguess</code>, 这个东西解密需要密钥, 所以我们刚才得到的<code>gemlove</code>.<br><img src="/images/17/22.jpg" alt><br>嗯..打个Misc都有茄子啊 wdnmd。<br><code>flag{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
 <hr>
 <p>先写到这里吧，慢慢再补充辣。</p>
 
@@ -866,12 +886,11 @@ img <span class="token operator">=</span> Image<span class="token punctuation">.
                     <div class="summary block-with-text">
                         
                             BUUOJ CTF, 日常刷题记录, 包含题目flag, 以及使用的脚本. 
+这是关于杂项题目的WP, 之前写过密码学的WP, 如果有需要可以转到BUUCTF 密码学思路
 
 
 签到emm, 直接给flag了。flag{buu_ctf}
-金三胖是一个gif,  可以通过网站分解, 也可以自己写个脚本.
-import os
-from P
+金三
                         
                     </div>
                     <div class="publish-info">
@@ -1126,7 +1145,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">11.3k</span>&nbsp;字
+                class="white-color">12k</span>&nbsp;字
             
             
 
