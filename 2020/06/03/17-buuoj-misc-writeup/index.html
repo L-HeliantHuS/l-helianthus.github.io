@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-02
+                    2020-06-03
                 </div>
                 
 
@@ -543,10 +543,10 @@ bV1g6t5wZDJif^J7</code></pre>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
 
 <span class="token comment" spellcheck="true"># 通过坐标的最大值数字 + 1计算出来的.</span>
-weight <span class="token operator">=</span> <span class="token number">272</span>
+width <span class="token operator">=</span> <span class="token number">272</span>
 height <span class="token operator">=</span> <span class="token number">272</span>
 
-img <span class="token operator">=</span> Image<span class="token punctuation">.</span>new<span class="token punctuation">(</span><span class="token string">"RGB"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>weight<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"white"</span><span class="token punctuation">)</span>
+img <span class="token operator">=</span> Image<span class="token punctuation">.</span>new<span class="token punctuation">(</span><span class="token string">"RGB"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"white"</span><span class="token punctuation">)</span>
 
 <span class="token comment" spellcheck="true"># cipher文件就是那一堆hex</span>
 <span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"cipher"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> fp<span class="token punctuation">:</span>
@@ -572,6 +572,8 @@ img <span class="token operator">=</span> Image<span class="token punctuation">.
 <p>执行完毕后生成了一个二维码</p>
 <p><img src="/images/17/15.jpg" alt></p>
 <p>得到flag<br><code>flag{40fc0a979f759c8892f4dc045e28b820}</code></p>
+<hr>
+<p>先写到这里吧，慢慢再补充辣。</p>
 
             </div>
             <hr/>
