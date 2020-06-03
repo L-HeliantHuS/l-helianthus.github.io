@@ -267,7 +267,7 @@
 <script src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/source/js/crypto-js.min.js"></script>
 <script>
     (function() {
-        let pwd = '259043c3cb6062d8f580b474ea45a8c257ab8af2bef1b892c10f253998d8dc56';
+        let pwd = '';
         if (pwd && pwd.length > 0) {
             if (pwd !== CryptoJS.SHA256(prompt('这里你要输入密码才可以看到我 ovo')).toString(CryptoJS.enc.Hex)) {
                 alert('密码错了哦，将返回主页！');
@@ -446,21 +446,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-27
+                    2020-06-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
 
@@ -593,8 +593,83 @@ john --show --format=LM pass.hash</code></pre>
 <p><code>flag{49d91077a1abcb14f1a9d546c80be9ef}</code></p>
 <h3 id="凯撒？替换？呵呵"><a href="#凯撒？替换？呵呵" class="headerlink" title="凯撒？替换？呵呵!"></a>凯撒？替换？呵呵!</h3><p>一堆看不懂的乱码, 扔去<a href="https://quipqiup.com/" target="_blank" rel="noopener">quipqiup</a>进行字符频率统计, 就可以得到flag了.</p>
 <p>大坑, 空格要删除掉.<br><code>flag{substitutioncipherdecryptionisalwayseasyjustlikeapieceofcake}</code></p>
+<h2 id="权限获得第一步"><a href="#权限获得第一步" class="headerlink" title="权限获得第一步"></a>权限获得第一步</h2><p>得到了一个txt, 里面是Windows SAM的内容, 格式是: <code>UserName:ID:HASH:HASH:::</code>, 将最后一段HASH去md5在线破解搜出来就是flag<br><code>flag{3617656}</code></p>
+<h2 id="萌萌哒的八戒"><a href="#萌萌哒的八戒" class="headerlink" title="萌萌哒的八戒"></a>萌萌哒的八戒</h2><p>从网上找个猪圈密码对照表, 一个一个对照出来就可以了.<br><code>flag{whenthepigwanttoeat}</code></p>
+<h2 id="世上无难事"><a href="#世上无难事" class="headerlink" title="世上无难事"></a>世上无难事</h2><p>一堆看不懂的, 扔去<a href="https://quipqiup.com/" target="_blank" rel="noopener">词频分析</a>, 得到flag, 但是提交的时候需要全小写.<br><code>flag{640e11012805f211b0ab24ff02a1ed09}</code></p>
+<h2 id="robomunication"><a href="#robomunication" class="headerlink" title="robomunication"></a>robomunication</h2><p>是一段音频, 听了一下感觉像是摩斯电码, 放到<code>Audacity</code>分析.<br><code>flag{BOOPBEEP}</code></p>
+<h2 id="异性相吸"><a href="#异性相吸" class="headerlink" title="异性相吸"></a>异性相吸</h2><p>key文件中一一对asdasdad之类的, 密文则是一段乱码, 猜可能是把asdasd的ascii码拿来对应密文进行异或.<br>写个脚本</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"key.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> key<span class="token punctuation">:</span>
+    <span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"密文.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> cipher<span class="token punctuation">:</span>
+        keyData <span class="token operator">=</span> key<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        cipherData <span class="token operator">=</span> cipher<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i<span class="token punctuation">,</span> j <span class="token keyword">in</span> zip<span class="token punctuation">(</span>keyData<span class="token punctuation">,</span> cipherData<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>ord<span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">^</span> ord<span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<p><code>flag{ea1bc0988992276b7f95b54a7435e89e}</code></p>
+<h2 id="还原大师"><a href="#还原大师" class="headerlink" title="还原大师"></a>还原大师</h2><p>给了个残缺的原文, 残缺的md5, 但是提示原文缺失的是大写字母, 那就简单了, 写个脚本爆破出来</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> string
+<span class="token keyword">import</span> hashlib
+
+sSet <span class="token operator">=</span> string<span class="token punctuation">.</span>ascii_uppercase
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> sSet<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> sSet<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> k <span class="token keyword">in</span> sSet<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> f<span class="token string">"TASC{i}O3RJMV{j}WDJKX{k}ZM"</span>
+            md5 <span class="token operator">=</span> hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            md5<span class="token punctuation">.</span>update<span class="token punctuation">(</span>m<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            result <span class="token operator">=</span> md5<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>upper<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> result<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"E903"</span><span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span></code></pre>
+<p><code>flag{E9032994DABAC08080091151380478A2}</code></p>
+<h2 id="传感器"><a href="#传感器" class="headerlink" title="传感器"></a>传感器</h2><p>没头绪, 不争气的去搜了搜wp, 原来是<code>曼彻斯特编码</code>, 那没事了.<br>网上大佬的脚本</p>
+<pre class=" language-python"><code class="language-python">cipher<span class="token operator">=</span><span class="token string">'5555555595555A65556AA696AA6666666955'</span>
+<span class="token keyword">def</span> <span class="token function">iee</span><span class="token punctuation">(</span>cipher<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    tmp<span class="token operator">=</span><span class="token string">''</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>cipher<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        a<span class="token operator">=</span>bin<span class="token punctuation">(</span>eval<span class="token punctuation">(</span><span class="token string">'0x'</span><span class="token operator">+</span>cipher<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>zfill<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+        tmp<span class="token operator">=</span>tmp<span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>tmp<span class="token punctuation">)</span>
+    plain<span class="token operator">=</span><span class="token punctuation">[</span>hex<span class="token punctuation">(</span>int<span class="token punctuation">(</span>tmp<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token punctuation">(</span>tmp<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>plain<span class="token punctuation">)</span><span class="token punctuation">.</span>upper<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+iee<span class="token punctuation">(</span>cipher<span class="token punctuation">)</span></code></pre>
+<p><code>flag{FFFFFED31F645055F9}</code></p>
+<h2 id="Cipher"><a href="#Cipher" class="headerlink" title="Cipher"></a>Cipher</h2><p><a href="http://rumkin.com/tools/cipher/playfair.php" target="_blank" rel="noopener">在线工具</a>解出<br><img src="/images/8/2.jpg" alt><br><code>flag{itisnotaproblemhavefun}</code></p>
+<h2 id="RSAROLL"><a href="#RSAROLL" class="headerlink" title="RSAROLL"></a>RSAROLL</h2><p>就是简单的RSA, 密文很多. 写个脚本就可以了.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> libnum
+
+<span class="token comment" spellcheck="true"># {920139713,19}</span>
+n <span class="token operator">=</span> <span class="token number">920139713</span>
+p <span class="token operator">=</span> <span class="token number">18443</span>
+q <span class="token operator">=</span> <span class="token number">49891</span>
+e <span class="token operator">=</span> <span class="token number">19</span>
+d <span class="token operator">=</span> libnum<span class="token punctuation">.</span>invmod<span class="token punctuation">(</span>e<span class="token punctuation">,</span> <span class="token punctuation">(</span>p<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> fp<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> fp<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        c <span class="token operator">=</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>int<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">,</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<p><code>flag{13212je2ue28fy71w8u87y31r78eu1e2}</code></p>
+<h2 id="BJDCTF-2nd-rsa0"><a href="#BJDCTF-2nd-rsa0" class="headerlink" title="[BJDCTF 2nd]rsa0"></a>[BJDCTF 2nd]rsa0</h2><p>挺简单的, 给了<code>p+q</code>和<code>p-q</code>的结果, 用幼儿园数学就可以解出来.<br>写个脚本</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> libnum
+p_q <span class="token operator">=</span> <span class="token number">23739288354455618823500789320882015507916235495298919211105643329075951209068787630098346460475927331769393616566728637534240820048596719327537779749309942</span>
+p__q <span class="token operator">=</span> <span class="token number">948302319808573594690404166522167040466682672257436846156503266017624344686672560965640249175574642110944426131051410227570706455318246794290130811495220</span>
+
+q <span class="token operator">=</span> <span class="token punctuation">(</span>p_q <span class="token operator">-</span> p__q<span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span>
+p <span class="token operator">=</span> p_q <span class="token operator">-</span> q
+n <span class="token operator">=</span> p <span class="token operator">*</span> q
+e <span class="token operator">=</span> <span class="token number">14319223</span>
+
+d <span class="token operator">=</span> libnum<span class="token punctuation">.</span>invmod<span class="token punctuation">(</span>e<span class="token punctuation">,</span> <span class="token punctuation">(</span>p<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+c<span class="token operator">=</span><span class="token number">15149744517033579581121079919371536543625764309178093114222222083997624880804403990685225551641742250133869348431666895839971706066083354772440919051386874078900267911498803910425195536370033292591575354103143983614210191790171674997710390856232217787490303852272027717390320852706104910007664891405492668536</span>
+
+m <span class="token operator">=</span> str<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>int<span class="token punctuation">(</span>m<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<p><code>flag{21c569ae-3068-4b9f-97f1-784ab48863d9}</code></p>
 <hr>
-<p>先到这里吧.  以后慢慢补充.</p>
+<p>刷到什么题就更新。</p>
 
             </div>
             <hr/>
@@ -1132,7 +1207,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.7k</span>&nbsp;字
+                class="white-color">11.3k</span>&nbsp;字
             
             
 
