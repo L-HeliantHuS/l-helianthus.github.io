@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-03
+                    2020-06-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    11 分
                 </div>
                 
 
@@ -592,6 +592,72 @@ img <span class="token operator">=</span> Image<span class="token punctuation">.
 <p>之前见过类似的, 但是这个是<code>新佛曰</code>, 没错, 更新换代了.</p>
 <p><a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">在线工具</a>解出了<code>gemlovecom</code>, 根据题目说明, 去掉<code>com</code>, 得到flag…..? flag不对? 继续分析.</p>
 <p>这里要用到<code>outguess</code>, 这个东西解密需要密钥, 所以我们刚才得到的<code>gemlove</code>.<br><img src="/images/17/22.jpg" alt><br>嗯..打个Misc都有茄子啊 wdnmd。<br><code>flag{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
+<h2 id="穿越时空的思念"><a href="#穿越时空的思念" class="headerlink" title="穿越时空的思念"></a>穿越时空的思念</h2><p>一段音频文件, 右声道有摩斯电码, 使用<code>Audacity</code>分析, 得到flag<br><img src="/images/17/23.jpg" alt><br><code>flag{f029bd6f551139eedeb8e45a175b0786}</code></p>
+<h2 id="Mysterious"><a href="#Mysterious" class="headerlink" title="Mysterious"></a>Mysterious</h2><p>真逆向题目, 使用IDA静态分析, 搜索字符串找到了<code>well done</code>, <code>Buff3r_0v3rf|0w</code>之类的字样, 追踪到使用这个字符串的函数中, 可以看到<br><img src="/images/17/24.jpg" alt></p>
+<p>首先是输入长度是<code>6</code>, <code>v12</code>会被+1, 要等于<code>123</code>, 也就是先写<code>122</code>, 后面<code>120 122 121</code>,<br>也就是需要</p>
+<pre class=" language-text"><code class="language-text">v14 = 120
+v15 = 121
+v16 = 122</code></pre>
+<p>转换成ascii码, 正好是<code>xyz</code>, 那么加上之前的<code>122</code>, 长度也刚好吻合, 最后的payload也就是<code>122xyz</code><br><img src="/images/17/25.jpg" alt></p>
+<p><code>flag{123_Buff3r_0v3rf|0w}</code></p>
+<h2 id="sqltest"><a href="#sqltest" class="headerlink" title="sqltest"></a>sqltest</h2><p>是一段sql盲注的包, 筛选出长度最长的包, 然后分析盲注语句.</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token number">1</span> <span class="token operator">and</span> ascii<span class="token punctuation">(</span>substr<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">select</span> concat_ws<span class="token punctuation">(</span>chr<span class="token punctuation">(</span><span class="token number">94</span><span class="token punctuation">)</span><span class="token punctuation">,</span> flag<span class="token punctuation">)</span> <span class="token keyword">from</span> db_flag<span class="token punctuation">.</span>tb_flag <span class="token keyword">limit</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">101</span></code></pre>
+<p>此时需要一点sql基础, <code>substr(&quot;test&quot;, 1,1)</code>代表第一位开始取一位, 也就是取出<code>t</code><br>那么<code>substr(&quot;test&quot;, 3, 1)</code>也就是取出<code>s</code></p>
+<p><code>ascii</code>函数就是把取出来的内容转换成<code>ascii码</code>.</p>
+<p>然后最后面的<code>&gt; 101</code>就是一段判断取出来的字母的ascii码是否是大于101.</p>
+<p>那么就好办了, 直接按照这个规律挨个看也行.</p>
+<p>因为是大于号, 所以每个字母位置的最后一个包后面的数字要 + 1, </p>
+<p>例子上的这个是第一个字母的包, 所以第一个字母的ascii就是<code>102</code>, 转换成字符串也就是<code>f</code>.</p>
+<p>得到所有的ascii, 并保存为<code>1.txt</code></p>
+<pre class=" language-text"><code class="language-text">102
+108
+97
+103
+123
+52
+55
+101
+100
+98
+56
+51
+48
+48
+101
+100
+53
+102
+57
+98
+50
+56
+102
+99
+53
+52
+98
+48
+100
+48
+57
+101
+99
+100
+101
+102
+55
+125</code></pre>
+<p>写个脚本给他转出来</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"1.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> fp<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> fp<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>int<span class="token punctuation">(</span>i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/17/26.jpg" alt></p>
+<p><code>flag{47edb8300ed5f9b28fc54b0d09ecdef7}</code></p>
+<h2 id="SWPU2019-神奇的二维码"><a href="#SWPU2019-神奇的二维码" class="headerlink" title="[SWPU2019]神奇的二维码"></a>[SWPU2019]神奇的二维码</h2><p>得到一个<code>二维码</code>, 扫码得到<code>swpuctf{flag_is_not_here}</code>, 看来不是这个.</p>
+<p>于是<code>notepad++</code>打开文件, 发现最后藏了个<code>good/good.mp3</code>, 于是<code>binwalk</code>分解, 得到了一个<code>flag.jpg</code>…嗯..很嘲讽…<br><img src="/images/17/27.jpg" alt></p>
+<p>还得到了一个<code>看看flag在不在里面^_^.rar</code>和<code>encode.txt</code>, <code>encode.txt</code>里面是一段<code>base64</code>, 解出来的内容就是这个压缩包的密码, 里面的内容还是那个<code>flag.jpg</code></p>
+<p>也得到了一个<code>flag.doc</code>, 里面是一段很长的<code>base64</code>, 解码又得到了一个<code>base64</code>… 循环下去, 最终得到了一个.. <code>comEON_YOuAreSOSoS0great</code>, 这。。。也不像是flag啊…</p>
+<p>嗯? 怎么回事? 怎么没有那个<code>good.mp4</code>, 于是看了看<code>binwalk</code>分解出来的其他压缩包, 发现了一个<code>18394.rar</code>,  有密码, 于是拿刚才解出的<code>comEON_YOuAreSOSoS0great</code>试了一下, 还真是… 得到了一段音频, 听声音是摩斯电码, 用<code>Audacity</code>分析出来, 拿去解码, 得到最终flag<br><code>flag{morseisveryveryeasy}</code></p>
 <hr>
 <p>先写到这里吧，慢慢再补充辣。</p>
 
@@ -1145,7 +1211,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12k</span>&nbsp;字
+                class="white-color">12.6k</span>&nbsp;字
             
             
 
