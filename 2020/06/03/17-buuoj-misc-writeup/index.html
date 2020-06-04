@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    3.1k
                 </div>
                 
 
@@ -658,6 +658,8 @@ v16 = 122</code></pre>
 <p>还得到了一个<code>看看flag在不在里面^_^.rar</code>和<code>encode.txt</code>, <code>encode.txt</code>里面是一段<code>base64</code>, 解出来的内容就是这个压缩包的密码, 里面的内容还是那个<code>flag.jpg</code></p>
 <p>也得到了一个<code>flag.doc</code>, 里面是一段很长的<code>base64</code>, 解码又得到了一个<code>base64</code>… 循环下去, 最终得到了一个.. <code>comEON_YOuAreSOSoS0great</code>, 这。。。也不像是flag啊…</p>
 <p>嗯? 怎么回事? 怎么没有那个<code>good.mp4</code>, 于是看了看<code>binwalk</code>分解出来的其他压缩包, 发现了一个<code>18394.rar</code>,  有密码, 于是拿刚才解出的<code>comEON_YOuAreSOSoS0great</code>试了一下, 还真是… 得到了一段音频, 听声音是摩斯电码, 用<code>Audacity</code>分析出来, 拿去解码, 得到最终flag<br><code>flag{morseisveryveryeasy}</code></p>
+<h2 id="GXYCTF2019-佛系青年"><a href="#GXYCTF2019-佛系青年" class="headerlink" title="[GXYCTF2019]佛系青年"></a>[GXYCTF2019]佛系青年</h2><p>下载下来压缩包, 解压的时候有个<code>txt</code>文件提示密码错误, 于是扔进<code>WinHEX</code>, 一看是伪加密.<br><img src="/images/17/28.jpg" alt><br>将<code>09 00</code>修改成<code>00 00</code>, 解压文件, 没有报错了, 打开<code>txt</code>文件之后发现是与佛论禅, 直接在线工具解密就可以了.</p>
+<p><code>flag{w0_fo_ci_Be1}</code></p>
 <hr>
 <p>先写到这里吧，慢慢再补充辣。</p>
 
@@ -1211,7 +1213,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12.6k</span>&nbsp;字
+                class="white-color">12.7k</span>&nbsp;字
             
             
 
