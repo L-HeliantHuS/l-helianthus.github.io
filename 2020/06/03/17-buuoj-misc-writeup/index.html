@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-04
+                    2020-07-02
                 </div>
                 
 
@@ -519,7 +519,7 @@ img <span class="token operator">=</span> Image<span class="token punctuation">.
 <h2 id="被嗅探的流量"><a href="#被嗅探的流量" class="headerlink" title="被嗅探的流量"></a>被嗅探的流量</h2><p>wireshark, <code>tcp.stream eq 2</code>, 追踪tcp流, 即可找到flag<br><img src="/images/17/7.jpg" alt><br><code>flag{da73d88936010da1eeeb36e945ec4b97}</code></p>
 <h2 id="爱因斯坦"><a href="#爱因斯坦" class="headerlink" title="爱因斯坦"></a>爱因斯坦</h2><p>得到图片, 右键查看属性, 得到一条<code>this_is_not_password</code><br><code>binwalk</code>分离出了一个压缩包, 有密码, 不知道密码怎么办呢? 那就试试上面这条吧.<br>压缩包密码: <code>this_is_not_password</code>, 解压缩得到flag, sb题目.<br><code>flag{dd22a92bf2cceb6c0cd0d6b83ff51606}</code></p>
 <h2 id="easycap"><a href="#easycap" class="headerlink" title="easycap"></a>easycap</h2><p>是个流量包, wireshark打开直接追踪tcp流, ….嗯..直接就是flag<br><code>flag{385b87afc8671dee07550290d16a8071}</code></p>
-<h2 id="假如给我三天光明"><a href="#假如给我三天光明" class="headerlink" title="假如给我三天光明"></a>假如给我三天光明</h2><p>给了一个带有密码的压缩包和一张图片, 图片下面是盲文, 直接从网上找个图片挨个对照, 得到压缩包密码<code>kmdonowg</code><br>解压得到一个音频文件, 听声音是摩斯电码, 通过<code>Audacity</code>可以看到音频长短, 然后去解密, 得到flag<br><code>flag{ctfwpei08732?23dz}</code></p>
+<h2 id="假如给我三天光明"><a href="#假如给我三天光明" class="headerlink" title="假如给我三天光明"></a>假如给我三天光明</h2><p>给了一个带有密码的压缩包和一张图片, 图片下面是盲文, 直接从网上找个图片挨个对照, 得到压缩包密码<code>kmdonowg</code><br>解压得到一个音频文件, 听声音是摩斯电码, 通过<code>Audacity</code>可以看到音频长短, 然后去解密, 得到flag<br><code>flag{wpei08732?23dz}</code></p>
 <h2 id="FLAG"><a href="#FLAG" class="headerlink" title="FLAG"></a>FLAG</h2><p>通过<code>StegSolve.jar</code>得到了一个zip<br><img src="/images/17/8.jpg" alt><br>savebin后, 解压, 得到一个elf文件, 直接通过<code>notepad++</code>搜索<code>ctf</code>关键字, 就可以看到flag<br><code>flag{dd0gf4c3tok3yb0ard4g41n~~~}</code></p>
 <h2 id="另外一个世界"><a href="#另外一个世界" class="headerlink" title="另外一个世界"></a>另外一个世界</h2><p>一张图片, 通过<code>notepad++</code>打开之后, 最后有一段神秘的二进制<code>01101011011011110110010101101011011010100011001101110011</code>, 把二进制转化为字符串, 得到flag<br><code>flag{koekj3s}</code></p>
 <h2 id="隐藏的钥匙"><a href="#隐藏的钥匙" class="headerlink" title="隐藏的钥匙"></a>隐藏的钥匙</h2><p>通过<code>notepad++</code>打开, 搜索<code>flag</code><br><img src="/images/17/9.jpg" alt><br>bas64解码得到flag<br><code>flag{377cbadda1eca2f2f73d36277781f00a}</code></p>
