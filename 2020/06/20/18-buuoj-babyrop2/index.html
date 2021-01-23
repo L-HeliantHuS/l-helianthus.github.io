@@ -442,7 +442,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-20
+                    2020-06-23
                 </div>
                 
 
@@ -779,55 +779,55 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/20/18-buuoj-babyrop2/">
+                <a href="/2021/01/23/19-pyinstaller-get-uac-admin/">
                     <div class="card-image">
                         
-                        <img src="/images/18/banner.jpg" class="responsive-img" alt="【CTF-PWN】ROP + One_gadget拿shell">
+                        <img src="/images/19/uac.png" class="responsive-img" alt="Pyinstaller打包py文件得到UAC权限">
                         
-                        <span class="card-title">【CTF-PWN】ROP + One_gadget拿shell</span>
+                        <span class="card-title">Pyinstaller打包py文件得到UAC权限</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            记录一下在题目中one_gadget的使用, one_gadget永远滴神.
+                            
+需要打包的脚本 a.py
 
-
-0x01 题目地址https://buuoj.cn/challenges#[HarekazeCTF2019]baby_rop2
-0x02 开始梭哈题目给了一个
+首先第一次打包脚本 a.py
+pyinstaller -F --uac-admin a.py
+然后去build目录找a/a.exe.manifest, 将其复制到a.py同级目录下, 再次运行
+pyinstal
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
+                            <a href="/categories/Python/" class="post-category">
+                                    Python
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/pwn/">
-                        <span class="chip bg-color">pwn</span>
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
                     </a>
                     
-                    <a href="/tags/rop/">
-                        <span class="chip bg-color">rop</span>
+                    <a href="/tags/uac/">
+                        <span class="chip bg-color">uac</span>
                     </a>
                     
                 </div>
@@ -1049,7 +1049,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.1k</span>&nbsp;字
+                class="white-color">13.2k</span>&nbsp;字
             
             
 

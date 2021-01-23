@@ -344,7 +344,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(https://miscpic.oss-cn-qingdao.aliyuncs.com/banner/4.jpg)');
+    $('.bg-cover').css('background-image', 'url(https://miscpic.oss-cn-qingdao.aliyuncs.com/banner/6.jpg)');
 </script>
 
 
@@ -477,6 +477,62 @@
     <!-- 所有文章卡片 -->
     <article id="articles" class="container articles">
         <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/01/23/19-pyinstaller-get-uac-admin/">
+                        <div class="card-image">
+                            
+                            <img src="/images/19/uac.png" class="responsive-img" alt="Pyinstaller打包py文件得到UAC权限">
+                            
+                            <span class="card-title">Pyinstaller打包py文件得到UAC权限</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+需要打包的脚本 a.py
+
+首先第一次打包脚本 a.py
+pyinstaller -F --uac-admin a.py
+然后去build目录找a/a.exe.manifest, 将其复制到a.py同级目录下, 再次运行
+pyinstal
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Python/" class="post-category">
+                                    Python
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/python/">
+                            <span class="chip bg-color">python</span>
+                        </a>
+                        
+                        <a href="/tags/uac/">
+                            <span class="chip bg-color">uac</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
@@ -774,64 +830,6 @@ ret2win 32位:先分析一下程序, 可以看到main、pwnme、ret2win函数.ma
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/05/27/13-Python-3-7-2-urlsplit-cve/">
-                        <div class="card-image">
-                            
-                            <img src="/images/13/1.png" class="responsive-img" alt="Python 3.7.2 urllib.parse.urlsplit 漏洞分析">
-                            
-                            <span class="card-title">Python 3.7.2 urllib.parse.urlsplit 漏洞分析</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Python 3.7.2的urllib.parse模块下urlsplit错误的处理字符导致漏洞。
-
-
-漏洞原理用 Punycode/IDNA 编码的 URL 使用 NFKC 规范化来分解字符。可能导致某些字符将新的段引入 URL。
-例如，在
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-27
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/网络安全/" class="post-category">
-                                    网络安全
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Python/">
-                            <span class="chip bg-color">Python</span>
-                        </a>
-                        
-                        <a href="/tags/CVE/">
-                            <span class="chip bg-color">CVE</span>
-                        </a>
-                        
-                        <a href="/tags/URLSPLIT/">
-                            <span class="chip bg-color">URLSPLIT</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 
@@ -848,7 +846,7 @@ ret2win 32位:先分析一下程序, 可以看到main、pwnme、ret2win函数.ma
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 3</div>
+            <div class="center-align b-text-gray">1 / 4</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -876,7 +874,7 @@ ret2win 32位:先分析一下程序, 可以看到main、pwnme、ret2win函数.ma
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.1k</span>&nbsp;字
+                class="white-color">13.2k</span>&nbsp;字
             
             
 
