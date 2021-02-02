@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[记一道Web题目 Web-Game (骰子)]]></title>
+    <url>%2F2021%2F02%2F02%2F20-Starsnow-Web-php-game%2F</url>
+    <content type="text"><![CDATA[0x1 get contents进入题目看到一个PHP小游戏, 是个关于骰子的, 可以猜骰子的数字和选择当前的倍数, 有1000本金.题目给了个提示 $md5=@md5($money); $md5_1=$money; ... if ((md5($md5_1)==md5('xxx'))&amp;&amp;(!($md5_1=='xxx'))) { echo '&lt;script>alter("flag{I....... 应该又是md5的弱类型比较. 继续看. 有个说明按钮, 点击之后查看url嗯, 文件包含… 包含谁呢… 扫描一下.存在git泄露, 但是没什么关键内容, 看一下robots.txt, 发现了hint.php 0x2 let’s go使用伪协议包含hint.php试试. 数层的base64后, 得到了一段php代码 index.php $md5=@md5($money); $md5_2=md5('s878926199a'); if ((md5($md5_1)==md5('s878926199a'))&amp;&amp;(!($md5_1=='s878926199a'))) { echo '&lt;script>alter("flag{...... .......... 意思就是$money的md5要等于s878926199a的md5, 但是$money不能等于s878926199a. $money在哪传？ 看一眼cookie.， 有一个被base64编码的money=…., 去找一个纯数字，MD5开头又是0e，那只有240610708.这里挺恶心的, 传入的money不用base64编码, 需要猜对的情况下才会出现, 就…多试几次. 得到dejavu_c_t_f.php 0x3 反序列化访问之后发现是反序列化 &lt;?php error_reporting(0); show_source(__FILE__); class create{ var $name='ctfer'; var $age='19'; var $flag='yingzi'; function __wakeup(){ $user->name=$this->name; $user->age=$this->age; $user->flag=$this->flag; $this->drive(); $this->getflag(); } function getflag(){ if ($this->flag=='yingzi') { include_once "./flag.php"; echo($flag); }else { echo 'Your car turned over.'; } } function drive(){ if ($this->age&lt;18) { exit("FBI warning!!"."&lt;br>"); } } } $arg=$_GET['arg']; if (strlen($arg)&lt;61) { unserialize($arg); }else{ echo "???"; } $a=new create; echo serialize($a); ?> O:6:"create":3:{s:4:"name";s:5:"ctfer";s:3:"age";s:2:"19";s:4:"flag";s:6:"yingzi";} 没什么特别的, 只是限制反序列化字符串的长度, 把用不到的属性删掉. O:6:&quot;create&quot;:2:{s:3:&quot;age&quot;;s:2:&quot;19&quot;;s:4:&quot;flag&quot;;s:6:&quot;yingzi&quot;;} flag{it_is_not_hard} SELF LEARNING &amp; SHARE]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>CTF</tag>
+        <tag>Web</tag>
+        <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Pyinstaller打包py文件得到UAC权限]]></title>
     <url>%2F2021%2F01%2F23%2F19-pyinstaller-get-uac-admin%2F</url>
     <content type="text"><![CDATA[需要打包的脚本 a.py 首先第一次打包脚本 a.py pyinstaller -F --uac-admin a.py 然后去build目录找a/a.exe.manifest, 将其复制到a.py同级目录下, 再次运行 pyinstall -F --uac-admin -r a.exe.manifest,1 a.py 也就是在第一次打包基础上增加-r a.exe.manifest,1, 然后查看dist目录, 发现就是带有UAC的exe了。 参考资料: https://blog.csdn.net/qq_26373925/article/details/105373124]]></content>
@@ -228,8 +241,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>paramiko</tag>
         <tag>python</tag>
+        <tag>paramiko</tag>
       </tags>
   </entry>
   <entry>
